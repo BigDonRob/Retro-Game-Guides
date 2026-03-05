@@ -367,6 +367,12 @@ body.show-remaining .gr-check-row.gr-checked { display: none; }
   const $tabBar  = document.getElementById('tab-bar');
   const $content = document.getElementById('tab-content');
 
+  // Verify elements exist
+  if (!$icon || !$title || !$meta || !$tabBar || !$content) {
+    console.error('Required DOM elements not found:', { $icon, $title, $meta, $tabBar, $content });
+    return;
+  }
+
   let storagePrefix    = `${raId}_`;
   let activeTabIndex   = -1;
   const tabCache       = {};
@@ -403,6 +409,7 @@ body.show-remaining .gr-check-row.gr-checked { display: none; }
       palettes   = pal;
       indexEntry = Array.isArray(idx) ? idx.find(g => g.raId === raId) : null;
     } catch (e) {
+      console.error('Boot error:', e);
       panic(`Failed to load guide: ${e.message}`); return;
     }
 
@@ -879,7 +886,12 @@ body.show-remaining .gr-check-row.gr-checked { display: none; }
     $content.innerHTML = `<div class="error-state">⚠️ Engine error: ${esc(msg)}</div>`;
   }
 
-  boot().catch(e => panic(e.message));
+  // Wait for DOM to be ready before booting
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => boot().catch(e => panic(e.message)));
+  } else {
+    boot().catch(e => panic(e.message));
+  }
 
 })();
 </script>
