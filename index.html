@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Retro Game Guides</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg-main: #0a0e14; --bg-secondary: #14181f; --bg-tertiary: #1e242e;
+    --accent-primary: #00cccc; --accent-tertiary: #0099cc;
+    --text-primary: #e6e9ef; --text-secondary: #8c92a3; --border-color: #2a3142;
+  }
+  body { font-family: 'Outfit', sans-serif; background: var(--bg-main); color: var(--text-primary); min-height: 100vh; }
+  header { background: var(--bg-secondary); border-bottom: 1px solid var(--border-color); padding: 2rem; }
+  header h1 { font-size: 2.5rem; font-weight: 700; background: linear-gradient(135deg, var(--accent-primary), var(--accent-tertiary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 0.25rem; }
+  header p { color: var(--text-secondary); font-size: 1rem; }
+  main { max-width: 960px; margin: 0 auto; padding: 2rem; }
+  .controls { display: flex; align-items: center; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1.25rem; }
+  .section-label { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-secondary); padding-bottom: 0.5rem; border-bottom: 1px solid var(--border-color); flex: 1 1 100%; }
+  .filter-group { display: flex; gap: 0.35rem; flex-wrap: wrap; }
+  .pill { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; padding: 0.2rem 0.65rem; border-radius: 20px; border: 1px solid var(--border-color); background: var(--bg-secondary); color: var(--text-secondary); cursor: pointer; transition: all 0.15s; }
+  .pill:hover { border-color: var(--accent-primary); color: var(--text-primary); }
+  .pill.active { border-color: var(--accent-primary); color: var(--accent-primary); background: rgba(0,204,204,0.07); }
+  .sort-select { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; padding: 0.2rem 0.65rem; border-radius: 4px; border: 1px solid var(--border-color); background: var(--bg-secondary); color: var(--text-secondary); cursor: pointer; margin-left: auto; }
+  .sort-select:focus { outline: none; border-color: var(--accent-primary); }
+  .search-input { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; padding: 0.2rem 0.65rem; border-radius: 4px; border: 1px solid var(--border-color); background: var(--bg-secondary); color: var(--text-secondary); width: 180px; }
+  .search-input::placeholder { color: var(--text-secondary); opacity: 0.6; }
+  .search-input:focus { outline: none; border-color: var(--accent-primary); color: var(--text-primary); }
+  .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+  .guide-card { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: 0.5rem; transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; }
+  .guide-card:hover { border-color: var(--accent-primary); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,204,204,0.1); }
+  .guide-card-icon { font-size: 1.75rem; line-height: 1; margin-bottom: 0.25rem; }
+  .guide-card-title { font-size: 1.1rem; font-weight: 700; color: var(--text-primary); }
+  .guide-card-meta { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--text-secondary); }
+  .guide-card-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.1rem; }
+  .tag { font-size: 0.7rem; font-family: 'JetBrains Mono', monospace; padding: 0.15rem 0.5rem; border-radius: 3px; border: 1px solid var(--border-color); background: var(--bg-tertiary); color: var(--text-secondary); }
+  .tag.completion { border-color: rgba(15,155,85,0.4); color: #4ec98a; background: rgba(15,155,85,0.08); }
+  .tag.reference  { border-color: rgba(0,204,204,0.4); color: var(--accent-primary); background: rgba(0,204,204,0.08); }
+  .tag.series     { border-color: rgba(0,153,204,0.35); color: #5bc4e8; background: rgba(0,153,204,0.07); }
+  .guide-card-author { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--text-secondary); opacity: 0.65; margin-top: auto; padding-top: 0.35rem; }
+  .guide-card-author span { color: var(--accent-primary); opacity: 1; }
+  .state-msg { grid-column: 1 / -1; padding: 3rem; text-align: center; color: var(--text-secondary); font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; line-height: 2; }
+  .loading-dot { display: inline-block; animation: blink 1.2s step-start infinite; }
+  .loading-dot:nth-child(2) { animation-delay: 0.4s; }
+  .loading-dot:nth-child(3) { animation-delay: 0.8s; }
+  @keyframes blink { 50% { opacity: 0; } }
+  footer { text-align: center; padding: 2rem; color: var(--text-secondary); font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; border-top: 1px solid var(--border-color); margin-top: 4rem; }
+
+  /* ── Builder CTA ── */
+  .builder-bar {
+    background: linear-gradient(135deg, rgba(0,204,204,0.06), rgba(0,153,204,0.04));
+    border: 1px solid rgba(0,204,204,0.18);
+    border-radius: 10px;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 1.5rem;
+  }
+  .builder-bar-text { flex: 1; min-width: 0; }
+  .builder-bar-title { font-size: 0.85rem; font-weight: 700; color: var(--text-primary); margin-bottom: 2px; }
+  .builder-bar-sub { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-secondary); }
+  .builder-btn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: 1px solid var(--accent-primary);
+    background: rgba(0,204,204,0.08);
+    color: var(--accent-primary);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s;
+    letter-spacing: .5px;
+    flex-shrink: 0;
+  }
+  .builder-btn:hover { background: rgba(0,204,204,0.18); box-shadow: 0 0 12px rgba(0,204,204,0.2); }
+
+  /* ── Builder confirm modal ── */
+  .modal-backdrop {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.65);
+    z-index: 100; display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.2s;
+  }
+  .modal-backdrop.open { opacity: 1; pointer-events: all; }
+  .modal-box {
+    background: #1e242e; border: 1px solid var(--border-color);
+    border-radius: 12px; padding: 28px 28px 24px;
+    max-width: 400px; width: 90%; box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    transform: translateY(8px) scale(0.97);
+    transition: transform 0.2s;
+  }
+  .modal-backdrop.open .modal-box { transform: none; }
+  .modal-icon { font-size: 32px; margin-bottom: 10px; }
+  .modal-title { font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
+  .modal-body  { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 22px; }
+  .modal-body strong { color: var(--text-primary); }
+  .modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
+  .modal-cancel {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
+    padding: 8px 16px; border-radius: 6px; border: 1px solid var(--border-color);
+    background: transparent; color: var(--text-secondary); cursor: pointer; transition: all .15s;
+  }
+  .modal-cancel:hover { color: var(--text-primary); border-color: var(--text-secondary); }
+  .modal-confirm {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 700;
+    padding: 8px 18px; border-radius: 6px; border: none;
+    background: var(--accent-primary); color: #0a0e14; cursor: pointer;
+    transition: all .15s; letter-spacing: .3px;
+  }
+  .modal-confirm:hover { filter: brightness(1.1); }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Retro Game Guides</h1>
+  <p>Completion trackers and reference guides — progress saved in your browser</p>
+</header>
+
+<main>
+  <!-- Builder CTA -->
+  <div class="builder-bar">
+    <div class="builder-bar-text">
+      <div class="builder-bar-title">🛠 Build a Guide</div>
+    </div>
+    <button class="builder-btn" id="openBuilderBtn">Open Builder →</button>
+  </div>
+
+  <div class="controls">
+    <div class="section-label">Available Guides</div>
+    <div class="filter-group" id="seriesFilters">
+      <button class="pill active" data-filter="all">All</button>
+    </div>
+    <input class="search-input" id="searchInput" type="text" placeholder="Search titles, systems…" autocomplete="off">
+    <select class="sort-select" id="sortSelect">
+      <option value="title">A–Z</option>
+      <option value="year-asc">Year ↑</option>
+      <option value="year-desc">Year ↓</option>
+    </select>
+  </div>
+  <div class="guide-grid" id="guideGrid">
+    <div class="state-msg">Loading<span class="loading-dot">.</span><span class="loading-dot">.</span><span class="loading-dot">.</span></div>
+  </div>
+</main>
+
+<footer>Retro Game Guides</footer>
+
+<script>
+// ─────────────────────────────────────────────────────────────────────────────
+//  Boot sequence:
+//    1. fetch games_index.json  — one request, all card metadata present
+//    2. Build filter pills from series values
+//    3. Render cards immediately; no per-game JS loading needed
+//
+//  games_index.json entry shape (see SCHEMA.md for full spec):
+//    {
+//      raId, slug, primaryName, altNames[], primarySystem, altSystems[],
+//      series, year, icon, author,
+//      tabs: [ { num, label, type }, ... ]
+//    }
+//
+//  Tab types drive card tags:
+//    checklist | subtab-checklist  →  "Completion Tracker"
+//    custom                        →  "Reference"
+// ─────────────────────────────────────────────────────────────────────────────
+
+const grid      = document.getElementById('guideGrid');
+const filterBar = document.getElementById('seriesFilters');
+const sortSel   = document.getElementById('sortSelect');
+const searchIn  = document.getElementById('searchInput');
+
+let allGames     = [];
+let activeFilter = 'all';
+let searchQuery  = '';
+
+// ── Path helper ──────────────────────────────────────────────────────────────
+function getGamePath(raId) {
+  const topEnd   = Math.ceil(raId / 5000) * 5000;
+  const topStart = topEnd - 4999;
+  const subEnd   = Math.ceil(raId / 200) * 200;
+  const subStart = subEnd - 199;
+  return `games/${topStart}-${topEnd}/${subStart}-${subEnd}/${raId}`;
+}
+
+// ── Boot ─────────────────────────────────────────────────────────────────────
+async function discover() {
+  let manifest;
+  try {
+    const res = await fetch('games_index.json');
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    manifest = await res.json();
+  } catch (err) {
+    grid.innerHTML = `<div class="state-msg">Could not load games_index.json<br><small style="opacity:.5">${err.message}</small></div>`;
+    return;
+  }
+
+  if (!Array.isArray(manifest) || !manifest.length) {
+    grid.innerHTML = '<div class="state-msg">No guides listed yet.</div>';
+    return;
+  }
+
+  // All metadata is already present in games_index.json — no further fetches.
+  allGames = manifest;
+
+  buildFilterPills();
+  render();
+}
+
+// ── Filter pills ─────────────────────────────────────────────────────────────
+function buildFilterPills() {
+  const series = [...new Set(allGames.map(g => g.series).filter(Boolean))].sort();
+  series.forEach(s => {
+    const btn = document.createElement('button');
+    btn.className = 'pill';
+    btn.dataset.filter = s;
+    btn.textContent = s;
+    btn.addEventListener('click', () => setFilter(s));
+    filterBar.appendChild(btn);
+  });
+}
+
+function setFilter(val) {
+  activeFilter = val;
+  filterBar.querySelectorAll('.pill').forEach(p => p.classList.toggle('active', p.dataset.filter === val));
+  render();
+}
+
+// ── Render ───────────────────────────────────────────────────────────────────
+function render() {
+  const q = searchQuery.toLowerCase().trim();
+
+  let games = allGames.filter(g => {
+    // Series filter
+    if (activeFilter !== 'all' && g.series !== activeFilter) return false;
+    // Search: match against primaryName, altNames, primarySystem, altSystems
+    if (q) {
+      const haystack = [
+        g.primaryName,
+        ...(g.altNames     || []),
+        g.primarySystem,
+        ...(g.altSystems   || []),
+        g.series           || '',
+        g.author           || '',
+      ].join(' ').toLowerCase();
+      if (!haystack.includes(q)) return false;
+    }
+    return true;
+  });
+
+  const sort = sortSel.value;
+  if      (sort === 'title')    games.sort((a, b) => a.primaryName.localeCompare(b.primaryName));
+  else if (sort === 'year-asc') games.sort((a, b) => (a.year || 0) - (b.year || 0));
+  else                          games.sort((a, b) => (b.year || 0) - (a.year || 0));
+
+  if (!games.length) { grid.innerHTML = '<div class="state-msg">No guides match this filter.</div>'; return; }
+  grid.innerHTML = '';
+  games.forEach(g => grid.appendChild(makeCard(g)));
+}
+
+// ── Card builder ─────────────────────────────────────────────────────────────
+function makeCard(g) {
+  const path = getGamePath(g.raId);
+
+  const a = document.createElement('a');
+  a.className = 'guide-card';
+  a.href = `guide_engine.html?game=${g.raId}`;
+
+  a.appendChild(el('div', 'guide-card-icon',  g.icon        || '🎮'));
+  a.appendChild(el('div', 'guide-card-title', g.primaryName));
+
+  const metaParts = [g.primarySystem];
+  if (g.altSystems && g.altSystems.length) metaParts.push(...g.altSystems);
+  if (g.year) metaParts.push(String(g.year));
+  a.appendChild(el('div', 'guide-card-meta',  metaParts.join(' · ')));
+
+  const tags = document.createElement('div');
+  tags.className = 'guide-card-tags';
+  const tabTypes = (g.tabs || []).map(t => t.type);
+  if (tabTypes.some(t => t === 'checklist' || t === 'subtab-checklist')) tags.appendChild(tag('completion', 'Completion Tracker'));
+  if (tabTypes.some(t => t === 'custom'))                                 tags.appendChild(tag('reference',  'Reference'));
+  if (g.series)                                                           tags.appendChild(tag('series',     g.series));
+  a.appendChild(tags);
+
+  if (g.author) {
+    const d = el('div', 'guide-card-author');
+    d.innerHTML = `Guide by: <span>${g.author}</span>`;
+    a.appendChild(d);
+  }
+
+  return a;
+}
+
+// ── Helpers ──────────────────────────────────────────────────────────────────
+function el(tagName, cls, text) {
+  const e = document.createElement(tagName);
+  e.className = cls;
+  if (text != null) e.textContent = text;
+  return e;
+}
+function tag(cls, text) {
+  const s = document.createElement('span');
+  s.className = `tag ${cls}`;
+  s.textContent = text;
+  return s;
+}
+
+// ── Events ───────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  sortSel.addEventListener('change', render);
+  searchIn.addEventListener('input', () => { searchQuery = searchIn.value; render(); });
+
+  // ── Builder modal ────────────────────────────────────────────────────────────
+  document.getElementById('openBuilderBtn').addEventListener('click', () => {
+    document.getElementById('builderModal').classList.add('open');
+  });
+  document.getElementById('modalCancel').addEventListener('click', () => {
+    document.getElementById('builderModal').classList.remove('open');
+  });
+  document.getElementById('modalConfirm').addEventListener('click', () => {
+    window.location.href = 'builder.html';
+  });
+  document.getElementById('builderModal').addEventListener('click', e => {
+    if (e.target === e.currentTarget) e.currentTarget.classList.remove('open');
+  });
+});
+
+discover();
+</script>
+<!-- Builder confirm modal -->
+<div class="modal-backdrop" id="builderModal">
+  <div class="modal-box">
+    <div class="modal-icon">🛠</div>
+    <div class="modal-title">Open Guide Builder</div>
+    <div class="modal-body">
+      The <strong>Game Guide Builder</strong> lets you create a complete guide
+      without writing any JSON. Set your game's metadata, add tabs and panels,
+      then download a ZIP ready to submit.<br><br>
+      Submissions are reviewed before they go live. Submit a pull request on GitHub or contact BigDonRob about manual Submissions.
+    </div>
+    <div class="modal-actions">
+      <button class="modal-cancel" id="modalCancel">Cancel</button>
+      <button class="modal-confirm" id="modalConfirm">Open Builder →</button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

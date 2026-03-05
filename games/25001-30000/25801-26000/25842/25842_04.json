@@ -1,0 +1,358 @@
+{
+  "label": "🎵 Magical Songs",
+  "panels": [
+    {
+      "id": "songs_info",
+      "panelType": "text",
+      "title": "🎵 Magical Songs",
+      "infobox": "Summon songs the Bard learns and can upgrade. Stats shown are Base / Upgraded.\n\n⚠️ = MISSABLE — upgrade source is tied to a one-time event or choice",
+      "content": ""
+    },
+    {
+      "id": "songs_list",
+      "panelType": "checklist",
+      "title": "All Songs (16)",
+      "columns": [
+        {
+          "key": "flag",
+          "label": "",
+          "style": "accent"
+        },
+        {
+          "key": "num",
+          "label": "#",
+          "style": "dim"
+        },
+        {
+          "key": "mana",
+          "label": "Mana",
+          "style": "dim"
+        },
+        {
+          "key": "mana_upg",
+          "label": "Mana↑",
+          "style": "dim"
+        },
+        {
+          "key": "hp",
+          "label": "HP",
+          "style": "plain"
+        },
+        {
+          "key": "hp_upg",
+          "label": "HP↑",
+          "style": "plain"
+        },
+        {
+          "key": "dmg",
+          "label": "DMG",
+          "style": "accent"
+        },
+        {
+          "key": "dmg_upg",
+          "label": "DMG↑",
+          "style": "accent"
+        },
+        {
+          "key": "armor",
+          "label": "Armor",
+          "style": "plain"
+        },
+        {
+          "key": "armor_upg",
+          "label": "Armor↑",
+          "style": "plain"
+        },
+        {
+          "key": "special",
+          "label": "Special",
+          "style": "plain"
+        },
+        {
+          "key": "obtain",
+          "label": "Obtain",
+          "style": "dim"
+        },
+        {
+          "key": "obtain_upg",
+          "label": "Upgrade",
+          "style": "dim"
+        }
+      ],
+      "entry_Tune": [
+        {
+          "id": "25842_t04_000",
+          "name": "Thunder Spider",
+          "flag": "",
+          "num": "1",
+          "mana": "75",
+          "mana_upg": "150",
+          "hp": "66",
+          "hp_upg": "138",
+          "dmg": "3–7",
+          "dmg_upg": "7–13",
+          "armor": "0",
+          "armor_upg": "0",
+          "special": "Lightning stuns opponents; upgraded chains bolts between enemies",
+          "obtain": "Taught by old man in Drunken Rat cellar (start of game)",
+          "obtain_upg": "Stump chest on Level 1, Forest Tower"
+        },
+        {
+          "id": "25842_t04_001",
+          "name": "Common Rat / Vorpal Rat",
+          "flag": "",
+          "num": "2",
+          "mana": "25",
+          "mana_upg": "100",
+          "hp": "5",
+          "hp_upg": "11",
+          "dmg": "1–5",
+          "dmg_upg": "32–92",
+          "armor": "0",
+          "armor_upg": "0",
+          "special": "Rat: none. Vorpal: launches at foes from great distance. Also scares people in pubs.",
+          "obtain": "Bard begins game knowing this song",
+          "obtain_upg": "Tree trunk just before NW passage to watery area, Highland Park"
+        },
+        {
+          "id": "25842_t04_002",
+          "name": "Heroine",
+          "flag": "",
+          "num": "3",
+          "mana": "100",
+          "mana_upg": "200",
+          "hp": "77",
+          "hp_upg": "187",
+          "dmg": "1–5",
+          "dmg_upg": "1–5",
+          "armor": "1–5",
+          "armor_upg": "2–10",
+          "special": "Fires burst of crossbow bolts",
+          "obtain": "Bannafeet teaches you after freeing Ketill Swart (or later in Neversdale hideout)",
+          "obtain_upg": "Chest behind NW secret door in Chicken Portal level, MacRath's Dungeon"
+        },
+        {
+          "id": "25842_t04_003",
+          "name": "Crone",
+          "flag": "",
+          "num": "4",
+          "mana": "100",
+          "mana_upg": "200",
+          "hp": "23",
+          "hp_upg": "72",
+          "dmg": "1–2",
+          "dmg_upg": "1–2",
+          "armor": "1–5",
+          "armor_upg": "3–7",
+          "special": "Heals injured allies; upgraded also curses enemies with fear",
+          "obtain": "Chest in Ketill's Hideout, Neversdale",
+          "obtain_upg": "Chest in Dounby Old City Tunnels"
+        },
+        {
+          "id": "25842_t04_004",
+          "name": "Bodyguard",
+          "flag": "",
+          "num": "5",
+          "mana": "100",
+          "mana_upg": "200",
+          "hp": "135",
+          "hp_upg": "218",
+          "dmg": "1–2",
+          "dmg_upg": "2–3",
+          "armor": "3–7",
+          "armor_upg": "6–14",
+          "special": "Taunts ranged foes; upgraded absorbs magic (immune to magical attacks)",
+          "obtain": "Chest in poorly lit storeroom (single-door hill), Kirkwall",
+          "obtain_upg": "From Olav after acquiring Firbolg Armbands in Finfolk Caverns"
+        },
+        {
+          "id": "25842_t04_005",
+          "name": "Light Fairy",
+          "flag": "",
+          "num": "6",
+          "mana": "50",
+          "mana_upg": "100",
+          "hp": "22",
+          "hp_upg": "25",
+          "dmg": "0",
+          "dmg_upg": "0",
+          "armor": "4–20",
+          "armor_upg": "4–20",
+          "special": "Lights dark areas; stuns/blinds enemies in combat",
+          "obtain": "Taught by four Bodbs in Kirkwall (Ch. III)",
+          "obtain_upg": "Corpse on Level 1, Mountain Tower (NE side room)"
+        },
+        {
+          "id": "25842_t04_006",
+          "name": "Mercenary",
+          "flag": "",
+          "num": "7",
+          "mana": "100",
+          "mana_upg": "200",
+          "hp": "86",
+          "hp_upg": "150",
+          "dmg": "8–20",
+          "dmg_upg": "11–35",
+          "armor": "2–6",
+          "armor_upg": "2–10",
+          "special": "Flails axe, knocking foes to ground",
+          "obtain": "Mell teaches you after defeating Fnarf in Highland Park",
+          "obtain_upg": "Chest in obviously-trapped chest, Mountain Pass"
+        },
+        {
+          "id": "25842_t04_007",
+          "name": "Trap Finder",
+          "flag": "",
+          "num": "8",
+          "mana": "100",
+          "mana_upg": "200",
+          "hp": "172",
+          "hp_upg": "240",
+          "dmg": "0",
+          "dmg_upg": "0",
+          "armor": "1–5",
+          "armor_upg": "3–7",
+          "special": "Disarms traps and picks up loot; upgraded also opens secret doors",
+          "obtain": "Stump chest on Level 1, Forest Tower",
+          "obtain_upg": "Obtained by defeating Lugh (Ch. VII) — given with Knight song"
+        },
+        {
+          "id": "25842_t04_008",
+          "name": "Elemental",
+          "flag": "⚠️",
+          "num": "9",
+          "mana": "100",
+          "mana_upg": "200",
+          "hp": "120",
+          "hp_upg": "187",
+          "dmg": "1–5",
+          "dmg_upg": "1–5",
+          "armor": "1–2",
+          "armor_upg": "1–2",
+          "special": "Throws fireballs burning foes in area; can melt ice walls",
+          "obtain": "Taught by Valkyrie after helping Hrafn in Burial Chamber",
+          "obtain_upg": "Be nice to Trow on docks in Stromness"
+        },
+        {
+          "id": "25842_t04_009",
+          "name": "Knight",
+          "flag": "",
+          "num": "10",
+          "mana": "200",
+          "mana_upg": "300",
+          "hp": "125",
+          "hp_upg": "187",
+          "dmg": "7–19",
+          "dmg_upg": "9–29",
+          "armor": "5–21",
+          "armor_upg": "27–27",
+          "special": "Shield bash stuns foes",
+          "obtain": "Obtained by defeating Lugh (Ch. VII)",
+          "obtain_upg": "Chest behind NE secret door in Chicken Portal level, MacRath's Dungeon"
+        },
+        {
+          "id": "25842_t04_010",
+          "name": "Brute",
+          "flag": "⚠️",
+          "num": "11",
+          "mana": "200",
+          "mana_upg": "300",
+          "hp": "120",
+          "hp_upg": "200",
+          "dmg": "15–35",
+          "dmg_upg": "26–50",
+          "armor": "1–2",
+          "armor_upg": "3–4",
+          "special": "Launches boulder, stuns/damages in area",
+          "obtain": "Chest in Dounby Old City Tunnels",
+          "obtain_upg": "Buy Ancient Flute from Crazy Thorvald in Stromness — comes free with purchase"
+        },
+        {
+          "id": "25842_t04_011",
+          "name": "Knocker",
+          "flag": "",
+          "num": "12",
+          "mana": "200",
+          "mana_upg": "400",
+          "hp": "144",
+          "hp_upg": "187",
+          "dmg": "8–14",
+          "dmg_upg": "15–25",
+          "armor": "1–5",
+          "armor_upg": "1–5",
+          "special": "Uses charged lightning rods to attack multiple enemies",
+          "obtain": "Obtained from Renard Brothers after their deception (SQ4: Fox Brothers)",
+          "obtain_upg": "Chest west of Obligatory Lava Level entrance, Finfolk Caverns"
+        },
+        {
+          "id": "25842_t04_012",
+          "name": "Rogue",
+          "flag": "",
+          "num": "13",
+          "mana": "150",
+          "mana_upg": "300",
+          "hp": "120",
+          "hp_upg": "195",
+          "dmg": "22–30",
+          "dmg_upg": "34–50",
+          "armor": "1–5",
+          "armor_upg": "3–7",
+          "special": "Taunts melee foes, evades and counterattacks; upgraded daggers are poisoned",
+          "obtain": "Chest in Silkbeard's Headquarters, Finstown",
+          "obtain_upg": "Chest on Level 2, Island Tower"
+        },
+        {
+          "id": "25842_t04_013",
+          "name": "Health Stealer (Gouger)",
+          "flag": "⚠️",
+          "num": "14",
+          "mana": "200",
+          "mana_upg": "400",
+          "hp": "240",
+          "hp_upg": "375",
+          "dmg": "14–30",
+          "dmg_upg": "21–45",
+          "armor": "2–6",
+          "armor_upg": "3–7",
+          "special": "Drains enemy health, uses it to heal allies",
+          "obtain": "Chest in Silkbeard's Headquarters, Finstown",
+          "obtain_upg": "Be snarky to Trow by Kirk in Stromness"
+        },
+        {
+          "id": "25842_t04_014",
+          "name": "Behemoth",
+          "flag": "⚠️",
+          "num": "15",
+          "mana": "300",
+          "mana_upg": "500",
+          "hp": "187",
+          "hp_upg": "250",
+          "dmg": "14–30",
+          "dmg_upg": "26–50",
+          "armor": "1–5",
+          "armor_upg": "2–10",
+          "special": "Charges causing explosion; fiery breath in close quarters",
+          "obtain": "Chest in center of Sun Portal level, MacRath's Dungeon",
+          "obtain_upg": "Be snarky to the Chosen in Obligatory Lava Level (SA8)"
+        },
+        {
+          "id": "25842_t04_015",
+          "name": "Enchantress",
+          "flag": "⚠️",
+          "num": "16",
+          "mana": "300",
+          "mana_upg": "500",
+          "hp": "125",
+          "hp_upg": "218",
+          "dmg": "1–2",
+          "dmg_upg": "2–3",
+          "armor": "2–10",
+          "armor_upg": "4–12",
+          "special": "Revives dead allies; upgraded also slows foes",
+          "obtain": "After lighting torches in Moon Portal level, MacRath's Dungeon",
+          "obtain_upg": "Chest on Level 1, Island Tower"
+        }
+      ]
+    }
+  ]
+}

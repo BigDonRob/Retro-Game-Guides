@@ -1,0 +1,341 @@
+{
+  "label": "🗡️ Weapons",
+  "panels": [
+    {
+      "id": "weapons_info",
+      "panelType": "text",
+      "title": "🗡️ Weapons",
+      "infobox": "All weapons in the game. ⚠️ = MISSABLE — available only during a specific event window.",
+      "content": ""
+    },
+    {
+      "id": "weapons_list",
+      "panelType": "checklist",
+      "title": "All Weapons (29)",
+      "columns": [
+        {
+          "key": "flag",
+          "label": "",
+          "style": "accent"
+        },
+        {
+          "key": "num",
+          "label": "#",
+          "style": "dim"
+        },
+        {
+          "key": "category",
+          "label": "Type",
+          "style": "dim"
+        },
+        {
+          "key": "damage",
+          "label": "Damage",
+          "style": "accent"
+        },
+        {
+          "key": "special",
+          "label": "Special",
+          "style": "plain"
+        },
+        {
+          "key": "location",
+          "label": "Location",
+          "style": "plain"
+        }
+      ],
+      "entry_Weapon": [
+        {
+          "id": "25842_t05_000",
+          "name": "Sword",
+          "flag": "",
+          "num": "1",
+          "category": "Sword",
+          "damage": "1–5",
+          "special": "—",
+          "location": "Starting weapon"
+        },
+        {
+          "id": "25842_t05_001",
+          "name": "Dirk",
+          "flag": "",
+          "num": "2",
+          "category": "Dirk",
+          "damage": "4–16",
+          "special": "—",
+          "location": "Buy: Seamus (Houton) or Velvet Hammer (Kirkwall)"
+        },
+        {
+          "id": "25842_t05_002",
+          "name": "Broadsword",
+          "flag": "",
+          "num": "3",
+          "category": "Sword",
+          "damage": "5–7",
+          "special": "—",
+          "location": "Mary gives you it after first giant rat encounter"
+        },
+        {
+          "id": "25842_t05_003",
+          "name": "Flail",
+          "flag": "",
+          "num": "4",
+          "category": "Flail",
+          "damage": "8–24",
+          "special": "Unblockable (100%)",
+          "location": "Buy: Seamus (Houton) or Velvet Hammer (Kirkwall)"
+        },
+        {
+          "id": "25842_t05_004",
+          "name": "Claymore",
+          "flag": "",
+          "num": "5",
+          "category": "2-Handed",
+          "damage": "9–25",
+          "special": "—",
+          "location": "Buy: Seamus (Houton) or Velvet Hammer (Kirkwall)"
+        },
+        {
+          "id": "25842_t05_005",
+          "name": "Long Bow",
+          "flag": "",
+          "num": "6",
+          "category": "Bow",
+          "damage": "9–29 ranged",
+          "special": "—",
+          "location": "Buy: Seamus (Houton)"
+        },
+        {
+          "id": "25842_t05_006",
+          "name": "Caladbolg",
+          "flag": "",
+          "num": "7",
+          "category": "Sword",
+          "damage": "7–19",
+          "special": "—",
+          "location": "Chest in SE corner of Bugbear Cairn (SQ2)"
+        },
+        {
+          "id": "25842_t05_007",
+          "name": "Great Bow",
+          "flag": "",
+          "num": "8",
+          "category": "Bow",
+          "damage": "11–36 ranged",
+          "special": "—",
+          "location": "Buy: Velvet Hammer (Kirkwall)"
+        },
+        {
+          "id": "25842_t05_008",
+          "name": "Glaisne",
+          "flag": "",
+          "num": "9",
+          "category": "Bow",
+          "damage": "13–43 ranged",
+          "special": "Fire Arrows (100%): 2–10",
+          "location": "On Ex-Chosen's body in Highland Park"
+        },
+        {
+          "id": "25842_t05_009",
+          "name": "Cronderg",
+          "flag": "",
+          "num": "10",
+          "category": "Flail",
+          "damage": "11–31",
+          "special": "Stunning Blows (25%) 2 sec; Unblockable (100%)",
+          "location": "Chest on Level 3, Forest Tower"
+        },
+        {
+          "id": "25842_t05_010",
+          "name": "Casgair",
+          "flag": "⚠️",
+          "num": "11",
+          "category": "Sword",
+          "damage": "7–27",
+          "special": "Magic Aura (100%): 3–15",
+          "location": "Stuck in ice at end of Frozen River (Ch. VI)"
+        },
+        {
+          "id": "25842_t05_011",
+          "name": "Quicksilver Broadsword",
+          "flag": "",
+          "num": "12",
+          "category": "Sword",
+          "damage": "6–24",
+          "special": "Magic Aura (100%): 2–10",
+          "location": "Be nice to Gower at end of Frozen Tombs"
+        },
+        {
+          "id": "25842_t05_012",
+          "name": "Cladteamb Soluis",
+          "flag": "",
+          "num": "13",
+          "category": "2-Handed",
+          "damage": "12–32",
+          "special": "Electric Blade (100%): 1–5",
+          "location": "Chest on Level 3, Mountain Tower"
+        },
+        {
+          "id": "25842_t05_013",
+          "name": "Silver Dirk",
+          "flag": "",
+          "num": "14",
+          "category": "Dirk",
+          "damage": "5–25",
+          "special": "—",
+          "location": "Buy: O'Dells Arms & Armor (West Dounby)"
+        },
+        {
+          "id": "25842_t05_014",
+          "name": "Granite Flail",
+          "flag": "",
+          "num": "15",
+          "category": "Flail",
+          "damage": "16–40",
+          "special": "Stunning Blows (35%) 3 sec; Unblockable (100%)",
+          "location": "Buy: O'Dells (West Dounby) or Dirk (Finstown); also in Finstown Armory chest"
+        },
+        {
+          "id": "25842_t05_015",
+          "name": "Lochaher Axe",
+          "flag": "",
+          "num": "16",
+          "category": "2-Handed",
+          "damage": "15–39",
+          "special": "Electrical Blade (100%): 2–10",
+          "location": "Buy: O'Dells (West Dounby) or Dirk (Finstown)"
+        },
+        {
+          "id": "25842_t05_016",
+          "name": "Elderwood Bow",
+          "flag": "",
+          "num": "17",
+          "category": "Bow",
+          "damage": "15–50 ranged",
+          "special": "Fire Arrows (100%): 3–15",
+          "location": "Buy: O'Dells Arms (West Dounby)"
+        },
+        {
+          "id": "25842_t05_017",
+          "name": "Blackthorne's Bow",
+          "flag": "",
+          "num": "18",
+          "category": "Bow",
+          "damage": "17–57 ranged",
+          "special": "Fire Arrows (100%): 4–20",
+          "location": "Buy: O'Dells Arms (West Dounby)"
+        },
+        {
+          "id": "25842_t05_018",
+          "name": "Blackthorne's Great Bow",
+          "flag": "",
+          "num": "19",
+          "category": "Bow",
+          "damage": "19–60 ranged",
+          "special": "Fire Arrows (100%): 5–25",
+          "location": "Buy: Dirk at Silkbeard's HQ (Finstown)"
+        },
+        {
+          "id": "25842_t05_019",
+          "name": "Shadow Axe",
+          "flag": "",
+          "num": "20",
+          "category": "Special (Ranged Menu)",
+          "damage": "14–38",
+          "special": "Fear Strike 75%",
+          "location": "Defeat the Zombie bearing it in Song Portal level, MacRath's Dungeon"
+        },
+        {
+          "id": "25842_t05_020",
+          "name": "Vipersteel Dirk",
+          "flag": "",
+          "num": "21",
+          "category": "Dirk",
+          "damage": "6–30",
+          "special": "Poison (50%): 3–15 for 6 sec",
+          "location": "Buy: Crazy Thorvald (Stromness)"
+        },
+        {
+          "id": "25842_t05_021",
+          "name": "Ravensteel Broadsword",
+          "flag": "",
+          "num": "22",
+          "category": "Sword",
+          "damage": "8–32",
+          "special": "Magic Aura (100%) 4–20; Mana Burst (25%) 5–25",
+          "location": "Buy: Crazy Thorvald (Stromness)"
+        },
+        {
+          "id": "25842_t05_022",
+          "name": "Onyx Flail",
+          "flag": "",
+          "num": "23",
+          "category": "Flail",
+          "damage": "22–54",
+          "special": "Stunning Blow (45%) 4 sec; Unblockable (100%)",
+          "location": "Buy: Crazy Thorvald (Stromness)"
+        },
+        {
+          "id": "25842_t05_023",
+          "name": "Frecraid",
+          "flag": "",
+          "num": "24",
+          "category": "2-Handed",
+          "damage": "20–52",
+          "special": "Electrical Blade (100%) 2–10; Lightning Storm (100%) 4–20",
+          "location": "Buy: Crazy Thorvald (Stromness)"
+        },
+        {
+          "id": "25842_t05_024",
+          "name": "Bow of Bile Dathi",
+          "flag": "",
+          "num": "25",
+          "category": "Bow",
+          "damage": "21–71 ranged",
+          "special": "Exploding Arrows (100%): 6–30",
+          "location": "Buy: Crazy Thorvald (Stromness)"
+        },
+        {
+          "id": "25842_t05_025",
+          "name": "Odraig Goch",
+          "flag": "",
+          "num": "26",
+          "category": "Bow",
+          "damage": "23–78 ranged",
+          "special": "Dragon Arrows (100%): 7–35",
+          "location": "Defeat Haggis Monster in Hatcher's Farm"
+        },
+        {
+          "id": "25842_t05_026",
+          "name": "Ego Sword (Singing Sword)",
+          "flag": "⚠️",
+          "num": "27",
+          "category": "Special (Ranged Menu)",
+          "damage": "20–52",
+          "special": "Reduces summoning re-equip delay",
+          "location": "Be nice to Culainn; rescue trapped miners in Firbolg Mines"
+        },
+        {
+          "id": "25842_t05_027",
+          "name": "Basluath",
+          "flag": "",
+          "num": "28",
+          "category": "Dirk",
+          "damage": "7–35",
+          "special": "Poison (50%): 4–20 for 6 sec; Life Drain (50%)",
+          "location": "Chest on Level 2, Island Tower"
+        },
+        {
+          "id": "25842_t05_028",
+          "name": "Balor's Eye",
+          "flag": "",
+          "num": "29",
+          "category": "Flail",
+          "damage": "23–59",
+          "special": "Sonic Slam (35%) 4 sec; Unblockable (100%)",
+          "location": "Chest on Level 3, Island Tower"
+        }
+      ]
+    }
+  ]
+}

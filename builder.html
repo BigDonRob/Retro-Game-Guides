@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BDR Guide Builder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ── BUILDER CHROME (never affected by theme/palette) ── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --b-bg:      #0c0f14;
+  --b-surf:    #161b22;
+  --b-surf2:   #1e2530;
+  --b-border:  #30363d;
+  --b-text:    #e6edf3;
+  --b-textMid: #8b949e;
+  --b-accent:  #3fb950;
+  --b-accentD: rgba(63,185,80,0.12);
+  --b-danger:  #f85149;
+  --b-blue:    #58a6ff;
+  --b-ff:      'Outfit', sans-serif;
+  --b-mono:    'JetBrains Mono', monospace;
+}
+
+body { font-family: var(--b-ff); background: var(--b-bg); color: var(--b-text); min-height: 100vh; }
+
+/* ── BUILDER HEADER ── */
+#b-header {
+  position: sticky; top: 0; z-index: 60;
+  background: var(--b-surf);
+  border-bottom: 1px solid var(--b-border);
+  height: 54px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 12px;
+}
+.b-back {
+  font-family: var(--b-mono); font-size: 11px; color: var(--b-textMid);
+  text-decoration: none; padding: 5px 10px; border: 1px solid var(--b-border);
+  border-radius: 5px; transition: color .15s, border-color .15s; white-space: nowrap;
+}
+.b-back:hover { color: var(--b-text); border-color: var(--b-textMid); }
+.b-header-title { font-size: 13px; font-weight: 600; color: var(--b-textMid); letter-spacing: .3px; }
+.b-header-title strong { color: var(--b-text); }
+#b-header-name { color: var(--b-accent); }
+.b-header-spacer { flex: 1; }
+.b-btn {
+  font-family: var(--b-ff); font-size: 12px; font-weight: 600;
+  padding: 7px 14px; border-radius: 6px; border: none; cursor: pointer;
+  transition: all .15s; display: flex; align-items: center; gap: 6px; white-space: nowrap;
+}
+.b-btn-ghost { background: transparent; border: 1px solid var(--b-border); color: var(--b-textMid); }
+.b-btn-ghost:hover { color: var(--b-text); border-color: var(--b-textMid); }
+.b-btn-primary { background: var(--b-accent); color: #0c0f14; }
+.b-btn-primary:hover { filter: brightness(1.1); }
+.b-btn-danger { background: transparent; border: 1px solid var(--b-border); color: var(--b-danger); }
+.b-btn-danger:hover { background: rgba(248,81,73,0.1); border-color: var(--b-danger); }
+
+/* ── EMPTY STATE ── */
+#b-empty {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-height: calc(100vh - 54px); gap: 16px; text-align: center; padding: 40px;
+}
+.b-empty-icon { font-size: 48px; opacity: 0.4; }
+.b-empty-title { font-size: 22px; font-weight: 700; color: var(--b-text); }
+.b-empty-sub { font-size: 14px; color: var(--b-textMid); max-width: 400px; line-height: 1.6; }
+
+/* ── GUIDE PREVIEW WRAPPER ── */
+#guide-preview-wrap { padding: 0 0 80px; }
+
+/* ── GUIDE PREVIEW — vars set here from selected theme+palette ── */
+#guide-preview {
+  --font-body:    Georgia, serif;
+  --font-display: Georgia, serif;
+  --font-mono:    'Courier New', monospace;
+  /* palette fallbacks */
+  --bg: #fdf6e3; --surface: #f4e8c4; --surface2: #ede0b5;
+  --border: #c9a96e; --borderL: #e0c990; --gold: #b8860b; --goldL: #d4a517;
+  --green: #4a7c3f; --greenDim: rgba(74,124,63,0.13); --greenBdr: rgba(74,124,63,0.4);
+  --brown: #2c1a0e; --brownMid: #5c3820; --text: #2c1a0e; --textMid: #6b4226; --textMuted: #9b7b5a;
+  /* shape fallbacks */
+  --radius-card: 8px; --radius-btn: 6px; --radius-input: 5px; --radius-tag: 4px;
+  --shadow-card: 0 2px 8px rgba(0,0,0,0.08); --shadow-sm: 0 1px 4px rgba(0,0,0,0.06); --shadow-lg: 0 6px 20px rgba(0,0,0,0.1);
+}
+#gp-header {
+  background: var(--neutralMid); border-bottom: 2px solid var(--emphasis);
+  padding: 0 20px; height: 68px; display: flex; align-items: center; gap: 12px;
+}
+#gp-icon { font-size: 26px; flex-shrink: 0; }
+#gp-title { font-family: var(--font-display); font-size: clamp(15px,2.5vw,20px); font-weight: 900; color: var(--emphasis); line-height: 1.2; }
+#gp-meta { font-family: var(--font-mono); font-size: 9px; color: var(--textMuted); margin-top: 2px; letter-spacing: .5px; }
+.gp-header-edit {
+  margin-left: auto; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius-btn); color: rgba(255,255,255,0.4); font-size: 12px;
+  padding: 5px 10px; cursor: pointer; font-family: var(--b-ff); transition: all .15s; white-space: nowrap;
+}
+.gp-header-edit:hover { color: rgba(255,255,255,0.8); border-color: rgba(255,255,255,0.3); }
+#gp-tabbar {
+  background: var(--surface2); border-bottom: 2px solid var(--border);
+  display: flex; flex-wrap: wrap; align-items: center; min-height: 42px; padding: 4px 0;
+}
+.gp-tab {
+  font-family: var(--font-body); font-size: 12.5px; color: var(--textMuted);
+  background: transparent; border: none; border-bottom: 3px solid transparent;
+  padding: 6px 14px; cursor: pointer; white-space: nowrap; transition: all .15s;
+  display: flex; align-items: center; gap: 6px; min-height: 32px;
+}
+.gp-tab:hover { color: var(--textMid); }
+.gp-tab.active { color: var(--neutral); font-weight: 600; border-bottom-color: var(--emphasis); background: var(--bg); }
+.gp-tab-edit {
+  opacity: 0; font-size: 10px; color: var(--textMuted); padding: 1px 3px;
+  border-radius: 3px; transition: opacity .15s; cursor: pointer;
+}
+.gp-tab:hover .gp-tab-edit { opacity: 1; }
+.gp-tab-del {
+  opacity: 0; font-size: 10px; color: var(--b-danger); padding: 1px 3px;
+  transition: opacity .15s; cursor: pointer;
+}
+.gp-tab:hover .gp-tab-del { opacity: 0.7; }
+.gp-tab-del:hover { opacity: 1 !important; }
+.gp-add-tab {
+  font-family: var(--b-mono); font-size: 11px; color: var(--textMuted);
+  background: transparent; border: 1px dashed var(--borderL); border-radius: var(--radius-btn);
+  padding: 4px 10px; margin-left: 6px; cursor: pointer; transition: all .15s;
+}
+.gp-add-tab:hover { color: var(--emphasis); border-color: var(--emphasis); }
+#gp-content { max-width: 900px; margin: 0 auto; padding: 20px 16px 0; background: var(--bg); min-height: 300px; }
+
+/* ── PANEL OVERLAY WRAPPER ── */
+.b-panel-wrap { position: relative; }
+.b-panel-overlay {
+  position: absolute; top: 8px; right: 8px; z-index: 10;
+  display: flex; gap: 4px;
+  opacity: 0; transition: opacity .15s; pointer-events: none;
+}
+.b-panel-wrap:hover .b-panel-overlay { opacity: 1; pointer-events: all; }
+.b-ov-btn {
+  font-size: 12px; padding: 4px 8px; border-radius: 4px; border: 1px solid var(--b-border);
+  background: var(--b-surf); color: var(--b-textMid); cursor: pointer;
+  transition: all .15s; font-family: var(--b-ff);
+}
+.b-ov-btn:hover { color: var(--b-text); border-color: var(--b-textMid); background: var(--b-surf2); }
+.b-ov-del:hover { color: var(--b-danger); border-color: var(--b-danger); }
+
+/* ── ADD PANEL BUTTON ── */
+.b-add-panel {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  margin: 12px 0 20px; padding: 12px;
+  border: 2px dashed var(--borderL); border-radius: var(--radius-card);
+  background: transparent; color: var(--textMuted);
+  font-family: var(--b-ff); font-size: 13px; cursor: pointer; transition: all .15s; width: 100%;
+}
+.b-add-panel:hover { border-color: var(--emphasis); color: var(--emphasis); }
+
+/* ── NO TAB SELECTED ── */
+.b-no-tab {
+  text-align: center; padding: 40px 20px; font-size: 13px; color: var(--textMuted);
+  font-family: var(--b-ff);
+}
+
+/* ── BOTTOM SHEET ── */
+#b-backdrop {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+  z-index: 80; opacity: 0; pointer-events: none; transition: opacity 0.25s;
+}
+#b-backdrop.open { opacity: 1; pointer-events: all; }
+#b-sheet {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 90;
+  background: #161b22; border: 1px solid var(--b-border);
+  border-radius: 20px 20px 0 0;
+  transform: translateY(100%);
+  transition: transform 0.32s cubic-bezier(0.32,0.72,0,1);
+  max-height: 88vh; display: flex; flex-direction: column;
+  box-shadow: 0 -8px 40px rgba(0,0,0,0.5);
+}
+#b-sheet.open { transform: translateY(0); }
+#b-sheet-handle { width: 40px; height: 4px; background: #2d3748; border-radius: 2px; margin: 12px auto 0; flex-shrink: 0; }
+#b-sheet-header { display: flex; align-items: center; padding: 12px 20px; border-bottom: 1px solid var(--b-border); flex-shrink: 0; gap: 10px; }
+#b-sheet-title { font-size: 15px; font-weight: 700; color: var(--b-text); flex: 1; }
+#b-sheet-close { width: 28px; height: 28px; border-radius: 50%; background: var(--b-surf2); border: none; color: var(--b-textMid); cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+#b-sheet-close:hover { color: var(--b-text); }
+#b-sheet-body { flex: 1; overflow-y: auto; padding: 16px 20px; }
+#b-sheet-footer { display: flex; gap: 10px; padding: 14px 20px; border-top: 1px solid var(--b-border); flex-shrink: 0; }
+#b-sheet-footer .b-btn { flex: 1; justify-content: center; }
+
+/* ── FORM ELEMENTS (in sheet) ── */
+.f-group { margin-bottom: 16px; }
+.f-label { display: block; font-size: 11.5px; font-weight: 600; color: var(--b-textMid); margin-bottom: 5px; letter-spacing: .3px; text-transform: uppercase; font-family: var(--b-mono); }
+.f-hint { font-size: 11px; color: var(--b-textMid); margin-top: 4px; line-height: 1.5; font-style: italic; }
+.f-input, .f-select, .f-textarea {
+  width: 100%; padding: 9px 12px; background: var(--b-bg); border: 1px solid var(--b-border);
+  border-radius: 6px; color: var(--b-text); font-family: var(--b-ff); font-size: 13px;
+  transition: border-color .15s; outline: none;
+}
+.f-input:focus, .f-select:focus, .f-textarea:focus { border-color: var(--b-blue); }
+.f-textarea { resize: vertical; min-height: 100px; line-height: 1.6; }
+.f-select { appearance: none; cursor: pointer; }
+.f-select option { background: #1e2530; }
+.f-row { display: flex; gap: 8px; }
+.f-row .f-input { flex: 1; }
+.f-row .col-label { flex: 2; }
+.f-row .col-style { flex: 1; min-width: 120px; }
+.f-divider { border: none; border-top: 1px solid var(--b-border); margin: 16px 0; }
+
+/* ── MD TOOLBAR ── */
+.md-toolbar { display: flex; gap: 4px; margin-bottom: 5px; }
+.md-btn {
+  font-family: var(--b-mono); font-size: 11px; padding: 4px 8px;
+  background: var(--b-surf2); border: 1px solid var(--b-border); border-radius: 4px;
+  color: var(--b-textMid); cursor: pointer; transition: all .15s;
+}
+.md-btn:hover { color: var(--b-text); border-color: var(--b-textMid); }
+
+/* ── LIST BUILDERS (kv, items, columns, rows, cards) ── */
+.list-section { margin-top: 8px; }
+.list-item {
+  display: flex; align-items: flex-start; gap: 8px;
+  padding: 8px 10px; background: var(--b-surf2);
+  border: 1px solid var(--b-border); border-radius: 6px; margin-bottom: 6px;
+}
+.list-item-fields { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+.list-item-fields .f-row { margin: 0; }
+.list-item-del { flex-shrink: 0; background: transparent; border: none; color: var(--b-textMid); cursor: pointer; font-size: 16px; padding: 2px 4px; line-height: 1; transition: color .15s; margin-top: 2px; }
+.list-item-del:hover { color: var(--b-danger); }
+.list-add { width: 100%; padding: 8px; background: transparent; border: 1px dashed var(--b-border); border-radius: 6px; color: var(--b-textMid); font-family: var(--b-ff); font-size: 12px; cursor: pointer; transition: all .15s; }
+.list-add:hover { color: var(--b-accent); border-color: var(--b-accent); }
+
+/* ── PANEL TYPE PICKER ── */
+.type-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px,1fr)); gap: 10px; }
+.type-card {
+  padding: 14px; background: var(--b-surf2); border: 2px solid var(--b-border);
+  border-radius: 10px; cursor: pointer; transition: all .15s; text-align: center;
+}
+.type-card:hover { border-color: var(--b-blue); background: rgba(88,166,255,0.06); }
+.type-card.selected { border-color: var(--b-accent); background: var(--b-accentD); }
+.type-card-icon { font-size: 22px; margin-bottom: 6px; }
+.type-card-label { font-size: 12px; font-weight: 600; color: var(--b-text); margin-bottom: 3px; }
+.type-card-desc { font-size: 10.5px; color: var(--b-textMid); line-height: 1.4; }
+
+/* ── THEME / PALETTE PICKERS ── */
+.swatch-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
+.swatch-card {
+  padding: 10px 12px; border: 2px solid var(--b-border); border-radius: 8px;
+  cursor: pointer; transition: all .15s;
+}
+.swatch-card:hover { border-color: var(--b-blue); }
+.swatch-card.selected { border-color: var(--b-accent); }
+.swatch-name { font-size: 12px; font-weight: 600; color: var(--b-text); }
+.swatch-desc { font-size: 10px; color: var(--b-textMid); margin-top: 2px; }
+.swatch-dot-row { display: flex; gap: 4px; margin-bottom: 6px; }
+.swatch-dot { width: 14px; height: 14px; border-radius: 50%; }
+</style>
+</head>
+<body>
+
+<!-- ── BUILDER HEADER ── -->
+<header id="b-header">
+  <a class="b-back" href="index.html">← Guides</a>
+  <div class="b-header-title">Guide Builder &rsaquo; <strong id="b-header-name">New Guide</strong></div>
+  <div class="b-header-spacer"></div>
+  <button class="b-btn b-btn-ghost" id="b-open-btn">📂 Open Guide</button>
+  <button class="b-btn b-btn-ghost" id="b-meta-btn">⚙ Game Meta</button>
+  <button class="b-btn b-btn-ghost" id="b-index-btn">⬇ Index Entry</button>
+  <button class="b-btn b-btn-primary" id="b-gen-btn">⬇ Generate ZIP</button>
+  <input type="file" id="b-zip-input" accept=".zip" style="display:none">
+</header>
+
+<!-- ── EMPTY START STATE ── -->
+<div id="b-empty">
+  <div class="b-empty-icon">🗺️</div>
+  <div class="b-empty-title">Start Building Your Guide</div>
+  <div class="b-empty-sub">Set your game's metadata first — the title, system, theme, and palette. Then add tabs and panels to build out your guide.</div>
+  <button class="b-btn b-btn-primary" id="b-start-btn" style="margin-top:8px;font-size:14px;padding:10px 24px">Set Game Meta →</button>
+</div>
+
+<!-- ── GUIDE PREVIEW ── -->
+<div id="guide-preview-wrap" style="display:none">
+  <div id="guide-preview">
+    <div id="gp-header">
+      <span id="gp-icon">🎮</span>
+      <div>
+        <div id="gp-title">Guide Title</div>
+        <div id="gp-meta"></div>
+      </div>
+      <button class="gp-header-edit" id="gp-edit-meta">✎ Edit Meta</button>
+    </div>
+    <nav id="gp-tabbar"></nav>
+    <main id="gp-content"></main>
+  </div>
+</div>
+
+<!-- ── BOTTOM SHEET ── -->
+<div id="b-backdrop"></div>
+<div id="b-sheet">
+  <div id="b-sheet-handle"></div>
+  <div id="b-sheet-header">
+    <span id="b-sheet-title">Sheet</span>
+    <button id="b-sheet-close">×</button>
+  </div>
+  <div id="b-sheet-body"></div>
+  <div id="b-sheet-footer">
+    <button class="b-btn b-btn-ghost" id="b-sheet-cancel">Cancel</button>
+    <button class="b-btn b-btn-primary" id="b-sheet-confirm">Save</button>
+  </div>
+</div>
+
+<script src="guide_render.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script>
+'use strict';
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BUILDER STATE
+   ═══════════════════════════════════════════════════════════════════════ */
+const state = {
+  meta: { raId:'', primaryName:'', primarySystem:'', altSystems:'', series:'', year:'', icon:'🎮', author:'', subtitle:'', theme:'clean', palette:'slate' },
+  tabs: [],
+  activeTabId: null,
+  // loaded data
+  _themes: {}, _palettes: {}, _panelTypes: {}
+};
+let sheetConfirm = null;
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BOOT
+   ═══════════════════════════════════════════════════════════════════════ */
+async function boot() {
+  try {
+    const [themes, palettes, panelTypes] = await Promise.all([
+      fetch('themes.json').then(r => r.json()),
+      fetch('palettes.json').then(r => r.json()),
+      fetch('panel_types.json').then(r => r.json()),
+    ]);
+    state._themes = themes;
+    state._palettes = palettes;
+    state._panelTypes = panelTypes;
+  } catch (e) {
+    console.warn('Could not load themes/palettes/panel_types:', e);
+  }
+
+  document.getElementById('b-start-btn').addEventListener('click', () => openMetaSheet());
+  document.getElementById('b-meta-btn').addEventListener('click',  () => openMetaSheet());
+  document.getElementById('gp-edit-meta').addEventListener('click', () => openMetaSheet());
+  document.getElementById('b-gen-btn').addEventListener('click', generateZip);
+  document.getElementById('b-index-btn').addEventListener('click', downloadIndexEntry);
+  document.getElementById('b-open-btn').addEventListener('click', () => document.getElementById('b-zip-input').click());
+  document.getElementById('b-zip-input').addEventListener('change', e => { if (e.target.files[0]) importZip(e.target.files[0]); e.target.value=''; });
+  document.getElementById('b-sheet-close').addEventListener('click', closeSheet);
+  document.getElementById('b-sheet-cancel').addEventListener('click', closeSheet);
+  document.getElementById('b-backdrop').addEventListener('click', closeSheet);
+  document.getElementById('b-sheet-confirm').addEventListener('click', () => { if (sheetConfirm?.()) closeSheet(); });
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   SHEET SYSTEM
+   ═══════════════════════════════════════════════════════════════════════ */
+function openSheet(title, bodyEl, onConfirm, confirmLabel) {
+  document.getElementById('b-sheet-title').textContent = title;
+  const body = document.getElementById('b-sheet-body');
+  body.innerHTML = '';
+  body.appendChild(bodyEl);
+  document.getElementById('b-sheet-confirm').textContent = confirmLabel || 'Save';
+  sheetConfirm = onConfirm;
+  document.getElementById('b-backdrop').classList.add('open');
+  document.getElementById('b-sheet').classList.add('open');
+}
+
+function closeSheet() {
+  document.getElementById('b-backdrop').classList.remove('open');
+  document.getElementById('b-sheet').classList.remove('open');
+  sheetConfirm = null;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   META SHEET
+   ═══════════════════════════════════════════════════════════════════════ */
+function openMetaSheet() {
+  const m = state.meta;
+  const el = document.createElement('div');
+
+  el.innerHTML = `
+    <div class="f-group">
+      <label class="f-label">RetroAchievements Game ID *</label>
+      <input class="f-input" id="mf-raId" type="number" placeholder="e.g. 2919" value="${esc(m.raId)}">
+    </div>
+    <div class="f-group">
+      <label class="f-label">Game Title *</label>
+      <input class="f-input" id="mf-name" placeholder="e.g. Harvest Moon: Hero of Leaf Valley" value="${esc(m.primaryName)}">
+    </div>
+    <div class="f-row">
+      <div class="f-group" style="flex:1">
+        <label class="f-label">Primary System *</label>
+        <input class="f-input" id="mf-sys" placeholder="PSP, N64, NDS…" value="${esc(m.primarySystem)}">
+      </div>
+      <div class="f-group" style="flex:1">
+        <label class="f-label">Year</label>
+        <input class="f-input" id="mf-year" type="number" placeholder="2007" value="${esc(m.year)}">
+      </div>
+    </div>
+    <div class="f-row">
+      <div class="f-group" style="flex:1">
+        <label class="f-label">Series</label>
+        <input class="f-input" id="mf-series" placeholder="e.g. Harvest Moon" value="${esc(m.series)}">
+      </div>
+      <div class="f-group" style="flex:1">
+        <label class="f-label">Author</label>
+        <input class="f-input" id="mf-author" placeholder="Your name or handle" value="${esc(m.author)}">
+      </div>
+    </div>
+    <div class="f-row">
+      <div class="f-group" style="flex:0 0 80px">
+        <label class="f-label">Icon</label>
+        <input class="f-input" id="mf-icon" placeholder="🎮" value="${esc(m.icon)}" style="text-align:center;font-size:18px">
+      </div>
+      <div class="f-group" style="flex:1">
+        <label class="f-label">Subtitle</label>
+        <input class="f-input" id="mf-sub" placeholder="Reference guide — progress saved in your browser" value="${esc(m.subtitle)}">
+      </div>
+    </div>
+    <hr class="f-divider">
+    <div class="f-group">
+      <label class="f-label">Theme (shape & fonts)</label>
+      <div class="swatch-grid" id="mf-themes"></div>
+    </div>
+    <div class="f-group">
+      <label class="f-label">Palette (colors)</label>
+      <div class="swatch-grid" id="mf-palettes"></div>
+    </div>`;
+
+  // Theme cards
+  const themeGrid = el.querySelector('#mf-themes');
+  Object.entries(state._themes).forEach(([key, th]) => {
+    const card = document.createElement('div');
+    card.className = 'swatch-card' + (m.theme === key ? ' selected' : '');
+    card.dataset.key = key;
+    card.innerHTML = `<div class="swatch-name">${esc(th.label)}</div><div class="swatch-desc">${esc(th.description)}</div>`;
+    card.addEventListener('click', () => { themeGrid.querySelectorAll('.swatch-card').forEach(c => c.classList.remove('selected')); card.classList.add('selected'); });
+    themeGrid.appendChild(card);
+  });
+
+  // Palette cards
+  const palGrid = el.querySelector('#mf-palettes');
+  Object.entries(state._palettes).forEach(([key, pal]) => {
+    const card = document.createElement('div');
+    card.className = 'swatch-card' + (m.palette === key ? ' selected' : '');
+    card.dataset.key = key;
+    // Color dots
+    const bg       = pal.vars['--bg']       || '#888';
+    const emphasis = pal.vars['--emphasis'] || '#888';
+    const positive = pal.vars['--positive'] || '#888';
+    const text     = pal.vars['--text']     || '#888';
+    card.innerHTML = `<div class="swatch-dot-row"><div class="swatch-dot" style="background:${bg};border:1px solid rgba(128,128,128,0.3)"></div><div class="swatch-dot" style="background:${emphasis}"></div><div class="swatch-dot" style="background:${positive}"></div><div class="swatch-dot" style="background:${text};border:1px solid rgba(128,128,128,0.3)"></div></div><div class="swatch-name">${esc(pal.label)}</div>`;
+    card.addEventListener('click', () => { palGrid.querySelectorAll('.swatch-card').forEach(c => c.classList.remove('selected')); card.classList.add('selected'); });
+    palGrid.appendChild(card);
+  });
+
+  openSheet('Game Meta', el, () => {
+    const raId = el.querySelector('#mf-raId').value.trim();
+    const name = el.querySelector('#mf-name').value.trim();
+    if (!raId || isNaN(parseInt(raId))) { alert('Please enter a valid RetroAchievements Game ID.'); return false; }
+    if (!name) { alert('Please enter a game title.'); return false; }
+    state.meta.raId          = raId;
+    state.meta.primaryName   = name;
+    state.meta.primarySystem = el.querySelector('#mf-sys').value.trim();
+    state.meta.year          = el.querySelector('#mf-year').value.trim();
+    state.meta.series        = el.querySelector('#mf-series').value.trim();
+    state.meta.author        = el.querySelector('#mf-author').value.trim();
+    state.meta.icon          = el.querySelector('#mf-icon').value.trim() || '🎮';
+    state.meta.subtitle      = el.querySelector('#mf-sub').value.trim();
+    const selTheme = themeGrid.querySelector('.selected');
+    const selPal   = palGrid.querySelector('.selected');
+    if (selTheme) state.meta.theme   = selTheme.dataset.key;
+    if (selPal)   state.meta.palette = selPal.dataset.key;
+    renderPreview();
+    return true;
+  }, 'Save Meta');
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   TAB SHEETS
+   ═══════════════════════════════════════════════════════════════════════ */
+function openAddTabSheet() {
+  const el = document.createElement('div');
+  el.innerHTML = `
+    <div class="f-group">
+      <label class="f-label">Tab Name *</label>
+      <input class="f-input" id="tf-label" placeholder="e.g. 💰 Sales  or  📋 Basics" autofocus>
+      <div class="f-hint">You can include an emoji at the start.</div>
+    </div>`;
+  openSheet('Add Tab', el, () => {
+    const label = el.querySelector('#tf-label').value.trim();
+    if (!label) { alert('Enter a tab name.'); return false; }
+    const tab = { id: uid('tab'), label, panels: [] };
+    state.tabs.push(tab);
+    state.activeTabId = tab.id;
+    renderPreview();
+    return true;
+  }, 'Add Tab');
+}
+
+function openEditTabSheet(tabId) {
+  const tab = state.tabs.find(t => t.id === tabId);
+  if (!tab) return;
+  const el = document.createElement('div');
+  el.innerHTML = `
+    <div class="f-group">
+      <label class="f-label">Tab Name *</label>
+      <input class="f-input" id="tf-label" value="${esc(tab.label)}">
+    </div>`;
+  openSheet('Edit Tab', el, () => {
+    const label = el.querySelector('#tf-label').value.trim();
+    if (!label) { alert('Enter a tab name.'); return false; }
+    tab.label = label;
+    renderPreview();
+    return true;
+  }, 'Save Tab');
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   PANEL SHEETS
+   ═══════════════════════════════════════════════════════════════════════ */
+function openAddPanelSheet(tabId) {
+  let selectedType = null;
+  const el = document.createElement('div');
+  el.innerHTML = `
+    <div class="f-group">
+      <label class="f-label">Panel Type</label>
+      <div class="type-grid" id="pt-grid"></div>
+    </div>
+    <div id="pt-form-area"></div>`;
+
+  const grid = el.querySelector('#pt-grid');
+  const formArea = el.querySelector('#pt-form-area');
+
+  const defaultTypes = { text:{label:'Text / Prose',icon:'📝',description:'Freeform markdown content.'}, keyvalue:{label:'Key / Value',icon:'🗂️',description:'Two-column reference pairs.'}, checklist:{label:'Checklist',icon:'☑️',description:'Trackable items with columns.'}, table:{label:'Table',icon:'📊',description:'Reference table with headers.'}, cards:{label:'Cards',icon:'🃏',description:'Rich card entries.'} };
+  Object.entries(state._panelTypes || defaultTypes).forEach(([key, pt]) => {
+    const card = document.createElement('div');
+    card.className = 'type-card';
+    card.dataset.type = key;
+    card.innerHTML = `<div class="type-card-icon">${pt.icon}</div><div class="type-card-label">${esc(pt.label)}</div><div class="type-card-desc">${esc(pt.description)}</div>`;
+    card.addEventListener('click', () => {
+      grid.querySelectorAll('.type-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      selectedType = key;
+      formArea.innerHTML = '';
+      formArea.appendChild(buildStructureForm(key, null));
+    });
+    grid.appendChild(card);
+  });
+
+  openSheet('Add Panel — Structure', el, () => {
+    if (!selectedType) { alert('Select a panel type.'); return false; }
+    const panel = readStructureForm(formArea, selectedType);
+    if (!panel) return false;
+    panel.id = uid('panel');
+    panel.panelType = selectedType;
+    // Initialise empty data containers
+    if (selectedType === 'keyvalue')  panel.rows  = panel.rows  || [];
+    if (selectedType === 'checklist') panel.items  = panel.items  || [];
+    if (selectedType === 'table')     panel.rows   = panel.rows   || [];
+    if (selectedType === 'cards')     panel.cards  = panel.cards  || [];
+    const tab = state.tabs.find(t => t.id === tabId);
+    if (tab) { tab.panels.push(panel); renderPreview(); }
+    return true;
+  }, 'Create Panel →');
+}
+
+function openEditPanelSheet(tabId, panelId) {
+  const tab = state.tabs.find(t => t.id === tabId);
+  const panel = tab?.panels.find(p => p.id === panelId);
+  if (!panel) return;
+  const formEl = buildStructureForm(panel.panelType, panel);
+  openSheet('Edit Panel Structure', formEl, () => {
+    const updated = readStructureForm(formEl, panel.panelType);
+    if (!updated) return false;
+    // Preserve existing row data when editing structure
+    const preserve = { rows: panel.rows, items: panel.items, cards: panel.cards, cardFields: panel.cardFields };
+    Object.assign(panel, updated);
+    if (preserve.rows   != null && panel.rows   == null) panel.rows   = preserve.rows;
+    if (preserve.items  != null && panel.items  == null) panel.items  = preserve.items;
+    if (preserve.cards  != null && panel.cards  == null) panel.cards  = preserve.cards;
+    // If cardFields changed, existing card data may have different keys — keep as-is
+    renderPreview();
+    return true;
+  }, 'Save Structure');
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   FORM HELPERS
+   ═══════════════════════════════════════════════════════════════════════ */
+function fGroup(label, inputEl, hint) {
+  const g = document.createElement('div'); g.className = 'f-group';
+  const lbl = document.createElement('label'); lbl.className = 'f-label'; lbl.textContent = label;
+  g.appendChild(lbl); g.appendChild(inputEl);
+  if (hint) { const h = document.createElement('div'); h.className = 'f-hint'; h.textContent = hint; g.appendChild(h); }
+  return g;
+}
+function fInput(id, placeholder, value) {
+  const i = document.createElement('input'); i.className = 'f-input'; i.id = id;
+  i.placeholder = placeholder || ''; i.value = value || ''; return i;
+}
+function fTextarea(id, value, hint) {
+  const t = document.createElement('textarea'); t.className = 'f-textarea'; t.id = id; t.value = value || '';
+  if (hint) t.placeholder = hint; return t;
+}
+
+function addColRow(list, label, key, style) {
+  const item = document.createElement('div'); item.className = 'list-item';
+  const styleOpts = ['plain','accent','dim'].map(s => `<option value="${s}"${style===s?' selected':''}>${s==='plain'?'Standard':s==='accent'?'Accent (gold)':'Dim (muted)'}</option>`).join('');
+  item.innerHTML = `<div class="list-item-fields"><div class="f-row"><input class="f-input col-label" placeholder="Column label (e.g. Price)" value="${esc(label)}"><select class="f-select col-style">${styleOpts}</select></div></div><button class="list-item-del" title="Remove">×</button>`;
+  item.querySelector('.list-item-del').addEventListener('click', () => item.remove());
+  list.appendChild(item);
+}
+function readColumns(colList) {
+  return [...colList.querySelectorAll('.list-item')].map(item => {
+    const label = item.querySelector('.col-label').value.trim();
+    const style = item.querySelector('.col-style').value;
+    const key   = label.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g,'') || uid('col');
+    return { key, label, style };
+  }).filter(c => c.label);
+}
+function addTableCol(list, label) {
+  const item = document.createElement('div'); item.className = 'list-item';
+  item.innerHTML = `<div class="list-item-fields"><input class="f-input tbl-col-label" placeholder="Column header" value="${esc(label)}"></div><button class="list-item-del" title="Remove">×</button>`;
+  item.querySelector('.list-item-del').addEventListener('click', () => item.remove());
+  list.appendChild(item);
+}
+function readTableCols(colList) { return [...colList.querySelectorAll('.tbl-col-label')].map(i => i.value.trim()).filter(Boolean); }
+function addCardField(list, label, key) {
+  const item = document.createElement('div'); item.className = 'list-item';
+  item.innerHTML = `<div class="list-item-fields"><div class="f-row"><input class="f-input cf-label" placeholder="Field label (e.g. Birthday)" value="${esc(label)}"><input class="f-input cf-key" placeholder="Key (auto)" value="${esc(key)}" style="font-family:var(--b-mono);font-size:11px"></div></div><button class="list-item-del" title="Remove">×</button>`;
+  item.querySelector('.list-item-del').addEventListener('click', () => item.remove());
+  const lInput = item.querySelector('.cf-label');
+  const kInput = item.querySelector('.cf-key');
+  lInput.addEventListener('input', () => { if (!kInput.dataset.manual) kInput.value = lInput.value.toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_|_$/g,''); });
+  kInput.addEventListener('input', () => { kInput.dataset.manual = '1'; });
+  list.appendChild(item);
+}
+function readCardFields(list) { return [...list.querySelectorAll('.list-item')].map(item => { const label = item.querySelector('.cf-label').value.trim(); const key = item.querySelector('.cf-key').value.trim() || label.toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_|_$/g,'') || uid('f'); return { key, label }; }).filter(f => f.label); }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   STRUCTURE FORM BUILDERS  (title + column/field config — NO row data)
+   ═══════════════════════════════════════════════════════════════════════ */
+function buildStructureForm(type, data) {
+  const el = document.createElement('div');
+  el.dataset.panelType = type;
+  const d = data || {};
+  switch (type) {
+    case 'text':      el.appendChild(buildTextStructure(d)); break;
+    case 'keyvalue':  el.appendChild(buildKVStructure(d)); break;
+    case 'checklist': el.appendChild(buildChecklistStructure(d)); break;
+    case 'table':     el.appendChild(buildTableStructure(d)); break;
+    case 'cards':     el.appendChild(buildCardsStructure(d)); break;
+  }
+  return el;
+}
+
+function readStructureForm(formEl, type) {
+  const title = formEl.querySelector('#pf-title')?.value.trim();
+  if (!title) { alert('Panel title is required.'); return null; }
+  const panel = { title };
+  const infobox = formEl.querySelector('#pf-infobox')?.value.trim();
+  if (infobox) panel.infobox = infobox;
+  switch (type) {
+    case 'text':
+      panel.content = formEl.querySelector('#pf-content')?.value.trim() || '';
+      break;
+    case 'keyvalue':
+      // No structure beyond title for kv
+      break;
+    case 'checklist': {
+      const colList = formEl.querySelector('#cl-cols');
+      panel.columns = colList ? readColumns(colList) : [];
+      break;
+    }
+    case 'table': {
+      const colList = formEl.querySelector('#tbl-cols');
+      panel.columns = colList ? readTableCols(colList) : [];
+      break;
+    }
+    case 'cards': {
+      const cfList = formEl.querySelector('#cards-fields');
+      panel.cardFields = cfList ? readCardFields(cfList) : [];
+      break;
+    }
+  }
+  return panel;
+}
+
+function buildTextStructure(d) {
+  const el = document.createElement('div');
+  el.appendChild(fGroup('Panel Title *', fInput('pf-title', 'e.g. Introduction', d.title)));
+  el.appendChild(fGroup('Tip Box (optional)', fInput('pf-infobox', 'Appears as a highlighted callout', d.infobox)));
+  const toolbar = document.createElement('div'); toolbar.className = 'md-toolbar';
+  [['**B**','**','**'],['*I*','*','*'],['`C`','`','`'],['H3','### ',''],['• List','- ','']].forEach(([label,before,after]) => {
+    const btn = document.createElement('button'); btn.className = 'md-btn'; btn.type = 'button';
+    btn.innerHTML = label;
+    btn.addEventListener('click', () => {
+      const ta = el.querySelector('#pf-content');
+      const s = ta.selectionStart, e = ta.selectionEnd, t = ta.value;
+      const sel = t.slice(s, e);
+      ta.value = t.slice(0,s) + before + sel + after + t.slice(e);
+      ta.focus(); ta.selectionStart = s + before.length; ta.selectionEnd = s + before.length + sel.length;
+    });
+    toolbar.appendChild(btn);
+  });
+  const contentGroup = document.createElement('div'); contentGroup.className = 'f-group';
+  const lbl = document.createElement('label'); lbl.className = 'f-label'; lbl.textContent = 'Content *';
+  const ta = fTextarea('pf-content', d.content, 'Write your content here. Supports **bold**, *italic*, `code`…');
+  contentGroup.append(lbl, toolbar, ta);
+  el.appendChild(contentGroup);
+  return el;
+}
+
+function buildKVStructure(d) {
+  const el = document.createElement('div');
+  el.appendChild(fGroup('Panel Title *', fInput('pf-title', 'e.g. Controls', d.title)));
+  const hint = document.createElement('div'); hint.className = 'f-hint';
+  hint.style.cssText = 'margin-top:8px;padding:10px 12px;background:var(--b-surf2);border:1px solid var(--b-border);border-radius:6px;';
+  hint.textContent = 'After creating this panel, use the Add Row button to add key/value pairs one at a time.';
+  el.appendChild(hint);
+  return el;
+}
+
+function buildChecklistStructure(d) {
+  const el = document.createElement('div');
+  el.appendChild(fGroup('Panel Title *', fInput('pf-title', 'e.g. Crops', d.title)));
+  el.appendChild(fGroup('Tip Box (optional)', fInput('pf-infobox', 'e.g. No shipment box — bring items to shops.', d.infobox)));
+  const colGroup = document.createElement('div'); colGroup.className = 'f-group';
+  const colLbl = document.createElement('label'); colLbl.className = 'f-label'; colLbl.textContent = 'Columns (Name + Checkbox are always included)';
+  const colHint = document.createElement('div'); colHint.className = 'f-hint'; colHint.textContent = 'Add any extra columns you want, e.g. Location, Price, Notes.';
+  const colList = document.createElement('div'); colList.className = 'list-section'; colList.id = 'cl-cols';
+  colGroup.append(colLbl, colHint, colList);
+  (d.columns || []).forEach(c => addColRow(colList, c.label, c.key, c.style));
+  const colAdd = document.createElement('button'); colAdd.className = 'list-add'; colAdd.textContent = '+ Add Column';
+  colAdd.addEventListener('click', () => addColRow(colList, '', '', 'plain'));
+  colGroup.appendChild(colAdd);
+  el.appendChild(colGroup);
+  const hint = document.createElement('div'); hint.className = 'f-hint';
+  hint.style.cssText = 'margin-top:8px;padding:10px 12px;background:var(--b-surf2);border:1px solid var(--b-border);border-radius:6px;';
+  hint.textContent = 'After creating, use Add Row to add checklist items one at a time — each row will show labeled fields for every column.';
+  el.appendChild(hint);
+  return el;
+}
+
+function buildTableStructure(d) {
+  const el = document.createElement('div');
+  el.appendChild(fGroup('Panel Title *', fInput('pf-title', 'e.g. Weapon Stats', d.title)));
+  const colGroup = document.createElement('div'); colGroup.className = 'f-group';
+  const colLbl = document.createElement('label'); colLbl.className = 'f-label'; colLbl.textContent = 'Column Headers';
+  const colHint = document.createElement('div'); colHint.className = 'f-hint'; colHint.textContent = 'Add all columns first — e.g. Name, Damage, Speed, Notes.';
+  const colList = document.createElement('div'); colList.className = 'list-section'; colList.id = 'tbl-cols';
+  colGroup.append(colLbl, colHint, colList);
+  (d.columns || []).forEach(c => addTableCol(colList, typeof c==='string' ? c : c.label || ''));
+  const colAdd = document.createElement('button'); colAdd.className = 'list-add'; colAdd.textContent = '+ Add Column';
+  colAdd.addEventListener('click', () => addTableCol(colList, ''));
+  colGroup.appendChild(colAdd);
+  el.appendChild(colGroup);
+  const hint = document.createElement('div'); hint.className = 'f-hint';
+  hint.style.cssText = 'margin-top:8px;padding:10px 12px;background:var(--b-surf2);border:1px solid var(--b-border);border-radius:6px;';
+  hint.textContent = 'After creating, use Add Row to fill in each table row — fields will be labeled with your column headers.';
+  el.appendChild(hint);
+  return el;
+}
+
+function buildCardsStructure(d) {
+  const el = document.createElement('div');
+  el.appendChild(fGroup('Panel Title *', fInput('pf-title', 'e.g. Villagers', d.title)));
+  const cfGroup = document.createElement('div'); cfGroup.className = 'f-group';
+  const cfLbl = document.createElement('label'); cfLbl.className = 'f-label'; cfLbl.textContent = 'Card Fields';
+  const cfHint = document.createElement('div'); cfHint.className = 'f-hint'; cfHint.textContent = 'Define the fields each card will have. The first field becomes the card title.';
+  const cfList = document.createElement('div'); cfList.className = 'list-section'; cfList.id = 'cards-fields';
+  cfGroup.append(cfLbl, cfHint, cfList);
+  (d.cardFields || []).forEach(f => addCardField(cfList, f.label, f.key));
+  const cfAdd = document.createElement('button'); cfAdd.className = 'list-add'; cfAdd.textContent = '+ Add Field';
+  cfAdd.addEventListener('click', () => addCardField(cfList, '', ''));
+  cfGroup.appendChild(cfAdd);
+  el.appendChild(cfGroup);
+  const hint = document.createElement('div'); hint.className = 'f-hint';
+  hint.style.cssText = 'margin-top:8px;padding:10px 12px;background:var(--b-surf2);border:1px solid var(--b-border);border-radius:6px;';
+  hint.textContent = 'After creating, use Add Row to fill in each card — fields will be labeled with the names you defined above.';
+  el.appendChild(hint);
+  return el;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   ROW / ITEM SHEETS  (focused per-row data entry with labeled fields)
+   ═══════════════════════════════════════════════════════════════════════ */
+function openAddRowSheet(tabId, panelId) {
+  const tab   = state.tabs.find(t => t.id === tabId);
+  const panel = tab?.panels.find(p => p.id === panelId);
+  if (!panel) return;
+  const { el, read } = buildRowForm(panel, null);
+  openSheet(`Add Row — ${panel.title}`, el, () => {
+    const row = read();
+    if (!row) return false;
+    appendRow(panel, row);
+    renderPreview();
+    return true;
+  }, 'Add Row');
+}
+
+function openEditRowSheet(tabId, panelId, rowIdx) {
+  const tab   = state.tabs.find(t => t.id === tabId);
+  const panel = tab?.panels.find(p => p.id === panelId);
+  if (!panel) return;
+  const existing = getRow(panel, rowIdx);
+  const { el, read } = buildRowForm(panel, existing);
+  openSheet(`Edit Row — ${panel.title}`, el, () => {
+    const row = read();
+    if (!row) return false;
+    setRow(panel, rowIdx, row);
+    renderPreview();
+    return true;
+  }, 'Save Row');
+}
+
+function openManageRowsSheet(tabId, panelId) {
+  const tab   = state.tabs.find(t => t.id === tabId);
+  const panel = tab?.panels.find(p => p.id === panelId);
+  if (!panel) return;
+  const rows = getPanelRows(panel);
+
+  const el = document.createElement('div');
+  const rebuild = () => {
+    el.innerHTML = '';
+    const currentRows = getPanelRows(panel);
+    if (!currentRows.length) {
+      const empty = document.createElement('div');
+      empty.className = 'f-hint'; empty.style.textAlign = 'center'; empty.style.padding = '24px';
+      empty.textContent = 'No rows yet — close this and use Add Row.';
+      el.appendChild(empty);
+      return;
+    }
+    currentRows.forEach((row, idx) => {
+      const item = document.createElement('div'); item.className = 'list-item'; item.style.alignItems='center';
+      const label = document.createElement('div'); label.style.flex = '1'; label.style.fontSize = '13px';
+      label.style.overflow = 'hidden'; label.style.textOverflow = 'ellipsis'; label.style.whiteSpace = 'nowrap';
+      label.textContent = getRowLabel(panel, row, idx);
+      const editBtn = document.createElement('button'); editBtn.className = 'b-ov-btn'; editBtn.style.marginRight='4px';
+      editBtn.textContent = '✎ Edit';
+      editBtn.addEventListener('click', () => {
+        closeSheet();
+        setTimeout(() => openEditRowSheet(tabId, panelId, idx), 200);
+      });
+      const upBtn = document.createElement('button'); upBtn.className = 'b-ov-btn'; upBtn.textContent = '↑';
+      upBtn.style.padding = '4px 7px';
+      upBtn.addEventListener('click', () => { moveRow(panel, idx, -1); rebuild(); renderPreview(); });
+      const dnBtn = document.createElement('button'); dnBtn.className = 'b-ov-btn'; dnBtn.textContent = '↓';
+      dnBtn.style.padding = '4px 7px';
+      dnBtn.addEventListener('click', () => { moveRow(panel, idx, 1); rebuild(); renderPreview(); });
+      const delBtn = document.createElement('button'); delBtn.className = 'b-ov-btn b-ov-del';
+      delBtn.textContent = '🗑'; delBtn.style.padding = '4px 7px';
+      delBtn.addEventListener('click', () => { if (confirm('Delete this row?')) { deleteRow(panel, idx); rebuild(); renderPreview(); } });
+      item.append(label, upBtn, dnBtn, editBtn, delBtn);
+      el.appendChild(item);
+    });
+  };
+  rebuild();
+
+  openSheet(`Manage Rows — ${panel.title}`, el, () => true, 'Done');
+}
+
+/* ── Row form builder: generates labeled inputs for any panel type ── */
+function buildRowForm(panel, existing) {
+  const el  = document.createElement('div');
+  const d   = existing || {};
+  const fns = [];  // array of () => value readers
+
+  if (panel.panelType === 'keyvalue') {
+    const keyInp = fInput('row-key',   'Key (e.g. Max HP)',   d.key   || '');
+    const valInp = fInput('row-value', 'Value (markdown ok)', d.value || '');
+    el.appendChild(fGroup('Key *', keyInp));
+    el.appendChild(fGroup('Value', valInp));
+    return { el, read: () => {
+      const key = keyInp.value.trim();
+      if (!key) { alert('Key is required.'); return null; }
+      return { key, value: valInp.value.trim() };
+    }};
+  }
+
+  if (panel.panelType === 'checklist') {
+    const nameInp = fInput('row-name', 'Item name *', d.name || '');
+    el.appendChild(fGroup('Name *', nameInp));
+    const cols = panel.columns || [];
+    const colInputs = cols.map(col => {
+      const inp = fInput('col-'+col.key, col.label, d[col.key] || '');
+      el.appendChild(fGroup(col.label, inp));
+      return { key: col.key, inp };
+    });
+    const noteInp = fInput('row-note', 'Optional sub-note', d.note || '');
+    el.appendChild(fGroup('Note (optional)', noteInp));
+    return { el, read: () => {
+      const name = nameInp.value.trim();
+      if (!name) { alert('Name is required.'); return null; }
+      const entry = { id: d.id || uid('item'), name };
+      const note = noteInp.value.trim();
+      if (note) entry.note = note;
+      colInputs.forEach(({ key, inp }) => { entry[key] = inp.value.trim(); });
+      return entry;
+    }};
+  }
+
+  if (panel.panelType === 'table') {
+    const cols = panel.columns || [];
+    const cells = Array.isArray(existing) ? existing : [];
+    const inputs = cols.map((col, i) => {
+      const val = cells[i] || (existing && existing[i]) || '';
+      const inp = fInput('tbl-'+i, col, val);
+      el.appendChild(fGroup(col + (i === 0 ? ' *' : ''), inp));
+      return inp;
+    });
+    if (!cols.length) {
+      const note = document.createElement('div'); note.className = 'f-hint';
+      note.textContent = 'No columns defined yet. Edit panel structure to add columns first.';
+      el.appendChild(note);
+    }
+    return { el, read: () => {
+      if (inputs.length && !inputs[0].value.trim()) { alert(`${cols[0] || 'First column'} is required.`); return null; }
+      return inputs.map(i => i.value.trim());
+    }};
+  }
+
+  if (panel.panelType === 'cards') {
+    const fields = panel.cardFields || [];
+    const inputs = fields.map((field, i) => {
+      const inp = fInput('cf-'+field.key, field.label, d[field.key] || '');
+      el.appendChild(fGroup(field.label + (i === 0 ? ' *' : ''), inp));
+      return { key: field.key, inp };
+    });
+    if (!fields.length) {
+      const note = document.createElement('div'); note.className = 'f-hint';
+      note.textContent = 'No card fields defined yet. Edit panel structure to add fields first.';
+      el.appendChild(note);
+    }
+    return { el, read: () => {
+      if (inputs.length && !inputs[0].inp.value.trim()) { alert(`${fields[0]?.label || 'First field'} is required.`); return null; }
+      const card = {};
+      inputs.forEach(({ key, inp }) => { card[key] = inp.value.trim(); });
+      return card;
+    }};
+  }
+
+  // Fallback
+  return { el, read: () => ({}) };
+}
+
+/* ── Row data helpers ── */
+function getPanelRows(panel) {
+  if (panel.panelType === 'checklist') return panel.items  || [];
+  if (panel.panelType === 'table')     return panel.rows   || [];
+  if (panel.panelType === 'keyvalue')  return panel.rows   || [];
+  if (panel.panelType === 'cards')     return panel.cards  || [];
+  return [];
+}
+function getRow(panel, idx) {
+  return getPanelRows(panel)[idx];
+}
+function appendRow(panel, row) {
+  if (panel.panelType === 'checklist') { if (!panel.items)  panel.items  = []; panel.items.push(row);  }
+  else if (panel.panelType === 'table') { if (!panel.rows)   panel.rows   = []; panel.rows.push(row);   }
+  else if (panel.panelType === 'keyvalue') { if (!panel.rows) panel.rows  = []; panel.rows.push(row);   }
+  else if (panel.panelType === 'cards') { if (!panel.cards)  panel.cards  = []; panel.cards.push(row);  }
+}
+function setRow(panel, idx, row) {
+  const arr = getPanelRows(panel);
+  if (idx >= 0 && idx < arr.length) arr[idx] = row;
+}
+function deleteRow(panel, idx) {
+  const arr = getPanelRows(panel);
+  arr.splice(idx, 1);
+}
+function moveRow(panel, idx, dir) {
+  const arr = getPanelRows(panel);
+  const j = idx + dir;
+  if (j < 0 || j >= arr.length) return;
+  [arr[idx], arr[j]] = [arr[j], arr[idx]];
+}
+function getRowLabel(panel, row, idx) {
+  if (panel.panelType === 'checklist') return row.name || `Row ${idx+1}`;
+  if (panel.panelType === 'keyvalue')  return row.key  ? `${row.key}: ${row.value||''}` : `Row ${idx+1}`;
+  if (panel.panelType === 'table')     return Array.isArray(row) ? (row[0] || `Row ${idx+1}`) : `Row ${idx+1}`;
+  if (panel.panelType === 'cards')     { const f = panel.cardFields?.[0]; return f ? (row[f.key] || `Card ${idx+1}`) : `Card ${idx+1}`; }
+  return `Row ${idx+1}`;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   PREVIEW RENDER
+   ═══════════════════════════════════════════════════════════════════════ */
+function renderPreview() {
+  const m = state.meta;
+  if (!m.primaryName && !m.raId) return;
+
+  // Show preview, hide empty state
+  document.getElementById('b-empty').style.display = 'none';
+  document.getElementById('guide-preview-wrap').style.display = '';
+
+  // Update header name in builder chrome
+  document.getElementById('b-header-name').textContent = m.primaryName || 'New Guide';
+
+  // Apply theme + palette to #guide-preview
+  applyThemePalette();
+
+  // Guide header
+  document.getElementById('gp-icon').textContent = m.icon || '🎮';
+  document.getElementById('gp-title').textContent = m.primaryName || 'Guide Title';
+  const metaParts = [m.primarySystem, ...( m.altSystems ? m.altSystems.split(',').map(s=>s.trim()).filter(Boolean) : []), m.year, m.series].filter(Boolean);
+  document.getElementById('gp-meta').textContent = metaParts.join(' · ');
+
+  // Tab bar
+  const tabbar = document.getElementById('gp-tabbar');
+  tabbar.innerHTML = '';
+  state.tabs.forEach(tab => {
+    const btn = document.createElement('button');
+    btn.className = 'gp-tab' + (tab.id === state.activeTabId ? ' active' : '');
+    btn.dataset.tabId = tab.id;
+    btn.innerHTML = `<span>${esc(tab.label)}</span><span class="gp-tab-edit" title="Rename">✎</span><span class="gp-tab-del" title="Delete">×</span>`;
+    btn.addEventListener('click', (e) => {
+      if (e.target.classList.contains('gp-tab-edit')) { openEditTabSheet(tab.id); return; }
+      if (e.target.classList.contains('gp-tab-del')) {
+        if (!confirm(`Delete tab "${tab.label}"?`)) return;
+        const idx = state.tabs.findIndex(t => t.id === tab.id);
+        state.tabs.splice(idx, 1);
+        if (state.activeTabId === tab.id) state.activeTabId = state.tabs[0]?.id || null;
+        renderPreview(); return;
+      }
+      state.activeTabId = tab.id; renderPreview();
+    });
+    tabbar.appendChild(btn);
+  });
+  const addTabBtn = document.createElement('button');
+  addTabBtn.className = 'gp-add-tab';
+  addTabBtn.textContent = '+ Add Tab';
+  addTabBtn.addEventListener('click', openAddTabSheet);
+  tabbar.appendChild(addTabBtn);
+
+  // Panel content
+  const content = document.getElementById('gp-content');
+  content.innerHTML = '';
+  if (!state.activeTabId && state.tabs.length) state.activeTabId = state.tabs[0].id;
+  const activeTab = state.tabs.find(t => t.id === state.activeTabId);
+  if (!activeTab) {
+    content.innerHTML = '<div class="b-no-tab">Select a tab or add one to get started.</div>';
+  } else {
+    const previewCtx = { save: ()=>{}, load: ()=>false, preview: true };
+    activeTab.panels.forEach(panel => {
+      const wrap = document.createElement('div');
+      wrap.className = 'b-panel-wrap';
+      const rendered = GuideRender.panel(panel, previewCtx);
+      // Overlay (top-right hover controls)
+      const overlay = document.createElement('div');
+      overlay.className = 'b-panel-overlay';
+      overlay.innerHTML = `<button class="b-ov-btn b-ov-up" title="Move Up">↑</button><button class="b-ov-btn b-ov-dn" title="Move Down">↓</button><button class="b-ov-btn" title="Edit Structure">✎ Structure</button><button class="b-ov-btn b-ov-del" title="Delete">🗑</button>`;
+      overlay.querySelector('.b-ov-del').addEventListener('click', () => {
+        if (confirm('Delete this panel?')) { activeTab.panels = activeTab.panels.filter(p => p.id !== panel.id); renderPreview(); }
+      });
+      overlay.querySelector('[title="Edit Structure"]').addEventListener('click', () => openEditPanelSheet(activeTab.id, panel.id));
+      overlay.querySelector('.b-ov-up').addEventListener('click', () => movePanel(activeTab, panel.id, -1));
+      overlay.querySelector('.b-ov-dn').addEventListener('click', () => movePanel(activeTab, panel.id, 1));
+      wrap.append(rendered, overlay);
+
+      // Row management bar — shown for data panels below the rendered content
+      const hasRows = ['checklist','table','keyvalue','cards'].includes(panel.panelType);
+      if (hasRows) {
+        const rowBar = document.createElement('div');
+        rowBar.style.cssText = 'display:flex;gap:8px;padding:6px 0 14px;';
+        const addRowBtn = document.createElement('button');
+        addRowBtn.className = 'b-btn b-btn-primary';
+        addRowBtn.style.cssText = 'font-size:11px;padding:5px 12px;';
+        addRowBtn.textContent = '+ Add Row';
+        addRowBtn.addEventListener('click', () => openAddRowSheet(activeTab.id, panel.id));
+        rowBar.appendChild(addRowBtn);
+        const rowCount = getPanelRows(panel).length;
+        if (rowCount > 0) {
+          const manageBtn = document.createElement('button');
+          manageBtn.className = 'b-btn b-btn-ghost';
+          manageBtn.style.cssText = 'font-size:11px;padding:5px 12px;';
+          manageBtn.textContent = `✎ Edit / Reorder Rows (${rowCount})`;
+          manageBtn.addEventListener('click', () => openManageRowsSheet(activeTab.id, panel.id));
+          rowBar.appendChild(manageBtn);
+        }
+        wrap.appendChild(rowBar);
+      }
+
+      content.appendChild(wrap);
+    });
+    const addBtn = document.createElement('button');
+    addBtn.className = 'b-add-panel';
+    addBtn.textContent = '+ Add Panel';
+    addBtn.addEventListener('click', () => openAddPanelSheet(activeTab.id));
+    content.appendChild(addBtn);
+  }
+}
+
+function movePanel(tab, panelId, dir) {
+  const i = tab.panels.findIndex(p => p.id === panelId);
+  const j = i + dir;
+  if (j < 0 || j >= tab.panels.length) return;
+  [tab.panels[i], tab.panels[j]] = [tab.panels[j], tab.panels[i]];
+  renderPreview();
+}
+
+function applyThemePalette() {
+  const themeKey = state.meta.theme;
+  const palKey   = state.meta.palette;
+  const theme    = state._themes[themeKey] || {};
+  const pal      = state._palettes[palKey] || {};
+  const preview  = document.getElementById('guide-preview');
+
+  Object.entries(theme.vars || {}).forEach(([k, v]) => preview.style.setProperty(k, v));
+  Object.entries(pal.vars   || {}).forEach(([k, v]) => preview.style.setProperty(k, v));
+  if (theme.fonts) {
+    preview.style.setProperty('--font-body',    theme.fonts.body    || '');
+    preview.style.setProperty('--font-display', theme.fonts.display || '');
+    preview.style.setProperty('--font-mono',    theme.fonts.mono    || '');
+    // Inject Google Fonts
+    if (theme.fonts.googleFonts) {
+      let link = document.getElementById('gf-preview-fonts');
+      if (!link) { link = document.createElement('link'); link.id = 'gf-preview-fonts'; link.rel = 'stylesheet'; document.head.appendChild(link); }
+      if (link.href !== theme.fonts.googleFonts) link.href = theme.fonts.googleFonts;
+    }
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   ZIP GENERATION
+   ═══════════════════════════════════════════════════════════════════════ */
+function getGamePath(raId) {
+  const topEnd = Math.ceil(raId / 5000) * 5000, topStart = topEnd - 4999;
+  const subEnd = Math.ceil(raId / 200) * 200,   subStart = subEnd - 199;
+  return `games/${topStart}-${topEnd}/${subStart}-${subEnd}/${raId}`;
+}
+
+// ── SHARED INDEX ENTRY BUILDER ────────────────────────────────────────
+function buildIndexEntry() {
+  const m = state.meta;
+  const raId = parseInt(m.raId);
+  const altSystems = m.altSystems ? m.altSystems.split(',').map(s=>s.trim()).filter(Boolean) : [];
+  const slug = m.primaryName.toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_|_$/g,'');
+  const tabManifest = state.tabs.map((tab, i) => ({ num: String(i+1).padStart(2,'0'), label: tab.label, type: 'panels' }));
+  return {
+    entry: {
+      raId, slug, primaryName: m.primaryName,
+      altNames: [], primarySystem: m.primarySystem || '', altSystems,
+      series: m.series || '', year: parseInt(m.year)||undefined,
+      icon: m.icon || '🎮', author: m.author || '',
+      tabs: tabManifest
+    },
+    slug
+  };
+}
+
+// ── DOWNLOAD INDEX ENTRY ───────────────────────────────────────────────
+function downloadIndexEntry() {
+  const m = state.meta;
+  if (!m.raId || isNaN(parseInt(m.raId))) { alert('Set a valid RA Game ID in Game Meta first.'); return; }
+  if (!m.primaryName) { alert('Set a game title in Game Meta first.'); return; }
+  const { entry, slug } = buildIndexEntry();
+  const blob = new Blob([JSON.stringify(entry, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `${parseInt(m.raId)}_${slug}_games_index_entry.json`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+// ── IMPORT ZIP ─────────────────────────────────────────────────────────
+async function importZip(file) {
+  let zip;
+  try {
+    zip = await JSZip.loadAsync(file);
+  } catch (e) {
+    alert('Could not read ZIP file: ' + e.message);
+    return;
+  }
+
+  // Locate the games_index_entry.json anywhere in the ZIP
+  const indexFile = Object.values(zip.files).find(f => !f.dir && f.name.endsWith('games_index_entry.json'));
+  // Locate _00.json
+  const configFile = Object.values(zip.files).find(f => !f.dir && /_00\.json$/.test(f.name));
+  // Locate all numbered tab files (_01.json … _NN.json), sorted
+  const tabFiles = Object.values(zip.files)
+    .filter(f => !f.dir && /_(\d{2})\.json$/.test(f.name) && !/_00\.json$/.test(f.name))
+    .sort((a, b) => a.name.localeCompare(b.name));
+
+  if (!configFile) { alert('No _00.json found in ZIP. Is this a valid guide submission?'); return; }
+  if (!tabFiles.length) { alert('No tab files found in ZIP.'); return; }
+
+  // Parse all files
+  let config, indexEntry;
+  try {
+    config = JSON.parse(await configFile.async('string'));
+  } catch (e) { alert('Could not parse _00.json: ' + e.message); return; }
+
+  if (indexFile) {
+    try { indexEntry = JSON.parse(await indexFile.async('string')); } catch (_) {}
+  }
+
+  const parsedTabs = [];
+  for (const tf of tabFiles) {
+    try {
+      parsedTabs.push(JSON.parse(await tf.async('string')));
+    } catch (e) {
+      alert('Could not parse ' + tf.name + ': ' + e.message); return;
+    }
+  }
+
+  // Reconstruct state.meta from config + index entry
+  const raId = config.storagePrefix ? config.storagePrefix.replace('_','') : (indexEntry?.raId || '');
+  state.meta = {
+    raId:          String(indexEntry?.raId || raId),
+    primaryName:   indexEntry?.primaryName || '',
+    primarySystem: indexEntry?.primarySystem || '',
+    altSystems:    (indexEntry?.altSystems || []).join(', '),
+    series:        indexEntry?.series || '',
+    year:          String(indexEntry?.year || ''),
+    icon:          indexEntry?.icon || '🎮',
+    author:        indexEntry?.author || '',
+    subtitle:      config.subtitle || '',
+    theme:         config.theme || 'clean',
+    palette:       config.palette || 'slate',
+  };
+
+  // Reconstruct tabs — convert entry_ keys back to items
+  state.tabs = parsedTabs.map((tabDef, i) => {
+    const panels = (tabDef.panels || []).map(panel => {
+      if (panel.panelType !== 'checklist') return { ...panel };
+      const entryKey = Object.keys(panel).find(k => k.startsWith('entry_'));
+      if (!entryKey) return { ...panel };
+      const { [entryKey]: entryItems, ...rest } = panel;
+      return { ...rest, items: entryItems || [] };
+    });
+    return { id: uid('tab'), label: tabDef.label || `Tab ${i+1}`, panels };
+  });
+
+  // Update UI — renderPreview handles header, tab bar, theme, and panel content
+  if (!state.activeTabId && state.tabs.length) state.activeTabId = state.tabs[0].id;
+  renderPreview();
+  alert(`Loaded: ${state.meta.primaryName || 'Guide'} — ${state.tabs.length} tab(s). Check Game Meta to verify all fields.`);
+}
+
+function entryKeyFromTitle(title) {
+  const first = (title || 'Items').trim().split(/\s+/)[0].replace(/[^\w]/g, '');
+  return 'entry_' + (first.charAt(0).toUpperCase() + first.slice(1) || 'Items');
+}
+
+async function generateZip() {
+  const m = state.meta;
+  if (!m.raId || isNaN(parseInt(m.raId))) { alert('Set a valid RA Game ID in Game Meta before generating.'); return; }
+  if (!m.primaryName) { alert('Set a game title in Game Meta before generating.'); return; }
+  if (!state.tabs.length) { alert('Add at least one tab before generating.'); return; }
+
+  const raId = parseInt(m.raId);
+  const gamePath = getGamePath(raId);
+  const zip = new JSZip();
+  const folder = zip.folder(`${raId}_submission`);
+
+  // _00.json
+  const config00 = { storagePrefix: `${raId}_`, subtitle: m.subtitle || `Guide by ${m.author || 'BDR'}`, theme: m.theme, palette: m.palette };
+  folder.file(`${gamePath}/${raId}_00.json`, JSON.stringify(config00, null, 2));
+
+  // Tab files
+  state.tabs.forEach((tab, i) => {
+    const num = String(i+1).padStart(2,'0');
+    const serialisedPanels = tab.panels.map(panel => {
+      if (panel.panelType !== 'checklist') return panel;
+      const { items, ...rest } = panel;
+      rest[entryKeyFromTitle(panel.title)] = items || [];
+      return rest;
+    });
+    const tabFile = { label: tab.label, panels: serialisedPanels };
+    folder.file(`${gamePath}/${raId}_${num}.json`, JSON.stringify(tabFile, null, 2));
+  });
+
+  // games_index entry
+  const { entry: indexEntry, slug } = buildIndexEntry();
+  folder.file('games_index_entry.json', JSON.stringify(indexEntry, null, 2));
+
+  // README
+  const readme = `BDR Guide Submission — ${m.primaryName}
+RA ID: ${raId}
+
+FILES TO ADD
+────────────
+1. Merge games_index_entry.json into the root games_index.json array.
+
+2. Place all files from the games/ directory into the repo's games/ directory.
+   Full path: ${gamePath}/
+
+Generated by BDR Guide Builder.`;
+  folder.file('README.txt', readme);
+
+  const blob = await zip.generateAsync({ type: 'blob' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `${raId}_${slug}_submission.zip`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   UTILITIES
+   ═══════════════════════════════════════════════════════════════════════ */
+function uid(prefix) { return (prefix||'id')+'_'+Math.random().toString(36).slice(2,9); }
+function esc(s) { return String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+boot();
+</script>
+</body>
+</html>

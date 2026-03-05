@@ -1,0 +1,136 @@
+{
+  "label": "🎸 Instruments",
+  "panels": [
+    {
+      "id": "instruments_info",
+      "panelType": "text",
+      "title": "🎸 Instruments",
+      "infobox": "Instruments increase your summon limit and mana capacity. Each instrument supersedes the last.\n\n⚠️ = MISSABLE — tied to specific choice or event window",
+      "content": "**Warning:** Getting Gnimb's Flute (SA1) before Stromness permanently prevents obtaining Upgraded Brute."
+    },
+    {
+      "id": "instruments_list",
+      "panelType": "checklist",
+      "title": "All Instruments (10)",
+      "columns": [
+        {
+          "key": "flag",
+          "label": "",
+          "style": "accent"
+        },
+        {
+          "key": "num",
+          "label": "#",
+          "style": "dim"
+        },
+        {
+          "key": "summon_limit",
+          "label": "Summon Limit",
+          "style": "accent"
+        },
+        {
+          "key": "mana",
+          "label": "Mana Cap",
+          "style": "accent"
+        },
+        {
+          "key": "location",
+          "label": "Location",
+          "style": "plain"
+        }
+      ],
+      "items": [
+        {
+          "id": "25842_t08_000",
+          "name": "Lute",
+          "flag": "",
+          "num": "1",
+          "summon_limit": "1",
+          "mana": "100",
+          "location": "Starting instrument"
+        },
+        {
+          "id": "25842_t08_001",
+          "name": "Harp",
+          "flag": "",
+          "num": "2",
+          "summon_limit": "2",
+          "mana": "200",
+          "location": "Buy: Velvet Hammer (Kirkwall)"
+        },
+        {
+          "id": "25842_t08_002",
+          "name": "Ornate Lute",
+          "flag": "",
+          "num": "3",
+          "summon_limit": "2",
+          "mana": "300",
+          "location": "Obtained by defeating Fnarf in Highland Park (Ch. IV)"
+        },
+        {
+          "id": "25842_t08_003",
+          "name": "Jeweled Flute",
+          "flag": "",
+          "num": "4",
+          "summon_limit": "3",
+          "mana": "300",
+          "location": "Obtained from Valkyrie after helping Hrafn in Burial Chamber (Ch. VI)"
+        },
+        {
+          "id": "25842_t08_004",
+          "name": "Silver Harp",
+          "flag": "",
+          "num": "5",
+          "summon_limit": "3",
+          "mana": "400",
+          "location": "Chest in Old City Tunnels (SA7), Dounby"
+        },
+        {
+          "id": "25842_t08_005",
+          "name": "Finn's Lute",
+          "flag": "",
+          "num": "6",
+          "summon_limit": "3",
+          "mana": "500",
+          "location": "From female refugee in the cell in SW of Finstown (Ch. IX)"
+        },
+        {
+          "id": "25842_t08_006",
+          "name": "Ancient Flute",
+          "flag": "",
+          "num": "7",
+          "summon_limit": "4",
+          "mana": "500",
+          "location": "Buy from Crazy Thorvald (Stromness) — comes with free Upgraded Brute song"
+        },
+        {
+          "id": "25842_t08_007",
+          "name": "Harp of Ages",
+          "flag": "⚠️",
+          "num": "8",
+          "summon_limit": "4",
+          "mana": "600",
+          "location": "Be nice to the Chosen in Obligatory Lava Level (SA8)"
+        },
+        {
+          "id": "25842_t08_008",
+          "name": "Ossian's Lute",
+          "flag": "",
+          "num": "9",
+          "summon_limit": "4",
+          "mana": "800",
+          "location": "Chest on Level 1, Island Tower (Ch. XIII)"
+        },
+        {
+          "id": "25842_t08_009",
+          "name": "Gnimb's Flute",
+          "flag": "⚠️",
+          "num": "10",
+          "summon_limit": "4",
+          "mana": "700",
+          "location": "Secret room chest, Ruins of Dun Alfiene (SA1) — requires Upgraded Trap Finder. WARNING: Getting this before Stromness prevents obtaining Upgraded Brute"
+        }
+      ]
+    }
+  ]
+}

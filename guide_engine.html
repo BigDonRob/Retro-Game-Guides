@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game Guide — Loading…</title>
+<style>
+/* ── RESET ── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ─────────────────────────────────────────────────────────────────────
+   CSS VARIABLE DEFAULTS
+   Overridden at runtime by applying theme + palette vars to :root.
+   Fallbacks only — every real guide will load themes.json + palettes.json.
+───────────────────────────────────────────────────────────────────── */
+:root {
+  /* Palette */
+  --bg:          #fdf6e3;
+  --surface:     #f4e8c4;
+  --surface2:    #ede0b5;
+  --border:      #c9a96e;
+  --borderL:     #e0c990;
+  --text:        #2c1a0e;
+  --textMid:     #6b4226;
+  --textMuted:   #9b7b5a;
+  --emphasis:    #b8860b;
+  --emphasisL:   #d4a517;
+  --positive:    #4a7c3f;
+  --positiveDim: rgba(74,124,63,0.13);
+  --positiveBdr: rgba(74,124,63,0.4);
+  --neutral:     #2c1a0e;
+  --neutralMid:  #5c3820;
+
+  /* Theme */
+  --font-body:    Georgia, serif;
+  --font-display: Georgia, serif;
+  --font-mono:    'Courier New', monospace;
+  --radius-card:  8px;
+  --radius-btn:   6px;
+  --radius-input: 5px;
+  --shadow-card:  0 2px 8px rgba(0,0,0,0.08);
+  --shadow-sm:    0 1px 4px rgba(0,0,0,0.06);
+
+  /* Layout */
+  --header-h: 72px;
+  --tabbar-h: 44px;
+}
+
+/* ── BODY ── */
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  padding-bottom: 60px;
+}
+
+/* ── GUIDE HEADER ── */
+#guide-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--neutralMid);
+  border-bottom: 2px solid var(--emphasis);
+  padding: 0 16px;
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+}
+.back-link {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--textMuted);
+  text-decoration: none;
+  white-space: nowrap;
+  padding: 5px 9px;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: var(--radius-btn);
+  transition: color .15s, border-color .15s;
+  flex-shrink: 0;
+}
+.back-link:hover { color: var(--emphasis); border-color: rgba(255,255,255,0.3); }
+#guide-icon { font-size: 26px; line-height: 1; flex-shrink: 0; }
+.header-text { min-width: 0; flex: 1; }
+#guide-title {
+  font-family: var(--font-display);
+  font-size: clamp(13px, 2.5vw, 19px);
+  font-weight: 900;
+  color: var(--emphasis);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
+}
+#guide-meta {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--textMuted);
+  letter-spacing: .4px;
+  margin-top: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* Header right: badges + display button */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.storage-badge {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--positive);
+  opacity: .7;
+  letter-spacing: .5px;
+  white-space: nowrap;
+}
+.display-btn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 5px 9px;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: var(--radius-btn);
+  background: transparent;
+  color: rgba(255,255,255,0.4);
+  cursor: pointer;
+  transition: all .15s;
+  white-space: nowrap;
+  line-height: 1;
+}
+.display-btn:hover { color: rgba(255,255,255,0.8); border-color: rgba(255,255,255,0.35); }
+.display-btn.overriding {
+  color: var(--emphasis);
+  border-color: var(--emphasis);
+  opacity: 0.9;
+}
+
+/* ── TAB BAR ── */
+#tab-bar {
+  position: sticky;
+  top: var(--header-h);
+  z-index: 40;
+  background: var(--surface2);
+  border-bottom: 2px solid var(--border);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  min-height: var(--tabbar-h);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+#tab-bar::-webkit-scrollbar { display: none; }
+.tab-btn {
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  color: var(--textMuted);
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  padding: 8px 15px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color .15s, border-color .15s, background .15s;
+  flex-shrink: 0;
+  min-height: var(--tabbar-h);
+  display: flex;
+  align-items: center;
+}
+.tab-btn:hover { color: var(--textMid); }
+.tab-btn.active {
+  color: var(--neutral);
+  font-weight: 600;
+  border-bottom-color: var(--emphasis);
+  background: var(--bg);
+}
+
+/* ── CONTENT ── */
+#tab-content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px 16px 0;
+}
+#guide-subtitle {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--textMuted);
+  padding: 8px 0 14px;
+  border-bottom: 1px solid var(--borderL);
+  margin-bottom: 16px;
+  letter-spacing: .3px;
+}
+
+/* ── LOADING / ERROR / EMPTY ── */
+.loading-state {
+  text-align: center; padding: 60px 20px;
+  font-family: var(--font-mono); font-size: 13px; color: var(--textMuted);
+}
+.loading-dot { display: inline-block; animation: blink 1.2s step-start infinite; }
+.loading-dot:nth-child(2) { animation-delay: .4s; }
+.loading-dot:nth-child(3) { animation-delay: .8s; }
+@keyframes blink { 50% { opacity: 0; } }
+.error-state {
+  background: var(--surface); border: 1px solid var(--border);
+  border-left: 3px solid #c04040; border-radius: var(--radius-card);
+  padding: 16px 18px; font-family: var(--font-mono); font-size: 12px;
+  color: #c04040; margin: 20px 0;
+}
+.empty-tab {
+  text-align: center; padding: 40px 20px;
+  font-family: var(--font-mono); font-size: 12px; color: var(--textMuted);
+}
+
+/* ── DISPLAY OVERRIDE SHEET ── */
+#do-backdrop {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.55);
+  z-index: 80; opacity: 0; pointer-events: none; transition: opacity .22s;
+}
+#do-backdrop.open { opacity: 1; pointer-events: all; }
+#do-sheet {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 90;
+  background: #161b22; border: 1px solid #30363d;
+  border-radius: 18px 18px 0 0;
+  transform: translateY(100%);
+  transition: transform .3s cubic-bezier(0.32,0.72,0,1);
+  max-height: 82vh; display: flex; flex-direction: column;
+  box-shadow: 0 -6px 36px rgba(0,0,0,0.45);
+}
+#do-sheet.open { transform: translateY(0); }
+#do-sheet-handle { width: 36px; height: 4px; background: #2d3748; border-radius: 2px; margin: 11px auto 0; flex-shrink: 0; }
+#do-sheet-header {
+  display: flex; align-items: center; padding: 10px 18px 10px;
+  border-bottom: 1px solid #30363d; flex-shrink: 0; gap: 10px;
+}
+#do-sheet-title { font-family: 'Outfit', 'Nunito', sans-serif; font-size: 14px; font-weight: 700; color: #e6edf3; flex: 1; }
+#do-current { font-family: monospace; font-size: 10px; color: #8b949e; flex-shrink: 0; }
+#do-sheet-close {
+  width: 26px; height: 26px; border-radius: 50%; background: #1e2530;
+  border: none; color: #8b949e; cursor: pointer; font-size: 15px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+#do-sheet-close:hover { color: #e6edf3; }
+#do-sheet-body { flex: 1; overflow-y: auto; padding: 14px 18px 20px; }
+.do-section-label {
+  font-family: monospace; font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 1px; color: #8b949e;
+  margin: 0 0 8px;
+}
+.do-section-label + .do-section-label { margin-top: 16px; }
+.do-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 8px; margin-bottom: 0; }
+.do-card {
+  padding: 12px 14px; background: #1e2530; border: 2px solid #30363d;
+  border-radius: 8px; cursor: pointer; transition: all .15s;
+}
+.do-card:hover { border-color: #58a6ff; }
+.do-card.active { border-color: #3fb950; background: rgba(63,185,80,0.08); }
+.do-card-dots { display: flex; gap: 4px; margin-bottom: 6px; }
+.do-dot { width: 13px; height: 13px; border-radius: 50%; flex-shrink: 0; }
+.do-card-name { font-size: 11.5px; font-weight: 600; color: #e6edf3; }
+.do-card-desc { font-size: 10px; color: #8b949e; margin-top: 2px; line-height: 1.3; }
+#do-reset-row {
+  margin-top: 16px; padding-top: 14px; border-top: 1px solid #30363d;
+  display: flex; align-items: center; justify-content: space-between;
+}
+#do-guide-default { font-size: 11px; color: #8b949e; }
+#do-guide-default strong { color: #e6edf3; }
+#do-reset-btn {
+  font-family: monospace; font-size: 11px; padding: 6px 14px;
+  border-radius: 5px; border: 1px solid #30363d; background: transparent;
+  color: #8b949e; cursor: pointer; transition: all .15s;
+}
+#do-reset-btn:hover { color: #e6edf3; border-color: #8b949e; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  #guide-header { padding: 0 10px; gap: 8px; }
+  #tab-content { padding: 14px 10px 0; }
+  .tab-btn { padding: 6px 11px; font-size: 12px; }
+  .storage-badge { display: none; }
+}
+
+/* ── SHOW-REMAINING FILTER ── */
+body.show-remaining .gr-check-row.gr-checked { display: none; }
+.display-btn.filter-active {
+  color: var(--emphasis);
+  border-color: var(--emphasis);
+  opacity: 0.9;
+}
+</style>
+</head>
+<body>
+
+<header id="guide-header">
+  <a class="back-link" href="index.html">← Guides</a>
+  <span id="guide-icon">🎮</span>
+  <div class="header-text">
+    <div id="guide-title">Loading…</div>
+    <div id="guide-meta"></div>
+  </div>
+  <div class="header-right">
+    <span class="storage-badge" id="storage-badge" style="display:none">● saved</span>
+    <button class="display-btn" id="filter-btn" style="display:none" title="Toggle checked item visibility">Show remaining</button>
+    <button class="display-btn" id="clear-btn" title="Clear all progress for this guide">Clear Progress</button>
+    <button class="display-btn" id="display-btn" title="Change display theme">🎨</button>
+  </div>
+</header>
+
+<nav id="tab-bar" role="tablist" aria-label="Guide sections"></nav>
+
+<main id="tab-content" role="main">
+  <div class="loading-state">
+    Loading<span class="loading-dot">.</span><span class="loading-dot">.</span><span class="loading-dot">.</span>
+  </div>
+</main>
+
+<!-- ── DISPLAY OVERRIDE SHEET ── -->
+<div id="do-backdrop"></div>
+<div id="do-sheet">
+  <div id="do-sheet-handle"></div>
+  <div id="do-sheet-header">
+    <span id="do-sheet-title">Display Preferences</span>
+    <span id="do-current"></span>
+    <button id="do-sheet-close">×</button>
+  </div>
+  <div id="do-sheet-body">
+    <div class="do-section-label">Theme</div>
+    <div class="do-grid" id="do-theme-grid"></div>
+    <div class="do-section-label" style="margin-top:16px">Palette</div>
+    <div class="do-grid" id="do-palette-grid"></div>
+    <div id="do-reset-row">
+      <span id="do-guide-default"></span>
+      <button id="do-reset-btn">Reset to guide default</button>
+    </div>
+  </div>
+</div>
+
+<script src="guide_render.js"></script>
+<script>
+'use strict';
+
+(function () {
+
+  const OVERRIDE_THEME_KEY   = 'bdr_user_theme';
+  const OVERRIDE_PALETTE_KEY = 'bdr_user_palette';
+  const FILTER_REMAINING_KEY = 'bdr_show_remaining';
+
+  // ── PATH HELPER ──────────────────────────────────────────────────────
+  function getGamePath(raId) {
+    const topEnd   = Math.ceil(raId / 5000) * 5000, topStart = topEnd - 4999;
+    const subEnd   = Math.ceil(raId / 200)  * 200,  subStart = subEnd - 199;
+    return `games/${topStart}-${topEnd}/${subStart}-${subEnd}/${raId}`;
+  }
+
+  // ── INIT ─────────────────────────────────────────────────────────────
+  const params = new URLSearchParams(location.search);
+  const raId   = parseInt(params.get('game') || '0', 10);
+  if (!raId) { panic('Missing ?game= parameter in URL.'); return; }
+
+  const GAME_PATH = getGamePath(raId) + '/';
+
+  const $icon    = document.getElementById('guide-icon');
+  const $title   = document.getElementById('guide-title');
+  const $meta    = document.getElementById('guide-meta');
+  const $tabBar  = document.getElementById('tab-bar');
+  const $content = document.getElementById('tab-content');
+
+  let storagePrefix    = `${raId}_`;
+  let activeTabIndex   = -1;
+  const tabCache       = {};
+
+  // Guide defaults (set at boot, used by reset)
+  let guideThemeKey   = '';
+  let guidePaletteKey = '';
+  let allThemes       = {};
+  let allPalettes     = {};
+
+  // ── STORAGE CONTEXT ──────────────────────────────────────────────────
+  const ctx = {
+    preview: false,
+    save(id, val) {
+      try { localStorage.setItem(storagePrefix + id, val ? '1' : '0'); } catch (_) {}
+    },
+    load(id) {
+      try { return localStorage.getItem(storagePrefix + id) === '1'; } catch (_) { return false; }
+    }
+  };
+
+  // ── BOOT ─────────────────────────────────────────────────────────────
+  async function boot() {
+    let config, themes, palettes, indexEntry;
+    try {
+      const [cfg, th, pal, idx] = await Promise.all([
+        fetchJSON(`${GAME_PATH}${raId}_00.json`),
+        fetchJSON('./themes.json').catch(() => ({})),
+        fetchJSON('./palettes.json').catch(() => ({})),
+        fetchJSON('./games_index.json'),
+      ]);
+      config     = cfg;
+      themes     = th;
+      palettes   = pal;
+      indexEntry = Array.isArray(idx) ? idx.find(g => g.raId === raId) : null;
+    } catch (e) {
+      panic(`Failed to load guide: ${e.message}`); return;
+    }
+
+    if (!indexEntry) { panic(`Game ${raId} not found in games_index.json.`); return; }
+
+    allThemes   = themes;
+    allPalettes = palettes;
+    guideThemeKey   = config.theme   || '';
+    guidePaletteKey = config.palette || '';
+
+    if (config.storagePrefix) storagePrefix = config.storagePrefix;
+
+    // Apply guide defaults first, then any user override on top
+    applyThemePalette(guideThemeKey, guidePaletteKey, themes, palettes);
+    applyUserOverride(themes, palettes);
+
+    // Header
+    $icon.textContent  = indexEntry.icon || '🎮';
+    $title.textContent = indexEntry.primaryName || 'Guide';
+    document.title     = `${indexEntry.primaryName || 'Guide'} — Game Guide`;
+    const metaParts = [
+      indexEntry.primarySystem,
+      ...(indexEntry.altSystems || []),
+      indexEntry.year ? String(indexEntry.year) : null,
+      indexEntry.series || null,
+    ].filter(Boolean);
+    $meta.textContent = metaParts.join(' · ');
+
+    if (config.subtitle) {
+      $content.innerHTML = '';
+      const sub = document.createElement('div');
+      sub.id = 'guide-subtitle';
+      sub.textContent = config.subtitle;
+      $content.appendChild(sub);
+    } else {
+      $content.innerHTML = '';
+    }
+
+    const hasChecklists = (indexEntry.tabs || []).some(t => t.type === 'checklist' || t.type === 'subtab-checklist' || t.type === 'panels');
+    
+    // Always show the storage badge and filter button
+    document.getElementById('storage-badge').style.display = '';
+    document.getElementById('filter-btn').style.display = '';
+    initFilterBtn();
+
+    // Tab bar
+    const tabs = indexEntry.tabs || [];
+    if (!tabs.length) { panic('No tabs defined for this guide.'); return; }
+    tabs.forEach((tab, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'tab-btn';
+      btn.textContent = tab.label;
+      btn.setAttribute('role', 'tab');
+      btn.setAttribute('aria-selected', 'false');
+      btn.addEventListener('click', () => activateTab(i, tabs));
+      $tabBar.appendChild(btn);
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.target.matches('input,textarea,select,[contenteditable]')) return;
+      if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+      e.preventDefault();
+      const next = Math.max(0, Math.min(tabs.length - 1, activeTabIndex + (e.key === 'ArrowRight' ? 1 : -1)));
+      if (next !== activeTabIndex) activateTab(next, tabs);
+    });
+
+    initOverrideSheet(themes, palettes);
+    
+    // Delay initial tab activation to ensure DOM is ready
+    setTimeout(async () => {
+      await activateTab(0, tabs);
+    }, 50);
+
+    // Clear progress button - add after DOM is ready and elements exist
+    setTimeout(() => {
+      const clearBtn = document.getElementById('clear-btn');
+      const clearCancel = document.getElementById('clear-cancel');
+      const clearConfirm = document.getElementById('clear-confirm');
+      const clearBackdrop = document.getElementById('clear-backdrop');
+      
+      if (clearBtn && clearCancel && clearConfirm && clearBackdrop) {
+        clearBtn.addEventListener('click', showClearConfirm);
+        clearCancel.addEventListener('click', hideClearConfirm);
+        clearConfirm.addEventListener('click', clearProgress);
+        clearBackdrop.addEventListener('click', (e) => {
+          if (e.target === e.currentTarget) hideClearConfirm();
+        });
+      }
+    }, 100);
+
+    // Clear progress modal event listeners
+    // Removed event listeners for clear-cancel, clear-confirm, and clear-backdrop
+    document.getElementById('clear-confirm').addEventListener('click', clearProgress);
+    document.getElementById('clear-backdrop').addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) hideClearConfirm();
+    });
+
+    initOverrideSheet(themes, palettes);
+    await activateTab(0, tabs);
+  }
+
+  // ── TAB ACTIVATION ───────────────────────────────────────────────────
+  async function activateTab(index, tabs) {
+    if (index === activeTabIndex) return;
+    activeTabIndex = index;
+    [...$tabBar.querySelectorAll('.tab-btn')].forEach((btn, i) => {
+      const active = i === index;
+      btn.classList.toggle('active', active);
+      btn.setAttribute('aria-selected', active ? 'true' : 'false');
+      if (active) btn.scrollIntoView({ inline: 'nearest', behavior: 'smooth' });
+    });
+
+    const num = tabs[index].num;
+    if (tabCache[num]) { mountTab(tabCache[num]); return; }
+
+    mountLoading();
+    let tabDef;
+    try {
+      tabDef = await fetchJSON(`${GAME_PATH}${raId}_${num}.json`);
+    } catch (e) {
+      mountError(`Could not load ${raId}_${num}.json — ${e.message}`); return;
+    }
+
+    const frag = buildTabContent(tabDef);
+    tabCache[num] = frag;
+    mountTab(frag);
+  }
+
+  // ── TAB CONTENT ──────────────────────────────────────────────────────
+  function buildTabContent(tabDef) {
+    const frag   = document.createDocumentFragment();
+    const panels = tabDef.panels || [];
+    if (!panels.length) {
+      const empty = document.createElement('div');
+      empty.className = 'empty-tab';
+      empty.textContent = 'This tab has no content yet.';
+      frag.appendChild(empty);
+      return frag;
+    }
+    GuideRender.injectStyles();
+    panels.forEach(panelDef => {
+      try {
+        frag.appendChild(GuideRender.panel(panelDef, ctx));
+      } catch (e) {
+        const err = document.createElement('div');
+        err.className = 'error-state';
+        err.textContent = `Panel error (${panelDef.panelType || '?'}): ${e.message}`;
+        frag.appendChild(err);
+      }
+    });
+    return frag;
+  }
+
+  // ── MOUNT HELPERS ────────────────────────────────────────────────────
+  function clearContent() {
+    [...$content.children].forEach(c => { if (c.id !== 'guide-subtitle') c.remove(); });
+  }
+  function mountTab(frag) {
+    clearContent();
+    const clonedFrag = frag.cloneNode(true);
+    $content.appendChild(clonedFrag);
+    rebindChecklists();
+    rebindPanelToggles();
+  }
+  function mountLoading() {
+    clearContent();
+    const d = document.createElement('div');
+    d.className = 'loading-state';
+    d.innerHTML = 'Loading<span class="loading-dot">.</span><span class="loading-dot">.</span><span class="loading-dot">.</span>';
+    $content.appendChild(d);
+  }
+  function mountError(msg) {
+    clearContent();
+    const d = document.createElement('div');
+    d.className = 'error-state';
+    d.textContent = `⚠️ ${msg}`;
+    $content.appendChild(d);
+  }
+
+  // ── CHECKLIST REBINDING ──────────────────────────────────────────────
+  function rebindChecklists() {
+    $content.querySelectorAll('.gr-check-row').forEach(tr => {
+      const itemId = tr.dataset.itemId;
+      if (!itemId) return;
+      const checked = ctx.load(itemId);
+      tr.classList.toggle('gr-checked', checked);
+      const cb = tr.querySelector('.gr-checkbox');
+      if (cb) { cb.classList.toggle('gr-checked', checked); cb.textContent = checked ? '✓' : ''; }
+      tr.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const now = tr.classList.toggle('gr-checked');
+        if (cb) { cb.classList.toggle('gr-checked', now); cb.textContent = now ? '✓' : ''; }
+        ctx.save(itemId, now);
+        updateProgress(tr);
+      });
+    });
+  }
+
+  // ── PANEL TOGGLE REBINDING ────────────────────────────────────────────
+  function rebindPanelToggles() {
+    $content.querySelectorAll('.gr-card-header').forEach(header => {
+      const card = header.closest('.gr-card');
+      const panelWrap = header.closest('.gr-panel-wrap');
+      const panelId = panelWrap?.dataset.panelId;
+      
+      if (!card || !panelId) return;
+      
+      const colKey = '__c_' + panelId;
+      const isExpanded = ctx.load(colKey);
+      if (!isExpanded) card.classList.add('gr-collapsed');
+      
+      header.addEventListener('click', (e) => {
+        e.preventDefault();
+        console.log('Panel header clicked (rebound):', panelId);
+        const nowCollapsed = card.classList.toggle('gr-collapsed');
+        ctx.save(colKey, !nowCollapsed); // save expanded=true when not collapsed
+      });
+
+      // Also add click handler to toggle icon
+      const toggle = header.querySelector('.gr-card-toggle');
+      if (toggle) {
+        toggle.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          console.log('Toggle icon clicked (rebound):', panelId);
+          const nowCollapsed = card.classList.toggle('gr-collapsed');
+          ctx.save(colKey, !nowCollapsed);
+        });
+      }
+    });
+  }
+  function updateProgress(tr) {
+    const body = tr.closest('.gr-card-body');
+    if (!body) return;
+    const total = body.querySelectorAll('.gr-check-row').length;
+    const done  = body.querySelectorAll('.gr-check-row.gr-checked').length;
+    const fill  = body.querySelector('.gr-progress-fill');
+    const count = body.querySelector('.gr-progress-count');
+    if (fill)  fill.style.width = Math.round(done / total * 100) + '%';
+    if (count) count.textContent = done;
+  }
+
+  // ── THEME / PALETTE APPLICATION ───────────────────────────────────────
+  function applyThemePalette(themeKey, palKey, themes, palettes) {
+    const theme = themes[themeKey] || {};
+    const pal   = palettes[palKey] || {};
+    const root  = document.documentElement;
+    Object.entries(theme.vars || {}).forEach(([k, v]) => root.style.setProperty(k, v));
+    Object.entries(pal.vars   || {}).forEach(([k, v]) => root.style.setProperty(k, v));
+    if (theme.fonts) {
+      root.style.setProperty('--font-body',    theme.fonts.body    || '');
+      root.style.setProperty('--font-display', theme.fonts.display || '');
+      root.style.setProperty('--font-mono',    theme.fonts.mono    || '');
+      if (theme.fonts.googleFonts) {
+        let link = document.getElementById('bdr-fonts');
+        if (!link) {
+          link = document.createElement('link');
+          link.id  = 'bdr-fonts';
+          link.rel = 'stylesheet';
+          document.head.prepend(link);
+        }
+        link.href = theme.fonts.googleFonts;
+      }
+    }
+  }
+
+  function applyUserOverride(themes, palettes) {
+    const ot = localStorage.getItem(OVERRIDE_THEME_KEY)   || '';
+    const op = localStorage.getItem(OVERRIDE_PALETTE_KEY) || '';
+    if (ot || op) {
+      applyThemePalette(
+        ot || guideThemeKey,
+        op || guidePaletteKey,
+        themes, palettes
+      );
+    }
+    updateOverrideIndicator();
+  }
+
+  function updateOverrideIndicator() {
+    const ot = localStorage.getItem(OVERRIDE_THEME_KEY)   || '';
+    const op = localStorage.getItem(OVERRIDE_PALETTE_KEY) || '';
+    const btn = document.getElementById('display-btn');
+    if (btn) btn.classList.toggle('overriding', !!(ot || op));
+  }
+
+  // ── FILTER BUTTON ─────────────────────────────────────────────────────
+  function initFilterBtn() {
+    const btn = document.getElementById('filter-btn');
+    if (!btn) return;
+
+    function applyFilter(active) {
+      document.body.classList.toggle('show-remaining', active);
+      btn.classList.toggle('filter-active', active);
+      btn.textContent = active ? 'Show all' : 'Show remaining';
+      try { localStorage.setItem(FILTER_REMAINING_KEY, active ? '1' : '0'); } catch (_) {}
+    }
+
+    // Restore persisted state
+    const stored = (() => { try { return localStorage.getItem(FILTER_REMAINING_KEY) === '1'; } catch (_) { return false; } })();
+    applyFilter(stored);
+
+    btn.addEventListener('click', () => applyFilter(!document.body.classList.contains('show-remaining')));
+  }
+
+  // ── OVERRIDE SHEET ────────────────────────────────────────────────────
+  function initOverrideSheet(themes, palettes) {
+    const backdrop  = document.getElementById('do-backdrop');
+    const sheet     = document.getElementById('do-sheet');
+    const closeBtn  = document.getElementById('do-sheet-close');
+    const resetBtn  = document.getElementById('do-reset-btn');
+    const openBtn   = document.getElementById('display-btn');
+    const themeGrid = document.getElementById('do-theme-grid');
+    const palGrid   = document.getElementById('do-palette-grid');
+    const currentEl = document.getElementById('do-current');
+    const defaultEl = document.getElementById('do-guide-default');
+
+    function esc(s) { return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+    // Show guide default info
+    const gThemeLabel = themes[guideThemeKey]?.label   || guideThemeKey;
+    const gPalLabel   = palettes[guidePaletteKey]?.label || guidePaletteKey;
+    defaultEl.innerHTML = `Guide default: <strong>${esc(gThemeLabel)}</strong> + <strong>${esc(gPalLabel)}</strong>`;
+
+    function getActiveTheme()   { return localStorage.getItem(OVERRIDE_THEME_KEY)   || guideThemeKey; }
+    function getActivePalette() { return localStorage.getItem(OVERRIDE_PALETTE_KEY) || guidePaletteKey; }
+
+    function refreshCurrent() {
+      const ot = localStorage.getItem(OVERRIDE_THEME_KEY)   || '';
+      const op = localStorage.getItem(OVERRIDE_PALETTE_KEY) || '';
+      if (!ot && !op) {
+        currentEl.textContent = 'guide default';
+      } else {
+        const tLabel = themes[ot || guideThemeKey]?.label   || ot   || guideThemeKey;
+        const pLabel = palettes[op || guidePaletteKey]?.label || op  || guidePaletteKey;
+        currentEl.textContent = `${tLabel} + ${pLabel}`;
+      }
+    }
+
+    function refreshActiveCards() {
+      const at = getActiveTheme();
+      const ap = getActivePalette();
+      themeGrid.querySelectorAll('.do-card').forEach(c => c.classList.toggle('active', c.dataset.key === at));
+      palGrid.querySelectorAll('.do-card').forEach(c =>   c.classList.toggle('active', c.dataset.key === ap));
+    }
+
+    // Build theme cards
+    Object.entries(themes).forEach(([key, th]) => {
+      const card = document.createElement('div');
+      card.className = 'do-card';
+      card.dataset.key = key;
+      card.innerHTML = `<div class="do-card-name">${esc(th.label)}</div><div class="do-card-desc">${esc(th.description || '')}</div>`;
+      card.addEventListener('click', () => {
+        localStorage.setItem(OVERRIDE_THEME_KEY, key);
+        applyThemePalette(key, getActivePalette(), themes, palettes);
+        updateOverrideIndicator();
+        refreshCurrent();
+        refreshActiveCards();
+      });
+      themeGrid.appendChild(card);
+    });
+
+    // Build palette cards
+    Object.entries(palettes).forEach(([key, pal]) => {
+      const card = document.createElement('div');
+      card.className = 'do-card';
+      card.dataset.key = key;
+      // Color preview dots: bg, emphasis, positive, text
+      const dots = [
+        { color: pal.vars['--bg']       || '#888', border: true },
+        { color: pal.vars['--emphasis'] || '#888', border: false },
+        { color: pal.vars['--positive'] || '#888', border: false },
+        { color: pal.vars['--text']     || '#888', border: true },
+      ].map(d => `<div class="do-dot" style="background:${d.color};${d.border ? 'border:1px solid rgba(128,128,128,0.3)' : ''}"></div>`).join('');
+      card.innerHTML = `<div class="do-card-dots">${dots}</div><div class="do-card-name">${esc(pal.label)}</div>`;
+      card.addEventListener('click', () => {
+        localStorage.setItem(OVERRIDE_PALETTE_KEY, key);
+        applyThemePalette(getActiveTheme(), key, themes, palettes);
+        updateOverrideIndicator();
+        refreshCurrent();
+        refreshActiveCards();
+      });
+      palGrid.appendChild(card);
+    });
+
+    // Reset
+    resetBtn.addEventListener('click', () => {
+      localStorage.removeItem(OVERRIDE_THEME_KEY);
+      localStorage.removeItem(OVERRIDE_PALETTE_KEY);
+      applyThemePalette(guideThemeKey, guidePaletteKey, themes, palettes);
+      updateOverrideIndicator();
+      refreshCurrent();
+      refreshActiveCards();
+    });
+
+    function openSheet() {
+      refreshCurrent();
+      refreshActiveCards();
+      backdrop.classList.add('open');
+      sheet.classList.add('open');
+    }
+    function closeSheet() {
+      backdrop.classList.remove('open');
+      sheet.classList.remove('open');
+    }
+
+    openBtn.addEventListener('click', openSheet);
+    closeBtn.addEventListener('click', closeSheet);
+    backdrop.addEventListener('click', closeSheet);
+
+    refreshCurrent();
+    refreshActiveCards();
+  }
+
+  // ── CLEAR PROGRESS ─────────────────────────────────────────────────
+  function showClearConfirm() {
+    document.getElementById('clear-backdrop').classList.add('open');
+  }
+
+  function hideClearConfirm() {
+    document.getElementById('clear-backdrop').classList.remove('open');
+  }
+
+  function clearProgress() {
+    // Get all localStorage keys for this guide
+    const keysToRemove = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && key.startsWith(storagePrefix)) {
+        keysToRemove.push(key);
+      }
+    }
+    
+    // Remove all guide-specific keys
+    keysToRemove.forEach(key => {
+      localStorage.removeItem(key);
+    });
+    
+    // Refresh current tab to show cleared state
+    if (activeTabIndex >= 0 && allTabs.length > 0) {
+      // Clear the cache for the current tab to force rebuild
+      const currentNum = allTabs[activeTabIndex].num;
+      delete tabCache[currentNum];
+      
+      // Force re-activation of the current tab
+      const tempIndex = activeTabIndex;
+      activeTabIndex = -1; // Reset to bypass the early return
+      activateTab(tempIndex, allTabs);
+    }
+    
+    // Show brief feedback
+    const badge = document.getElementById('storage-badge');
+    if (badge) {
+      badge.textContent = '● cleared';
+      badge.style.display = 'inline-block';
+      setTimeout(() => {
+        badge.style.display = 'none';
+      }, 2000);
+    }
+    
+    hideClearConfirm();
+  }
+
+  // ── UTILITIES ─────────────────────────────────────────────────────────
+  async function fetchJSON(url) {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`HTTP ${res.status} — ${url}`);
+    return res.json();
+  }
+  function esc(s) {
+    return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+  function panic(msg) {
+    $content.innerHTML = `<div class="error-state">⚠️ Engine error: ${esc(msg)}</div>`;
+    $title.textContent = 'Error';
+  }
+
+  boot().catch(e => panic(e.message));
+
+})();
+</script>
+</body>
+</html>
