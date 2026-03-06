@@ -358,6 +358,8 @@ body.show-remaining .gr-check-row.gr-checked { display: none; }
   const params = new URLSearchParams(location.search);
   const raId   = parseInt(params.get('game') || '0', 10);
   if (!raId) { panic('Missing ?game= parameter in URL.'); return; }
+  const panelIndex = parseInt(params.get('panel') || '0', 10);
+  const tabIndex = parseInt(params.get('tab') || '0', 10);
 
   const GAME_PATH = getGamePath(raId) + '/';
 
@@ -449,7 +451,7 @@ body.show-remaining .gr-check-row.gr-checked { display: none; }
     }
 
     const hasChecklists = (indexEntry.tabs || []).some(t => t.type === 'checklist' || t.type === 'subtab-checklist' || t.type === 'panels');
-    
+
     // Always show the storage badge and filter button
     document.getElementById('storage-badge').style.display = '';
     document.getElementById('filter-btn').style.display = '';
@@ -477,10 +479,14 @@ body.show-remaining .gr-check-row.gr-checked { display: none; }
     });
 
     initOverrideSheet(themes, palettes);
-    
+
+    // tab index init
+    if (!tabIndex || tabs.findIndex(t => t.num == tabIndex) === -1) {
+      tabIndex = 0;
+    }
     // Delay initial tab activation to ensure DOM is ready
     setTimeout(async () => {
-      await activateTab(0, tabs);
+      await activateTab(tabIndex, tabs, panelIndex);
     }, 50);
 
     // Clear progress button - add after DOM is ready and elements exist
@@ -489,7 +495,7 @@ body.show-remaining .gr-check-row.gr-checked { display: none; }
       const clearCancel = document.getElementById('clear-cancel');
       const clearConfirm = document.getElementById('clear-confirm');
       const clearBackdrop = document.getElementById('clear-backdrop');
-      
+
       if (clearBtn && clearCancel && clearConfirm && clearBackdrop) {
         clearBtn.addEventListener('click', showClearConfirm);
         clearCancel.addEventListener('click', hideClearConfirm);
@@ -508,11 +514,10 @@ body.show-remaining .gr-check-row.gr-checked { display: none; }
     });
 
     initOverrideSheet(themes, palettes);
-    await activateTab(0, tabs);
   }
 
   // ── TAB ACTIVATION ───────────────────────────────────────────────────
-  async function activateTab(index, tabs) {
+  async function activateTab(index, tabs, panelIdx) {
     if (index === activeTabIndex) return;
     activeTabIndex = index;
     [...$tabBar.querySelectorAll('.tab-btn')].forEach((btn, i) => {
@@ -536,6 +541,24 @@ body.show-remaining .gr-check-row.gr-checked { display: none; }
     const frag = buildTabContent(tabDef);
     tabCache[num] = frag;
     mountTab(frag);
+  
+    requestAnimationFrame(() => {
+      //handle the panel navigation
+      if (panelIdx != 0 && (!panelIdx || !tabDef.panels[panelIdx])) {
+        console.log('could not find panel' + panelIdx)
+        panelIdx = 0;
+      }
+      scrollToPanel(panelIdx);
+      const panel = $content.querySelectorAll('.gr-panel-wrap')[panelIdx];
+      if (!panel) return;
+
+      const card = panel.querySelector('gr-card');
+      if (card && card.classList.contains('gr-collapsed')) {
+        card.classList.remove('gr-collapsed');
+      }
+
+      panel.scrollIntoView({behavior: 'smooth'});
+    });
   }
 
   // ── TAB CONTENT ──────────────────────────────────────────────────────
