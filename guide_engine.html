@@ -358,8 +358,12 @@ body.show-remaining .gr-check-row.gr-checked { display: none; }
   const params = new URLSearchParams(location.search);
   const raId   = parseInt(params.get('game') || '0', 10);
   if (!raId) { panic('Missing ?game= parameter in URL.'); return; }
-  const panelIndex = parseInt(params.get('panel') || '0', 10);
-  const tabIndex = parseInt(params.get('tab') || '0', 10);
+  const panelParam = params.get('panel')
+  let panelIndex
+  if (panelParam !== null){
+    panelIndex = parseInt(panelParam, 10);
+  }
+  const tabIndex = parseInt(params.get('tab') || '-1', 10);
 
   const GAME_PATH = getGamePath(raId) + '/';
 
@@ -541,24 +545,30 @@ body.show-remaining .gr-check-row.gr-checked { display: none; }
     const frag = buildTabContent(tabDef);
     tabCache[num] = frag;
     mountTab(frag);
-  
-    requestAnimationFrame(() => {
-      //handle the panel navigation
-      if (panelIdx != 0 && (!panelIdx || !tabDef.panels[panelIdx])) {
-        console.log('could not find panel' + panelIdx)
-        panelIdx = 0;
-      }
-      scrollToPanel(panelIdx);
-      const panel = $content.querySelectorAll('.gr-panel-wrap')[panelIdx];
-      if (!panel) return;
 
-      const card = panel.querySelector('gr-card');
-      if (card && card.classList.contains('gr-collapsed')) {
-        card.classList.remove('gr-collapsed');
-      }
+    if (panelIdx != null && tabDef.panels && tabDef.panels[panelIdx]){
+      setTimeout(() => scrollToPanel(panelIdx), 50);
+    }
+  }
 
-      panel.scrollIntoView({behavior: 'smooth'});
-    });
+  // handle the naviguation if a panel is specified
+  function scrollToPanel(index) {
+    const panel = $content.querySelectorAll('.gr-panel-wrap')[index];
+    if (!panel) return;
+
+    const card = panel.querySelector('.gr-card');
+    if (card && card.classList.contains('gr-collapsed')) {
+      card.classList.remove('gr-collapsed');
+    }
+
+    const cardHeader = card.querySelector('.gr-card-header');
+    if (cardHeader) {
+      const rect = cardHeader.getBoundingClientRect();
+      const guideHeader = document.getElementById('guide-header').getBoundingClientRect();
+      const tabBar = document.getElementById('tab-bar').getBoundingClientRect();
+      const scrollTop = window.scrollY + rect.top - guideHeader.top - (tabBar.top * 2);
+      window.scrollTo({ top: scrollTop, behavior: 'smooth' });
+    }
   }
 
   // ── TAB CONTENT ──────────────────────────────────────────────────────
