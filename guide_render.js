@@ -233,8 +233,10 @@
     h = h.replace(/\*(.+?)\*/g, '<em>$1</em>');
     // Inline code
     h = h.replace(/`(.+?)`/g, '<code class="gr-code">$1</code>');
-    // Internal links
-    h = h.replace(/\[(.+?)\]\(\s*(\d+)\s*,\s*(\d+)\s*\)/g, '<span class="gr-internal-link" tab="$2" panel="$3">$1</span>')
+    // Internal links to tab
+    h = h.replace(/\[(.+?)\]\(\s*(\d+)\s*\)/g, '<span class="gr-internal-link" tab=$2 panel="none">$1</span>');
+    // Internal links to panel
+    h = h.replace(/\[(.+?)\]\(\s*(\d+)\s*,\s*(\d+)\s*\)/g, '<span class="gr-internal-link" tab="$2" panel="$3">$1</span>');
     // Links
     h = h.replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" class="gr-link" target="_blank" rel="noopener">$1</a>');
     // Unordered lists (collect consecutive li items)

@@ -213,28 +213,5 @@
         "label": "📋Reference"
       }
     ]
-  },
-  {
-    "raId": 1,
-    "slug": "test",
-    "primaryName": "test",
-    "altNames": [],
-    "primarySystem": "test",
-    "altSystems": [],
-    "series": "",
-    "icon": "🎮",
-    "author": "",
-    "tabs": [
-      {
-        "num": "01",
-        "label": "test",
-        "type": "panels"
-      },
-      {
-        "num": "02",
-        "label": "test 2",
-        "type": "panels"
-      }
-    ]
   }
 ]
