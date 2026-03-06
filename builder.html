@@ -1115,17 +1115,17 @@ function attachLinkListeners() {
       const panel = link.getAttribute('panel');
 
       const tabs = Array.from(document.querySelectorAll('.gp-tab'));
-      if (tab < 0 || tab >= tabs.length) {
+      if (tab < 1 || tab >= tabs.length + 1) {
         console.log("tab " + tab + " not found");
         return;
       }
 
-      state.activeTabId = tabs[tab].getAttribute('data-tab-id');
+      state.activeTabId = tabs[tab - 1].getAttribute('data-tab-id');
 
       renderPreview();
 
       if (panel !== "none") {
-        scrollToPanel(parseInt(panel, 10));
+        scrollToPanel(parseInt(panel - 1, 10));
       }
     });
   });

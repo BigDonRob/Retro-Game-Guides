@@ -497,7 +497,7 @@ body.show-remaining .gr-check-row.gr-checked { display: none; }
           url.searchParams.set("tab", tab);
           history.replaceState({}, "", url);
           setTimeout(async () => {
-            await activateTab(tab, tabs, null);
+            await activateTab(tab - 1, tabs, null);
           }, 50);
         } else {
           const url = new URL(window.location);
@@ -505,7 +505,7 @@ body.show-remaining .gr-check-row.gr-checked { display: none; }
           url.searchParams.set("panel", panel);
           history.replaceState({}, "", url);
           setTimeout( async () => {
-            await activateTab(tab, tabs, parseInt(panel, 10));
+            await activateTab(tab - 1, tabs, parseInt(panel, 10));
           }, 50);
         }
       }
@@ -519,7 +519,7 @@ body.show-remaining .gr-check-row.gr-checked { display: none; }
     } else {
     // Delay initial tab activation to ensure DOM is ready
       setTimeout(async () => {
-        await activateTab(tabIndex, tabs, panelIndex);
+        await activateTab(tabIndex - 1, tabs, panelIndex);
       }, 50);
     }
 
@@ -552,17 +552,21 @@ body.show-remaining .gr-check-row.gr-checked { display: none; }
 
   // ── TAB ACTIVATION ───────────────────────────────────────────────────
   async function activateTab(index, tabs, panelIdx) {
-    if (index === activeTabIndex) return;
     activeTabIndex = index;
     [...$tabBar.querySelectorAll('.tab-btn')].forEach((btn, i) => {
-      const active = i === index;
-      btn.classList.toggle('active', active);
-      btn.setAttribute('aria-selected', active ? 'true' : 'false');
-      if (active) btn.scrollIntoView({ inline: 'nearest', behavior: 'smooth' });
+     const active = i === index;
+     btn.classList.toggle('active', active);
+     btn.setAttribute('aria-selected', active ? 'true' : 'false');
+     if (active) btn.scrollIntoView({ inline: 'nearest', behavior: 'smooth' });
     });
-
     const num = tabs[index].num;
-    if (tabCache[num]) { mountTab(tabCache[num]); return; }
+    if (tabCache[num]) { 
+      mountTab(tabCache[num]); 
+      if (panelIdx && panelIdx !== "none") {
+        setTimeout(() => scrollToPanel(panelIdx - 1), 50);
+      }
+      return; 
+    }
 
     mountLoading();
     let tabDef;
@@ -577,7 +581,7 @@ body.show-remaining .gr-check-row.gr-checked { display: none; }
     mountTab(frag);
 
     if (panelIdx != null && tabDef.panels && tabDef.panels[panelIdx]){
-      setTimeout(() => scrollToPanel(panelIdx), 50);
+      setTimeout(() => scrollToPanel(panelIdx - 1), 50);
     }
   }
 
@@ -700,7 +704,7 @@ body.show-remaining .gr-check-row.gr-checked { display: none; }
     if (!panel) return;
 
     const card = panel.querySelector('.gr-card');
-    if (!card || !card.classList.contains('gr-collapsed')) return;
+    if (!card) return;
     card.classList.remove('gr-collapsed');
     ctx.save('__c_' + index, true);
   }
@@ -710,7 +714,7 @@ body.show-remaining .gr-check-row.gr-checked { display: none; }
     if (!panel) return;
 
     const card = panel.querySelector('.gr-card');
-    if (!card || card.classList.contains('gr-collapsed')) return;
+    if (!card) return;
     card.classList.add('gr-collapsed');
     ctx.save('__c_' + index, false);
   }

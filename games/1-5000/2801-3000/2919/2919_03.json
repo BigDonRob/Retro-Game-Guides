@@ -5,7 +5,7 @@
       "id": "basics_goal",
       "panelType": "text",
       "title": "🌾 Goal",
-      "content": "Save Leaf Valley! Either earn **50,000G** by end of Year 2, or trigger at least **3 alternative endings of the same type** (Nature or Tourist) to stop Funland. There are **16 unique endings** total."
+      "content": "[01](1)\n[02](2)\n[03](3,3)\n[00](0,0)\n[04](4,1)"
     },
     {
       "id": "basics_controls",
