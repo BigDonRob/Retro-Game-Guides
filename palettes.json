@@ -209,7 +209,7 @@
       "--positiveDim": "rgba(5,150,105,0.12)",
       "--positiveBdr": "rgba(5,150,105,0.38)",
       "--neutral":     "#0c2340",
-      "--neutralMid":  "#0369a1",
+      "--neutralMid":  "#0c2340",
       "--accent":      "#7c3aed",
       "--accent2":     "#0891b2",
       "--accent3":     "#dc2626",

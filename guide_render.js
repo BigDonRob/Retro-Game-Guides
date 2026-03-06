@@ -280,6 +280,11 @@
     const isExpanded = colKey ? ctx.load(colKey) : false;
     if (!isExpanded) card.classList.add('gr-collapsed');
 
+    header.addEventListener('click', () => {
+      const nowCollapsed = card.classList.toggle('gr-collapsed');
+      if (colKey) ctx.save(colKey, !nowCollapsed);
+    });
+
     const body = document.createElement('div');
     body.className = 'gr-card-body';
     try {
@@ -384,7 +389,7 @@
     const thead = document.createElement('thead');
     const htr   = document.createElement('tr');
     const cbTh  = document.createElement('th'); cbTh.style.width = '36px';
-    const nmTh  = document.createElement('th'); nmTh.textContent = 'Item';
+    const nmTh  = document.createElement('th'); nmTh.textContent = def.nameLabel || 'Item';
     htr.append(cbTh, nmTh);
     columns.forEach(col => {
       const th = document.createElement('th');

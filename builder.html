@@ -673,6 +673,8 @@ function readStructureForm(formEl, type) {
       // No structure beyond title for kv
       break;
     case 'checklist': {
+      const nameLabel = formEl.querySelector('#pf-namelabel')?.value.trim();
+      if (nameLabel) panel.nameLabel = nameLabel;
       const colList = formEl.querySelector('#cl-cols');
       panel.columns = colList ? readColumns(colList) : [];
       break;
@@ -729,6 +731,7 @@ function buildKVStructure(d) {
 function buildChecklistStructure(d) {
   const el = document.createElement('div');
   el.appendChild(fGroup('Panel Title *', fInput('pf-title', 'e.g. Crops', d.title)));
+  el.appendChild(fGroup('Name Column Label', fInput('pf-namelabel', 'e.g. Achievement, Item, Location… (default: Item)', d.nameLabel || '')));
   el.appendChild(fGroup('Tip Box (optional)', fInput('pf-infobox', 'e.g. No shipment box — bring items to shops.', d.infobox)));
   const colGroup = document.createElement('div'); colGroup.className = 'f-group';
   const colLbl = document.createElement('label'); colLbl.className = 'f-label'; colLbl.textContent = 'Columns (Name + Checkbox are always included)';
