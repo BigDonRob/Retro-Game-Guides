@@ -96,6 +96,8 @@
   padding: 1px 5px;
   color: var(--emphasis);
 }
+.gr-internal-link { color: var(--emphasis); text-decoration : underline; cursor : pointer; }
+
 .gr-link { color: var(--emphasis); }
 
 /* ── Shared Table Wrap ── */
@@ -231,6 +233,10 @@
     h = h.replace(/\*(.+?)\*/g,     '<em>$1</em>');
     // Inline code
     h = h.replace(/`(.+?)`/g, '<code class="gr-code">$1</code>');
+    // Internal links to tab
+    h = h.replace(/\[(.+?)\]\(\s*(\d+)\s*\)/g, '<span class="gr-internal-link" tab=$2 panel="none">$1</span>');
+    // Internal links to panel
+    h = h.replace(/\[(.+?)\]\(\s*(\d+)\s*,\s*(\d+)\s*\)/g, '<span class="gr-internal-link" tab="$2" panel="$3">$1</span>');
     // Links
     h = h.replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" class="gr-link" target="_blank" rel="noopener">$1</a>');
     // Unordered lists (collect consecutive li items)
@@ -355,7 +361,7 @@
   // ── CHECKLIST ─────────────────────────────────────────────────────────
   function renderChecklist(def, ctx) {
     const entryKey = Object.keys(def).find(k => k.startsWith('entry_'));
-    const items   = (entryKey ? def[entryKey] : def.items) || [];
+    const items    = (entryKey ? def[entryKey] : def.items) || [];
     const columns = def.columns || [];
     const wrap = document.createElement('div');
 
@@ -498,7 +504,7 @@
   // ── CARDS ─────────────────────────────────────────────────────────────
   function renderCards(def) {
     const cardFields = def.cardFields || [];
-    const cards      = def.cards      || [];
+    const cards      = def.cards || [];
     const wrap = document.createElement('div');
     wrap.className = 'gr-cards';
 

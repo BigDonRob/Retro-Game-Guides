@@ -1097,6 +1097,49 @@ function renderPreview() {
     addBtn.addEventListener('click', () => openAddPanelSheet(activeTab.id));
     content.appendChild(addBtn);
   }
+
+  attachLinkListeners();
+}
+
+// handle internal hyperlinks
+function attachLinkListeners() {
+  const links = document.querySelectorAll('.gr-internal-link');
+  links.forEach(link => {
+    link.replaceWith(link.cloneNode(true));
+  });
+
+  const freshLinks = document.querySelectorAll('.gr-internal-link');
+  freshLinks.forEach(link => {
+    link.addEventListener('click', (event) => {
+      const tab = parseInt(link.getAttribute('tab'), 10);
+      const panel = link.getAttribute('panel');
+
+      const tabs = Array.from(document.querySelectorAll('.gp-tab'));
+      if (tab < 1 || tab >= tabs.length + 1) {
+        console.log("tab " + tab + " not found");
+        return;
+      }
+
+      state.activeTabId = tabs[tab - 1].getAttribute('data-tab-id');
+
+      renderPreview();
+
+      if (panel !== "none") {
+        scrollToPanel(parseInt(panel - 1, 10));
+      }
+    });
+  });
+}
+
+function scrollToPanel(index){
+  const panels = Array.from(document.querySelectorAll('.gr-card'));
+  if(index < 0 || index >= panels.length) {
+    console.log("panel " + index + " not found");
+    return;
+  }
+  const panel = panels[index];
+  panel.classList.remove('gr-collapsed');
+  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function movePanel(tab, panelId, dir) {

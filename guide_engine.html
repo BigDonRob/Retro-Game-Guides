@@ -358,6 +358,12 @@ body.show-remaining .gr-check-row.gr-checked { display: none; }
   const params = new URLSearchParams(location.search);
   const raId   = parseInt(params.get('game') || '0', 10);
   if (!raId) { panic('Missing ?game= parameter in URL.'); return; }
+  const panelParam = params.get('panel')
+  let panelIndex
+  if (panelParam !== null){
+    panelIndex = parseInt(panelParam, 10);
+  }
+  const tabIndex = parseInt(params.get('tab') || '0', 10);
 
   const GAME_PATH = getGamePath(raId) + '/';
 
@@ -449,7 +455,7 @@ body.show-remaining .gr-check-row.gr-checked { display: none; }
     }
 
     const hasChecklists = (indexEntry.tabs || []).some(t => t.type === 'checklist' || t.type === 'subtab-checklist' || t.type === 'panels');
-    
+
     // Always show the storage badge and filter button
     document.getElementById('storage-badge').style.display = '';
     document.getElementById('filter-btn').style.display = '';
@@ -477,11 +483,45 @@ body.show-remaining .gr-check-row.gr-checked { display: none; }
     });
 
     initOverrideSheet(themes, palettes);
-    
+
+
+    // internal link handler
+    document.addEventListener('click', (event) => {
+      if (event.target.classList.contains('gr-internal-link')) {
+        const tab = parseInt(event.target.getAttribute('tab'), 10);
+        const panel = event.target.getAttribute('panel');
+        if (tabs.findIndex(t => t.num == tab) === -1){
+          console.log("tab " + tab + " not found");
+        } else if (panel == "none") {
+          const url = new URL(window.location);
+          url.searchParams.set("tab", tab);
+          history.replaceState({}, "", url);
+          setTimeout(async () => {
+            await activateTab(tab - 1, tabs, null);
+          }, 50);
+        } else {
+          const url = new URL(window.location);
+          url.searchParams.set("tab", tab);
+          url.searchParams.set("panel", panel);
+          history.replaceState({}, "", url);
+          setTimeout( async () => {
+            await activateTab(tab - 1, tabs, parseInt(panel, 10));
+          }, 50);
+        }
+      }
+    });
+
+    // tab index init
+    if (!tabIndex || tabs.findIndex(t => t.num == tabIndex) === -1) {
+      setTimeout(async () => {
+        await activateTab(0, tabs, panelIndex);
+      }, 50);
+    } else {
     // Delay initial tab activation to ensure DOM is ready
-    setTimeout(async () => {
-      await activateTab(0, tabs);
-    }, 50);
+      setTimeout(async () => {
+        await activateTab(tabIndex - 1, tabs, panelIndex);
+      }, 50);
+    }
 
     // Clear progress button - add after DOM is ready and elements exist
     setTimeout(() => {
@@ -489,7 +529,7 @@ body.show-remaining .gr-check-row.gr-checked { display: none; }
       const clearCancel = document.getElementById('clear-cancel');
       const clearConfirm = document.getElementById('clear-confirm');
       const clearBackdrop = document.getElementById('clear-backdrop');
-      
+
       if (clearBtn && clearCancel && clearConfirm && clearBackdrop) {
         clearBtn.addEventListener('click', showClearConfirm);
         clearCancel.addEventListener('click', hideClearConfirm);
@@ -508,22 +548,25 @@ body.show-remaining .gr-check-row.gr-checked { display: none; }
     });
 
     initOverrideSheet(themes, palettes);
-    await activateTab(0, tabs);
   }
 
   // ── TAB ACTIVATION ───────────────────────────────────────────────────
-  async function activateTab(index, tabs) {
-    if (index === activeTabIndex) return;
+  async function activateTab(index, tabs, panelIdx) {
     activeTabIndex = index;
     [...$tabBar.querySelectorAll('.tab-btn')].forEach((btn, i) => {
-      const active = i === index;
-      btn.classList.toggle('active', active);
-      btn.setAttribute('aria-selected', active ? 'true' : 'false');
-      if (active) btn.scrollIntoView({ inline: 'nearest', behavior: 'smooth' });
+     const active = i === index;
+     btn.classList.toggle('active', active);
+     btn.setAttribute('aria-selected', active ? 'true' : 'false');
+     if (active) btn.scrollIntoView({ inline: 'nearest', behavior: 'smooth' });
     });
-
     const num = tabs[index].num;
-    if (tabCache[num]) { mountTab(tabCache[num]); return; }
+    if (tabCache[num]) { 
+      mountTab(tabCache[num]); 
+      if (panelIdx && panelIdx !== "none") {
+        setTimeout(() => scrollToPanel(panelIdx - 1), 50);
+      }
+      return; 
+    }
 
     mountLoading();
     let tabDef;
@@ -536,6 +579,30 @@ body.show-remaining .gr-check-row.gr-checked { display: none; }
     const frag = buildTabContent(tabDef);
     tabCache[num] = frag;
     mountTab(frag);
+
+    if (panelIdx != null && tabDef.panels && tabDef.panels[panelIdx]){
+      setTimeout(() => scrollToPanel(panelIdx - 1), 50);
+    }
+  }
+
+  // handle the naviguation if a panel is specified
+  function scrollToPanel(index) {
+    const panel = $content.querySelectorAll('.gr-panel-wrap')[index];
+    if (!panel) return;
+
+    const card = panel.querySelector('.gr-card');
+    if (card && card.classList.contains('gr-collapsed')) {
+      expandPanel(index);
+    }
+
+    const cardHeader = card.querySelector('.gr-card-header');
+    if (cardHeader) {
+      const rect = cardHeader.getBoundingClientRect();
+      const guideHeader = document.getElementById('guide-header').getBoundingClientRect();
+      const tabBar = document.getElementById('tab-bar').getBoundingClientRect();
+      const scrollTop = window.scrollY + rect.top - guideHeader.top - (tabBar.top * 2);
+      window.scrollTo({ top: scrollTop, behavior: 'smooth' });
+    }
   }
 
   // ── TAB CONTENT ──────────────────────────────────────────────────────
@@ -610,37 +677,48 @@ body.show-remaining .gr-check-row.gr-checked { display: none; }
 
   // ── PANEL TOGGLE REBINDING ────────────────────────────────────────────
   function rebindPanelToggles() {
-    $content.querySelectorAll('.gr-card-header').forEach(header => {
-      const card = header.closest('.gr-card');
-      const panelWrap = header.closest('.gr-panel-wrap');
-      const panelId = panelWrap?.dataset.panelId;
-      
-      if (!card || !panelId) return;
-      
-      const colKey = '__c_' + panelId;
+    const panels = $content.querySelectorAll('.gr-panel-wrap'); // NodeList
+    panels.forEach((panelWrap, index) => {
+      const card = panelWrap.querySelector('.gr-card');
+      const header = panelWrap.querySelector('.gr-card-header');
+      if (!card || !header) return;
+
+      const colKey = '__c_' + index;
       const isExpanded = ctx.load(colKey);
       if (!isExpanded) card.classList.add('gr-collapsed');
-      
+
+      // Toggle panel on header click
       header.addEventListener('click', (e) => {
         e.preventDefault();
-        console.log('Panel header clicked (rebound):', panelId);
-        const nowCollapsed = card.classList.toggle('gr-collapsed');
-        ctx.save(colKey, !nowCollapsed); // save expanded=true when not collapsed
+        if (card.classList.contains('gr-collapsed')) {
+          expandPanel(index);
+        } else {
+          collapsePanel(index);
+        }
       });
-
-      // Also add click handler to toggle icon
-      const toggle = header.querySelector('.gr-card-toggle');
-      if (toggle) {
-        toggle.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          console.log('Toggle icon clicked (rebound):', panelId);
-          const nowCollapsed = card.classList.toggle('gr-collapsed');
-          ctx.save(colKey, !nowCollapsed);
-        });
-      }
     });
   }
+
+  function expandPanel(index) {
+    const panel = $content.querySelectorAll('.gr-panel-wrap')[index];
+    if (!panel) return;
+
+    const card = panel.querySelector('.gr-card');
+    if (!card) return;
+    card.classList.remove('gr-collapsed');
+    ctx.save('__c_' + index, true);
+  }
+
+  function collapsePanel(index) {
+    const panel = $content.querySelectorAll('.gr-panel-wrap')[index];
+    if (!panel) return;
+
+    const card = panel.querySelector('.gr-card');
+    if (!card) return;
+    card.classList.add('gr-collapsed');
+    ctx.save('__c_' + index, false);
+  }
+
   function updateProgress(tr) {
     const body = tr.closest('.gr-card-body');
     if (!body) return;

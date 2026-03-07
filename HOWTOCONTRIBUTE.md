@@ -94,6 +94,8 @@ Fill in the **Panel Title** and optionally a **Tip Box** (appears as a highlight
 - `` `code` `` → `code`
 - `### Heading` → a section header
 - `- Item` → a bullet point
+- `[text](tab)` → link to another tab, `tab` must be an integer. tabs start at 1.   
+- `[text](tab, panel)` → link to another panel, `panel` must be an integer. panels start at 1.   
 
 The toolbar buttons above the text area will insert formatting around your selection.
 
