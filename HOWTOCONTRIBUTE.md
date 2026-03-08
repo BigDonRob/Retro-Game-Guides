@@ -104,14 +104,12 @@ Fill in the **Panel Title** and save. Then use **+ Add Row** to add pairs one at
 ### Checklist Panel
 
 1. Fill in **Panel Title** and optionally a **Tip Box**.
-2. Add **Columns** — click **+ Add Column** for each extra column you want. Every checklist already has a built-in Name column and a checkbox; you're adding columns for things like Location, Price, Notes, etc. Each column needs a label and a style:
+2. Add **Columns** — click **+ Add Column** for each extra column you want. Every checklist already has a built-in Number column and a checkbox; you're adding columns for things like Location, Price, Notes, etc. Each column needs a label and a style:
    - **Standard** — regular text
    - **Accent (gold)** — for prices, rewards, key data
    - **Dim (muted)** — for secondary info; hidden on narrow screens
 3. Click **Create Panel**.
 4. Click **+ Add Row** to fill in items. Each row has a Name field and one field per column you defined. The optional **Note** field adds small secondary text under the item name — good for warnings or tips.
-
-> **Note on the exported JSON:** The builder names the checklist items array using an `entry_` prefix derived from the panel title (e.g. a panel titled "Achievement Checklist" exports as `entry_AchievementChecklist`). This is intentional — it makes the JSON self-documenting. If you're editing exported files by hand, keep the `entry_` prefix on whichever key holds the items array.
 
 > **Tip on IDs:** The builder auto-generates item IDs. If you're migrating an existing guide and need to preserve user progress, you'll want to edit the exported JSON directly to match the old IDs. See `SCHEMA.md`.
 
