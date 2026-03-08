@@ -30,12 +30,32 @@
   }
 
   /** Minimal markdown → HTML. Input is plain text (not pre-escaped). */
-  function md(s) {
+  function md(s, skipEsc=false) {
     if (!s) return '';
-    let h = esc(s);
+    let h = skipEsc ? s : esc(s);
     // Headers
     h = h.replace(/^### (.+)$/gm, '<h3 class="gr-h3">$1</h3>');
     h = h.replace(/^## (.+)$/gm,  '<h3 class="gr-h3">$1</h3>');
+    // horizontale rules
+    h = h.replace(/^\s*(\*\*\*|---|___)\s*$/gm, '<hr class="gr-hr">');
+    h = h.replace(/^\s*(===)\s*$/gm, '<hr class="gr-hr2">');
+    // infoboxes ("&gt;" correspond to ">")
+    h = h.replace(/^&gt; ?(.*(?:\n&gt; ?.*)*)/gm, (match, content) => {
+      const cleaned = content.replace(/^&gt; ?/gm, '');
+      const html = md(cleaned, true);
+      return `<div class="gr-infobox">${html}</div>`;
+    });
+    // collapsible box
+    h = h.replace(/\[\s*(.+?)\s*\]\{\s*([\s\S]+?)\s*\}/g, (match, header, content) => {
+      content = md(content, true)
+      return `<div class="gr-box gr-collapsed">
+                <div class="gr-box-header">
+                  <div class="gr-box-title">${header}</div>
+                  <div class="gr-box-toggle">▾</div>
+                </div>
+                <div class="gr-box-body">${content}</div>
+              </div>`;
+    });
     // Bold / italic
     h = h.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
     h = h.replace(/\*(.+?)\*/g,     '<em>$1</em>');
@@ -61,12 +81,19 @@
     });
     // Paragraphs — split on blank lines, skip block elements
     const blocks = h.split(/\n\n+/);
-    return blocks.map(b => {
+    h = blocks.map(b => {
       b = b.trim();
       if (!b) return '';
-      if (/^<(h3|ul|ol)/.test(b)) return b;
+      if (/^<(h3|ul|ol|hr|div|blockquote)/.test(b)) return b;
       return `<p class="gr-p">${b.replace(/\n/g, '<br>')}</p>`;
     }).join('');
+
+    // removing <br> around <hr>
+    h = h.replace(/<br>\s*(<hr class="gr-hr2?">)\s*<br>/g, '$1')
+     .replace(/<br>\s*(<hr class="gr-hr2?">)/g, '$1')
+     .replace(/(<hr class="gr-hr2?">)\s*<br>/g, '$1');
+
+    return h;
   }
 
   /** Collision-resistant ID for new items. */
