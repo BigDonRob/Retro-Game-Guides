@@ -61,7 +61,7 @@
 
 /* ── Text Panel ── */
 .gr-text { font-size: 13px; color: var(--text); line-height: 1.8; }
-.gr-p { margin: 0 0 8px; }
+.gr-p { margin: 0 0 10px; }
 .gr-p:last-child { margin-bottom: 0; }
 .gr-h3 {
   font-family: var(--font-display, Georgia, serif);
@@ -69,6 +69,20 @@
   font-weight: 700;
   color: var(--emphasis);
   margin: 12px 0 4px;
+}
+.gr-hr {
+  border: none;
+  height: .15em;
+  margin: 1.5rem 7.5rem 1.5rem 7.5rem;
+  background-color: var(--surface2);
+  border-radius: 999px;
+}
+.gr-hr2 {
+  border: none;
+  height: .4em;
+  margin: 1.5rem 3rem 1.5rem 3rem;
+  background-color: var(--surface2);
+  border-radius: 999px;
 }
 .gr-ul { padding-left: 18px; margin: 4px 0 8px; color: var(--text); }
 .gr-ul li { margin-bottom: 3px; font-size: 13px; }

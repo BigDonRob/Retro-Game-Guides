@@ -36,6 +36,9 @@
     // Headers
     h = h.replace(/^### (.+)$/gm, '<h3 class="gr-h3">$1</h3>');
     h = h.replace(/^## (.+)$/gm,  '<h3 class="gr-h3">$1</h3>');
+    // horizontale rules
+    h = h.replace(/^\s*(\*\*\*|---|___)\s*$/gm, '<hr class="gr-hr">');
+    h = h.replace(/^\s*(===)\s*$/gm, '<hr class="gr-hr2">');
     // Bold / italic
     h = h.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
     h = h.replace(/\*(.+?)\*/g,     '<em>$1</em>');
@@ -61,12 +64,19 @@
     });
     // Paragraphs — split on blank lines, skip block elements
     const blocks = h.split(/\n\n+/);
-    return blocks.map(b => {
+    h = blocks.map(b => {
       b = b.trim();
       if (!b) return '';
-      if (/^<(h3|ul|ol)/.test(b)) return b;
+      if (/^<(h3|ul|ol|hr)/.test(b)) return b;
       return `<p class="gr-p">${b.replace(/\n/g, '<br>')}</p>`;
     }).join('');
+
+    // removing <br> around <hr>
+    h = h.replace(/<br>\s*(<hr class="gr-hr2?">)\s*<br>/g, '$1')
+     .replace(/<br>\s*(<hr class="gr-hr2?">)/g, '$1')
+     .replace(/(<hr class="gr-hr2?">)\s*<br>/g, '$1');
+
+    return h;
   }
 
   /** Collision-resistant ID for new items. */
