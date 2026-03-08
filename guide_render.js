@@ -39,6 +39,12 @@
     // horizontale rules
     h = h.replace(/^\s*(\*\*\*|---|___)\s*$/gm, '<hr class="gr-hr">');
     h = h.replace(/^\s*(===)\s*$/gm, '<hr class="gr-hr2">');
+    // infoboxes ("&gt;" correspond to ">")
+    h = h.replace(/^&gt; ?(.*(?:\n&gt; ?.*)*)/gm, (match, content) => {
+      const cleaned = content.replace(/^&gt; ?/gm, '');
+      const html = md(cleaned);
+      return `<div class="gr-infobox">${html}</div>`;
+    });
     // Bold / italic
     h = h.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
     h = h.replace(/\*(.+?)\*/g,     '<em>$1</em>');
