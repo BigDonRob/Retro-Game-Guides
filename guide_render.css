@@ -185,8 +185,20 @@
 .gr-card-value { color: var(--text); }
 
 /* ── Horizontal Rules ── */
-.gr-hr  { border: none; border-top: 1px solid var(--borderL); margin: 12px 0; }
-.gr-hr2 { border: none; border-top: 3px double var(--border); margin: 12px 0; }
+.gr-hr {
+  border: none;
+  height: .15em;
+  margin: 1.5rem 7.5rem 1.5rem 7.5rem;
+  background-color: var(--surface2);
+  border-radius: 999px;
+}
+.gr-hr2 {
+  border: none;
+  height: .4em;
+  margin: 1.5rem 3rem 1.5rem 3rem;
+  background-color: var(--surface2);
+  border-radius: 999px;
+}
 
 /* ── Blockquote ── */
 .gr-blockquote {
