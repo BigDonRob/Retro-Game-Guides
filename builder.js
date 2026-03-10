@@ -14,9 +14,9 @@
        { raId, slug, primaryName, primarySystem, icon, theme, palette }
 
      _00.json — full guide config + metadata + tab manifest:
-       { storagePrefix, subtitle, theme, palette, icon,
+       { storagePrefix, subtitle, icon,
          primaryName, primarySystem, altSystems, altNames,
-         series, year, author,
+         series, year, author, bgImage,
          tabs: [{ num, label, type }] }
    ═══════════════════════════════════════════════════════════════════════ */
 (function () {
@@ -50,7 +50,7 @@
     meta: {
       raId: '', primaryName: '', systemId: null, altSystemIds: [],
       altNames: '', seriesHubId: null, year: '', icon: '🎮', author: '',
-      subtitle: '', theme: 'clean', palette: 'slate', contentTags: [],
+      subtitle: '', theme: 'clean', palette: 'slate', contentTags: [], bgImage: '',
     },
     tabs:        [],
     activeTabId: null,
@@ -488,6 +488,7 @@
     if (altSystems.length) cfg.altSystems = altSystems;
     if (altNames.length)   cfg.altNames   = altNames;
     if (m.year)            cfg.year       = parseInt(m.year);
+    if (m.bgImage)         cfg.bgImage    = m.bgImage;
     return cfg;
   }
 
@@ -605,6 +606,7 @@
       theme:         state._themesList[indexEntry?.theme]     || 'clean',
       palette:       state._palettesList[indexEntry?.palette] || 'slate',
       contentTags:   (indexEntry?.tags    || []).map(i => state._tagsList[i]).filter(Boolean),
+      bgImage:       config.bgImage || '',
     };
 
     state.tabs = parsedTabs.map((tabDef, i) => {

@@ -38,6 +38,25 @@ body.mode-editor #editor-header {
   --textMid:     #8b949e;
 }
 
+/* ── BACKGROUND IMAGE (optional, set from _00.json bgImage field) ── */
+body.has-bg-image {
+  background-size: contain;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+body.has-bg-image #tab-content {
+  background: transparent;
+}
+@media (max-width: 600px) {
+  body.has-bg-image {
+    background-image: none !important;
+  }
+  body.has-bg-image #tab-content {
+    background: var(--bg);
+  }
+}
+
 /* ── BODY ── */
 body {
   font-family: var(--font-body);

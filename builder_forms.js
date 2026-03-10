@@ -98,6 +98,20 @@
         <input class="f-input" id="mf-sub" placeholder="e.g. Completion tracker — progress saved locally" value="${esc(m.subtitle)}">
       </div>
       <div class="f-group">
+        <label class="f-label">Background Image <span style="font-weight:400;text-transform:none">(WebP only — centered behind all panels, not stretched)</span></label>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <label class="b-btn b-btn-ghost" style="cursor:pointer;font-size:11px">
+            📁 Choose WebP…
+            <input type="file" id="mf-bgimage-input" accept="image/webp" style="display:none">
+          </label>
+          <button type="button" id="mf-bgimage-clear" class="b-btn b-btn-ghost" style="font-size:11px;${m.bgImage ? '' : 'display:none'}">✕ Remove</button>
+        </div>
+        <div id="mf-bgimage-preview" style="margin-top:8px;${m.bgImage ? '' : 'display:none'}">
+          <img id="mf-bgimage-thumb" src="${m.bgImage ? esc(m.bgImage) : ''}" style="max-width:100%;max-height:120px;border-radius:6px;border:1px solid rgba(255,255,255,0.1);object-fit:cover;display:block">
+          <div id="mf-bgimage-size" style="font-family:monospace;font-size:10px;color:#8b949e;margin-top:4px"></div>
+        </div>
+      </div>
+      <div class="f-group">
         <label class="f-label">Content Tags <span style="font-weight:400;text-transform:none">(for browse filtering)</span></label>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
           <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; cursor: pointer;">
@@ -139,6 +153,38 @@
       const hubId = seriesRevMap[seriesSearchEl.value.trim()];
       seriesIdEl.value = hubId != null ? String(hubId) : '';
     });
+
+    // Background image — file picker + clear
+    const bgInput   = el.querySelector('#mf-bgimage-input');
+    const bgClear   = el.querySelector('#mf-bgimage-clear');
+    const bgPreview = el.querySelector('#mf-bgimage-preview');
+    const bgThumb   = el.querySelector('#mf-bgimage-thumb');
+    const bgSize    = el.querySelector('#mf-bgimage-size');
+    let bgImageData = m.bgImage || '';
+
+    function showBgPreview(dataUrl, bytes) {
+      bgThumb.src = dataUrl;
+      bgSize.textContent = bytes != null ? `${(bytes / 1024).toFixed(1)} KB` : '';
+      bgPreview.style.display = '';
+      bgClear.style.display = '';
+    }
+    function clearBgImage() {
+      bgImageData = '';
+      bgThumb.src = '';
+      bgPreview.style.display = 'none';
+      bgClear.style.display = 'none';
+      bgInput.value = '';
+    }
+    if (bgImageData) showBgPreview(bgImageData, null);
+    bgInput.addEventListener('change', () => {
+      const file = bgInput.files[0];
+      if (!file) return;
+      if (file.type !== 'image/webp') { alert('Please choose a WebP image.'); bgInput.value = ''; return; }
+      const reader = new FileReader();
+      reader.onload = e => { bgImageData = e.target.result; showBgPreview(bgImageData, file.size); };
+      reader.readAsDataURL(file);
+    });
+    bgClear.addEventListener('click', clearBgImage);
 
     // Theme swatches
     const themeGrid = el.querySelector('#mf-themes');
@@ -289,6 +335,7 @@
       state.meta.author        = el.querySelector('#mf-author').value.trim();
       state.meta.icon          = el.querySelector('#mf-icon').value.trim() || '🎮';
       state.meta.subtitle      = el.querySelector('#mf-sub').value.trim();
+      state.meta.bgImage       = bgImageData;
 
       const contentTags = [];
       if (el.querySelector('#mf-tag-walkthrough').checked) contentTags.push('Walkthrough');

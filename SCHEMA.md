@@ -157,6 +157,7 @@ This file contains guide display metadata and the tab manifest. Browse/filter me
 | `subtitle` | — | Short description shown under the game title in the content area. |
 | `author` | — | Guide author name. |
 | `altSystems` | — | Array of system name strings for display in guide header. |
+| `bgImage` | — | Base64-encoded WebP data URL (`"data:image/webp;base64,…"`). Displayed as a centered, natural-size, fixed background image underneath all panels. Does not stretch or scale with the browser. Omit if no background image is desired. |
 
 **Fields that must NOT appear in `_00.json`:** `theme`, `palette`, `series`, `contentTags`, `altNames`. These belong in `games_index.json` only.
 
