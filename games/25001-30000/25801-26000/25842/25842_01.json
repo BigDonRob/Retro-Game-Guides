@@ -767,10 +767,18 @@
           "chapter": "Ch.7: Mountain Tower",
           "area": "Level 3",
           "label": "E",
-          "contents": "2-Handed Sword (30 SP), 2-Handed Axe (10 SP), Ceremonial Sword (200 SP), Jeweled Sword (200 SP), Fancy Pants (120 SP), Ruby (100 SP), Houton Land Deed (60 SP), Adderstone x1"
+          "contents": "2-Handed Sword (30 SP), 2-Handed Axe (10 SP), Ceremonial Sword (200 SP), Jeweled Sword (200 SP)"
         },
         {
           "id": "25842_t01_083",
+          "flag": "",
+          "chapter": "Ch.7: Mountain Tower",
+          "area": "Level 3",
+          "label": "F",
+          "contents": "Fancy Pants (120 SP), Ruby (100 SP), Houton Land Deed (60 SP), Adderstone x1"
+        },
+        {
+          "id": "25842_t01_084",
           "flag": "",
           "chapter": "Ch.8: Dounby",
           "area": "The Old City",
@@ -779,7 +787,7 @@
           "note": "TUNE — first chest from West Dounby entrance"
         },
         {
-          "id": "25842_t01_084",
+          "id": "25842_t01_085",
           "flag": "",
           "chapter": "Ch.8: Dounby",
           "area": "The Old City",
@@ -788,7 +796,7 @@
           "note": "TUNE — south"
         },
         {
-          "id": "25842_t01_085",
+          "id": "25842_t01_086",
           "flag": "",
           "chapter": "Ch.8: Dounby",
           "area": "The Old City",
@@ -797,7 +805,7 @@
           "note": "INSTRUMENT: Silver Harp (3 summons, 400 mana) — extreme southwest"
         },
         {
-          "id": "25842_t01_086",
+          "id": "25842_t01_087",
           "flag": "",
           "chapter": "Ch.8: Dounby",
           "area": "The Old City",
@@ -805,7 +813,7 @@
           "contents": "Jeweled Sword (200 SP), Adderstone x3"
         },
         {
-          "id": "25842_t01_087",
+          "id": "25842_t01_088",
           "flag": "🟡",
           "chapter": "Ch.8: Dounby",
           "area": "The Old City",
@@ -814,7 +822,7 @@
           "note": "Hidden room — Explorer required"
         },
         {
-          "id": "25842_t01_088",
+          "id": "25842_t01_089",
           "flag": "",
           "chapter": "Ch.9: Finstown",
           "area": "Town of Finstown (Armory)",
@@ -823,7 +831,7 @@
           "note": "TOKEN: Broonie's Cloak (+10% health regen)"
         },
         {
-          "id": "25842_t01_089",
+          "id": "25842_t01_090",
           "flag": "",
           "chapter": "Ch.9: Finstown",
           "area": "Town of Finstown (Armory)",
@@ -832,7 +840,7 @@
           "note": "WEAPON: Granite Flail"
         },
         {
-          "id": "25842_t01_090",
+          "id": "25842_t01_091",
           "flag": "",
           "chapter": "Ch.9: Finstown",
           "area": "Town of Finstown (Armory)",
@@ -841,7 +849,7 @@
           "note": "ARMOR: Scathach's Mail"
         },
         {
-          "id": "25842_t01_091",
+          "id": "25842_t01_092",
           "flag": "",
           "chapter": "Ch.9: Finstown",
           "area": "Town of Finstown (Armory)",
@@ -849,7 +857,7 @@
           "contents": "300 Silver Pieces, Ceremonial Sword (200 SP), Copper Goblet (4 SP), Adderstone x1"
         },
         {
-          "id": "25842_t01_092",
+          "id": "25842_t01_093",
           "flag": "",
           "chapter": "Ch.9: Finstown",
           "area": "Town of Finstown (Armory)",
@@ -857,7 +865,7 @@
           "contents": "200 Silver Pieces, Adderstone x1, Black Pearl (175 SP), Amethyst (80 SP)"
         },
         {
-          "id": "25842_t01_093",
+          "id": "25842_t01_094",
           "flag": "",
           "chapter": "Ch.9: Finstown",
           "area": "Town of Finstown (Silkbeard)",
@@ -866,7 +874,7 @@
           "note": "TUNE: Rogue — Silkbeard's treasure room"
         },
         {
-          "id": "25842_t01_094",
+          "id": "25842_t01_095",
           "flag": "",
           "chapter": "Ch.9: Finstown",
           "area": "Town of Finstown (Silkbeard)",
@@ -874,7 +882,7 @@
           "contents": "475 Silver Pieces, Adderstone x1, Pearl (80 SP), Houton Land Deed (60 SP)"
         },
         {
-          "id": "25842_t01_095",
+          "id": "25842_t01_096",
           "flag": "",
           "chapter": "Ch.9: Finstown",
           "area": "Town of Finstown (Silkbeard)",
@@ -907,7 +915,7 @@
       ],
       "entry_Fargos": [
         {
-          "id": "25842_t01_096",
+          "id": "25842_t01_996",
           "flag": "",
           "chapter": "Ch.10: Greenlands",
           "area": "Greenlands North Plain",

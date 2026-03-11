@@ -259,7 +259,41 @@
   display: flow-root;
 }
 .gr-box.gr-collapsed .gr-box-body { display: none; }
+/* ── Card Grid ── */
+.cg-outer {
+  display: grid;
+  grid-template-columns: repeat(var(--cg-card-cols, 1), 1fr);
+  gap: 10px;
+}
+.cg-card {
+  display: grid;
+  gap: 0;
+  background: var(--surface);
+  border: 1px solid var(--borderL);
+  border-radius: var(--radius-card, 8px);
+  overflow: hidden;
+}
+.cg-cell {
+  padding: 6px 10px;
+  min-height: 28px;
+  overflow: hidden;
+  word-break: break-word;
+}
+.cg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+.cg-text { font-size: 12.5px; line-height: 1.5; }
+.cg-text-right { text-align: right; }
+.cg-constant { color: var(--textMuted); font-weight: 600; }
+.cg-field    { color: var(--text); }
+
 /* ── Responsive ── */
+@media (max-width: 600px) {
+  .cg-outer { grid-template-columns: 1fr !important; }
+}
 @media (max-width: 600px) {
   .gr-card-body { padding: 10px; }
   .gr-dim { display: none; }
