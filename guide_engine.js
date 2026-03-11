@@ -99,6 +99,12 @@
     applyUserOverride(themes, palettes);
     initA11y();
 
+    // Background image (stored as base64 WebP in _00.json)
+    if (config.bgImage) {
+      document.body.style.backgroundImage = `url(${config.bgImage})`;
+      document.body.classList.add('has-bg-image');
+    }
+
     // Header — display fields from _00.json; series/altSystems decoded from index entry
     $icon.textContent  = config.icon || '🎮';
     $title.textContent = config.primaryName || 'Guide';

@@ -14,9 +14,9 @@
        { raId, slug, primaryName, primarySystem, icon, theme, palette }
 
      _00.json — full guide config + metadata + tab manifest:
-       { storagePrefix, subtitle, theme, palette, icon,
+       { storagePrefix, subtitle, icon,
          primaryName, primarySystem, altSystems, altNames,
-         series, year, author,
+         series, year, author, bgImage,
          tabs: [{ num, label, type }] }
    ═══════════════════════════════════════════════════════════════════════ */
 (function () {
@@ -50,10 +50,11 @@
     meta: {
       raId: '', primaryName: '', systemId: null, altSystemIds: [],
       altNames: '', seriesHubId: null, year: '', icon: '🎮', author: '',
-      subtitle: '', theme: 'clean', palette: 'slate', contentTags: [],
+      subtitle: '', theme: 'clean', palette: 'slate', contentTags: [], bgImage: '',
     },
     tabs:        [],
     activeTabId: null,
+    gridEditorActive: false,    // suppresses renderPreview while grid editor is open
     // CSS definition lookups (from themes.json / palettes.json)
     _themes:     {},
     _palettes:   {},
@@ -237,6 +238,7 @@
 
   // ── RENDER PREVIEW ────────────────────────────────────────────────────
   function renderPreview() {
+    if (state.gridEditorActive) return;
     const m = state.meta;
     if (!m.primaryName && !m.raId) return;
 
@@ -319,13 +321,25 @@
           movePanel(activeTab, panel.id,  1));
         wrap.append(rendered, overlay);
 
-        if (['checklist','table','keyvalue','cards'].includes(panel.panelType)) {
+        if (['checklist','table','keyvalue','cards','cardgrid'].includes(panel.panelType)) {
           const rowBar = document.createElement('div');
-          rowBar.style.cssText = 'display:flex;gap:8px;padding:6px 0 14px';
+          rowBar.style.cssText = 'display:flex;gap:8px;padding:6px 0 14px;flex-wrap:wrap';
+
+          // cardgrid: "Edit Grid Layout" button comes first
+          if (panel.panelType === 'cardgrid') {
+            const gridBtn = document.createElement('button');
+            gridBtn.className = 'b-btn b-btn-ghost';
+            gridBtn.style.cssText = 'font-size:11px;padding:5px 12px';
+            gridBtn.textContent = '⊞ Edit Grid Layout';
+            gridBtn.addEventListener('click', () =>
+              window.BForms.openCardGridEditor(activeTab.id, panel.id));
+            rowBar.appendChild(gridBtn);
+          }
+
           const addRowBtn = document.createElement('button');
           addRowBtn.className = 'b-btn b-btn-primary';
           addRowBtn.style.cssText = 'font-size:11px;padding:5px 12px';
-          addRowBtn.textContent = '+ Add Row';
+          addRowBtn.textContent = panel.panelType === 'cardgrid' ? '+ Add Card' : '+ Add Row';
           addRowBtn.addEventListener('click', () =>
             window.BForms.openAddRowSheet(activeTab.id, panel.id));
           rowBar.appendChild(addRowBtn);
@@ -488,6 +502,7 @@
     if (altSystems.length) cfg.altSystems = altSystems;
     if (altNames.length)   cfg.altNames   = altNames;
     if (m.year)            cfg.year       = parseInt(m.year);
+    if (m.bgImage)         cfg.bgImage    = m.bgImage;
     return cfg;
   }
 
@@ -524,10 +539,17 @@
     state.tabs.forEach((tab, i) => {
       const num = String(i + 1).padStart(2, '0');
       const serialisedPanels = tab.panels.map(panel => {
-        if (panel.panelType !== 'checklist') return panel;
-        const { items, ...rest } = panel;
-        rest[entryKeyFromTitle(panel.title)] = items || [];
-        return rest;
+        if (panel.panelType === 'checklist') {
+          const { items, ...rest } = panel;
+          rest[entryKeyFromTitle(panel.title)] = items || [];
+          return rest;
+        }
+        if (panel.panelType === 'cardgrid') {
+          const { items, ...rest } = panel;
+          rest[entryKeyFromTitle(panel.title)] = items || [];
+          return rest;
+        }
+        return panel;
       });
       folder.file(
         `${gamePath}/${raId}_${num}.json`,
@@ -605,15 +627,18 @@
       theme:         state._themesList[indexEntry?.theme]     || 'clean',
       palette:       state._palettesList[indexEntry?.palette] || 'slate',
       contentTags:   (indexEntry?.tags    || []).map(i => state._tagsList[i]).filter(Boolean),
+      bgImage:       config.bgImage || '',
     };
 
     state.tabs = parsedTabs.map((tabDef, i) => {
       const panels = (tabDef.panels || []).map(panel => {
-        if (panel.panelType !== 'checklist') return { ...panel };
-        const entryKey = Object.keys(panel).find(k => k.startsWith('entry_'));
-        if (!entryKey) return { ...panel };
-        const { [entryKey]: entryItems, ...rest } = panel;
-        return { ...rest, items: entryItems || [] };
+        if (panel.panelType === 'checklist' || panel.panelType === 'cardgrid') {
+          const entryKey = Object.keys(panel).find(k => k.startsWith('entry_'));
+          if (!entryKey) return { ...panel };
+          const { [entryKey]: entryItems, ...rest } = panel;
+          return { ...rest, items: entryItems || [] };
+        }
+        return { ...panel };
       });
       return { id: uid('tab'), label: tabDef.label || `Tab ${i + 1}`, panels };
     });

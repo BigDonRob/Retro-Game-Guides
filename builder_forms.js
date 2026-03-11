@@ -98,6 +98,20 @@
         <input class="f-input" id="mf-sub" placeholder="e.g. Completion tracker — progress saved locally" value="${esc(m.subtitle)}">
       </div>
       <div class="f-group">
+        <label class="f-label">Background Image <span style="font-weight:400;text-transform:none">(WebP only — centered behind all panels, not stretched)</span></label>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <label class="b-btn b-btn-ghost" style="cursor:pointer;font-size:11px">
+            📁 Choose WebP…
+            <input type="file" id="mf-bgimage-input" accept="image/webp" style="display:none">
+          </label>
+          <button type="button" id="mf-bgimage-clear" class="b-btn b-btn-ghost" style="font-size:11px;${m.bgImage ? '' : 'display:none'}">✕ Remove</button>
+        </div>
+        <div id="mf-bgimage-preview" style="margin-top:8px;${m.bgImage ? '' : 'display:none'}">
+          <img id="mf-bgimage-thumb" src="${m.bgImage ? esc(m.bgImage) : ''}" style="max-width:100%;max-height:120px;border-radius:6px;border:1px solid rgba(255,255,255,0.1);object-fit:cover;display:block">
+          <div id="mf-bgimage-size" style="font-family:monospace;font-size:10px;color:#8b949e;margin-top:4px"></div>
+        </div>
+      </div>
+      <div class="f-group">
         <label class="f-label">Content Tags <span style="font-weight:400;text-transform:none">(for browse filtering)</span></label>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
           <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; cursor: pointer;">
@@ -139,6 +153,38 @@
       const hubId = seriesRevMap[seriesSearchEl.value.trim()];
       seriesIdEl.value = hubId != null ? String(hubId) : '';
     });
+
+    // Background image — file picker + clear
+    const bgInput   = el.querySelector('#mf-bgimage-input');
+    const bgClear   = el.querySelector('#mf-bgimage-clear');
+    const bgPreview = el.querySelector('#mf-bgimage-preview');
+    const bgThumb   = el.querySelector('#mf-bgimage-thumb');
+    const bgSize    = el.querySelector('#mf-bgimage-size');
+    let bgImageData = m.bgImage || '';
+
+    function showBgPreview(dataUrl, bytes) {
+      bgThumb.src = dataUrl;
+      bgSize.textContent = bytes != null ? `${(bytes / 1024).toFixed(1)} KB` : '';
+      bgPreview.style.display = '';
+      bgClear.style.display = '';
+    }
+    function clearBgImage() {
+      bgImageData = '';
+      bgThumb.src = '';
+      bgPreview.style.display = 'none';
+      bgClear.style.display = 'none';
+      bgInput.value = '';
+    }
+    if (bgImageData) showBgPreview(bgImageData, null);
+    bgInput.addEventListener('change', () => {
+      const file = bgInput.files[0];
+      if (!file) return;
+      if (file.type !== 'image/webp') { alert('Please choose a WebP image.'); bgInput.value = ''; return; }
+      const reader = new FileReader();
+      reader.onload = e => { bgImageData = e.target.result; showBgPreview(bgImageData, file.size); };
+      reader.readAsDataURL(file);
+    });
+    bgClear.addEventListener('click', clearBgImage);
 
     // Theme swatches
     const themeGrid = el.querySelector('#mf-themes');
@@ -289,6 +335,7 @@
       state.meta.author        = el.querySelector('#mf-author').value.trim();
       state.meta.icon          = el.querySelector('#mf-icon').value.trim() || '🎮';
       state.meta.subtitle      = el.querySelector('#mf-sub').value.trim();
+      state.meta.bgImage       = bgImageData;
 
       const contentTags = [];
       if (el.querySelector('#mf-tag-walkthrough').checked) contentTags.push('Walkthrough');
@@ -357,9 +404,17 @@
       keyvalue:  { label: 'Key / Value',   icon: '🗂️', description: 'Two-column reference pairs.' },
       checklist: { label: 'Checklist',     icon: '☑️', description: 'Trackable items with columns.' },
       table:     { label: 'Table',         icon: '📊', description: 'Reference table with headers.' },
-      cards:     { label: 'Cards',         icon: '🃏', description: 'Rich card entries.' },
+      cardgrid:  { label: 'Card Grid',     icon: '🃏', description: 'Customisable card layout with image and text regions.' },
     };
-    const types = Object.keys(state._panelTypes).length ? state._panelTypes : defaultTypes;
+    // Filter out legacy 'cards' type from picker — it remains in the renderer for existing data
+    const rawTypes = Object.keys(state._panelTypes).length ? state._panelTypes : defaultTypes;
+    const types = Object.fromEntries(
+      Object.entries(rawTypes).filter(([k]) => k !== 'cards').map(([k, v]) =>
+        k === 'cards' ? ['cardgrid', { label: 'Card Grid', icon: '🃏', description: 'Customisable card layout.' }] : [k, v]
+      )
+    );
+    // Ensure cardgrid is always present
+    if (!types.cardgrid) types.cardgrid = defaultTypes.cardgrid;
 
     Object.entries(types).forEach(([key, pt]) => {
       const card = document.createElement('div');
@@ -378,6 +433,23 @@
 
     openSheet('Add Panel', el, () => {
       if (!selectedType) { alert('Select a panel type.'); return false; }
+      if (selectedType === 'cardgrid') {
+        // Read title + density from the setup form
+        const title = formArea.querySelector('#pf-title')?.value.trim();
+        if (!title) { alert('Panel title is required.'); return false; }
+        const densityEl = formArea.querySelector('.cg-density-opt.selected');
+        const cardColumns = densityEl ? parseInt(densityEl.dataset.cols) : 1;
+        const panel = {
+          id: uid('panel'), panelType: 'cardgrid', title, cardColumns,
+          grid: { cols: 3, rows: 3 }, regions: [], items: [],
+        };
+        const tab = state.tabs.find(t => t.id === tabId);
+        if (!tab) return false;
+        tab.panels.push(panel);
+        // Close sheet then launch grid editor
+        setTimeout(() => openCardGridEditor(tabId, panel.id), 50);
+        return true;
+      }
       const panel = readStructureForm(formArea, selectedType);
       if (!panel) return false;
       panel.id        = uid('panel');
@@ -397,6 +469,11 @@
     const tab   = state.tabs.find(t => t.id === tabId);
     const panel = tab?.panels.find(p => p.id === panelId);
     if (!panel) return;
+    // cardgrid structure editing is handled by the full-area grid editor
+    if (panel.panelType === 'cardgrid') {
+      openCardGridEditor(tabId, panelId);
+      return;
+    }
     const formEl = buildStructureForm(panel.panelType, panel);
     openSheet('Edit Panel Structure', formEl, () => {
       const updated = readStructureForm(formEl, panel.panelType);
@@ -413,11 +490,12 @@
     el.dataset.panelType = type;
     const d = data || {};
     switch (type) {
-      case 'text':      el.appendChild(buildTextForm(d));      break;
-      case 'keyvalue':  el.appendChild(buildKVForm(d));        break;
-      case 'checklist': el.appendChild(buildChecklistForm(d)); break;
-      case 'table':     el.appendChild(buildTableForm(d));     break;
-      case 'cards':     el.appendChild(buildCardsForm(d));     break;
+      case 'text':      el.appendChild(buildTextForm(d));          break;
+      case 'keyvalue':  el.appendChild(buildKVForm(d));            break;
+      case 'checklist': el.appendChild(buildChecklistForm(d));     break;
+      case 'table':     el.appendChild(buildTableForm(d));         break;
+      case 'cards':     el.appendChild(buildCardsForm(d));         break;
+      case 'cardgrid':  el.appendChild(buildCardGridSetupForm(d)); break;
     }
     return el;
   }
@@ -558,6 +636,377 @@
     return el;
   }
 
+  // ── CARD GRID SETUP FORM (shown in Add Panel sheet) ──────────────────
+  function buildCardGridSetupForm(d) {
+    const el = document.createElement('div');
+    el.appendChild(fGroup('Panel Title *', fInput('pf-title', 'e.g. Villagers', d?.title || '')));
+
+    const dg = document.createElement('div'); dg.className = 'f-group';
+    const dl = document.createElement('label'); dl.className = 'f-label'; dl.textContent = 'Card Density (desktop)';
+    const dh = document.createElement('div'); dh.className = 'f-hint'; dh.textContent = 'How many cards sit side-by-side on wide screens.';
+    const dc = document.createElement('div'); dc.className = 'cg-density-row';
+    dg.append(dl, dh, dc);
+
+    const densities = [
+      { cols: 1, label: 'Full',   mock: 1 },
+      { cols: 2, label: 'Half',   mock: 2 },
+      { cols: 3, label: 'Thirds', mock: 3 },
+    ];
+    const current = d?.cardColumns || 1;
+    densities.forEach(({ cols, label, mock }) => {
+      const opt = document.createElement('div');
+      opt.className = 'cg-density-opt' + (cols === current ? ' selected' : '');
+      opt.dataset.cols = cols;
+      const preview = document.createElement('div'); preview.className = 'cg-density-preview';
+      for (let i = 0; i < mock; i++) {
+        const card = document.createElement('div'); card.className = 'cg-density-card'; preview.appendChild(card);
+      }
+      const lbl = document.createElement('div'); lbl.className = 'cg-density-label'; lbl.textContent = label;
+      opt.append(preview, lbl);
+      opt.addEventListener('click', () => {
+        dc.querySelectorAll('.cg-density-opt').forEach(o => o.classList.remove('selected'));
+        opt.classList.add('selected');
+      });
+      dc.appendChild(opt);
+    });
+    el.appendChild(dg);
+    return el;
+  }
+
+  // ── CARD GRID EDITOR (takes over #tab-content) ────────────────────────
+  function openCardGridEditor(tabId, panelId) {
+    const { state: S, esc: e2, renderPreview: rp, closeSheet: cs } = window.B;
+    cs();  // close any open sheet first
+
+    const tab   = S.tabs.find(t => t.id === tabId);
+    const panel = tab?.panels.find(p => p.id === panelId);
+    if (!panel) return;
+
+    S.gridEditorActive = true;
+
+    // ── Editor state ─────────────────────────────────────────────────
+    let gridCols   = panel.grid?.cols || 3;
+    let gridRows   = panel.grid?.rows || 3;
+    let regions    = (panel.regions || []).map(r => ({ ...r }));
+    let nextNum    = regions.reduce((m, r) => Math.max(m, parseInt(r.id?.replace('r','') || 0)), 0) + 1;
+
+    let selAnchor  = null;   // { col, row }
+    let selCurrent = null;   // { col, row }
+    let isSelecting = false;
+
+    const COLORS = ['#3b82f6','#f59e0b','#10b981','#ef4444','#8b5cf6','#f97316','#06b6d4','#ec4899'];
+    const regionColor = id => COLORS[regions.findIndex(r => r.id === id) % COLORS.length] || COLORS[0];
+
+    function occupiedMap() {
+      const m = {};
+      regions.forEach(r => {
+        for (let c = r.col; c < r.col + r.colSpan; c++)
+          for (let row = r.row; row < r.row + r.rowSpan; row++)
+            m[`${c},${row}`] = r.id;
+      });
+      return m;
+    }
+
+    function getSelRect() {
+      if (!selAnchor || !selCurrent) return null;
+      return {
+        col:     Math.min(selAnchor.col, selCurrent.col),
+        row:     Math.min(selAnchor.row, selCurrent.row),
+        colSpan: Math.abs(selCurrent.col - selAnchor.col) + 1,
+        rowSpan: Math.abs(selCurrent.row - selAnchor.row) + 1,
+      };
+    }
+
+    function rectOverlaps(rect) {
+      const occ = occupiedMap();
+      for (let c = rect.col; c < rect.col + rect.colSpan; c++)
+        for (let r = rect.row; r < rect.row + rect.rowSpan; r++)
+          if (occ[`${c},${r}`]) return true;
+      return false;
+    }
+
+    function maxOccupied() {
+      let mc = 0, mr = 0;
+      regions.forEach(r => {
+        mc = Math.max(mc, r.col + r.colSpan - 1);
+        mr = Math.max(mr, r.row + r.rowSpan - 1);
+      });
+      return { mc, mr };
+    }
+
+    // ── DOM setup ────────────────────────────────────────────────────
+    const content = document.getElementById('tab-content');
+    content.style.maxWidth = 'none';
+    content.style.padding  = '0';
+    content.innerHTML = '';
+
+    const editor = document.createElement('div'); editor.id = 'cg-editor';
+
+    // Header
+    const hdr = document.createElement('div'); hdr.className = 'cg-editor-hdr';
+    hdr.innerHTML = `
+      <span class="cg-editor-title">⊞ Grid Layout: <strong>${e2(panel.title)}</strong></span>
+      <div class="cg-editor-dims">
+        <label class="cg-dim-lbl">Cols</label>
+        <input type="number" id="cg-cols-inp" class="cg-dim-inp" min="1" max="12" value="${gridCols}">
+        <label class="cg-dim-lbl">Rows</label>
+        <input type="number" id="cg-rows-inp" class="cg-dim-inp" min="1" max="12" value="${gridRows}">
+      </div>
+      <button id="cg-done-btn" class="b-btn b-btn-primary">✓ Done</button>`;
+
+    // Hint
+    const hint = document.createElement('div'); hint.className = 'cg-hint';
+    hint.textContent = 'Click and drag to select a rectangular region. Work right-to-left or top-to-bottom — regions are easier to expand than shrink.';
+
+    // Body: grid + sidebar
+    const body = document.createElement('div'); body.className = 'cg-editor-body';
+    const gridWrap = document.createElement('div'); gridWrap.id = 'cg-grid-wrap';
+    const sidebar  = document.createElement('div'); sidebar.className = 'cg-sidebar';
+    sidebar.innerHTML = `<div class="cg-sidebar-title">Defined Regions</div><div id="cg-regions-list"></div><div class="cg-hint" style="margin-top:10px">Unassigned cells are blank — that's valid.</div>`;
+    body.append(gridWrap, sidebar);
+
+    // Config panel (hidden until selection)
+    const cfgPanel = document.createElement('div'); cfgPanel.id = 'cg-cfg'; cfgPanel.style.display = 'none';
+
+    editor.append(hdr, hint, body, cfgPanel);
+    content.appendChild(editor);
+
+    // ── Render functions ─────────────────────────────────────────────
+    function buildGridDOM(interactive) {
+      // Builds one card-grid element. interactive=true adds mouse events + selection highlight.
+      const occ     = occupiedMap();
+      const rect    = interactive ? getSelRect() : null;
+      const overlap = rect ? rectOverlaps(rect) : false;
+
+      const grid = document.createElement('div');
+      grid.className = 'cg-grid';
+      grid.style.gridTemplateColumns = `repeat(${gridCols}, 1fr)`;
+      grid.style.gridTemplateRows    = `repeat(${gridRows}, 1fr)`;
+
+      for (let r = 1; r <= gridRows; r++) {
+        for (let c = 1; c <= gridCols; c++) {
+          const cell = document.createElement('div');
+          cell.className = 'cg-grid-cell';
+          if (interactive) { cell.dataset.col = c; cell.dataset.row = r; }
+
+          const rid = occ[`${c},${r}`];
+          if (rid) {
+            cell.classList.add('cg-cell-occ');
+            cell.style.background  = regionColor(rid) + '28';
+            cell.style.borderColor = regionColor(rid) + '99';
+            const reg = regions.find(x => x.id === rid);
+            if (reg && reg.col === c && reg.row === r) {
+              const lbl = document.createElement('span'); lbl.className = 'cg-cell-lbl';
+              lbl.textContent = (reg.type === 'image' ? '🖼 ' : '📝 ') + (reg.field || reg.value || reg.id);
+              cell.appendChild(lbl);
+            }
+          } else if (rect && c >= rect.col && c < rect.col + rect.colSpan && r >= rect.row && r < rect.row + rect.rowSpan) {
+            cell.classList.add(overlap ? 'cg-cell-sel-bad' : 'cg-cell-sel');
+          }
+          grid.appendChild(cell);
+        }
+      }
+
+      if (interactive) {
+        grid.addEventListener('mousedown', ev => {
+          const cell = ev.target.closest('.cg-grid-cell'); if (!cell) return;
+          const c = parseInt(cell.dataset.col), r = parseInt(cell.dataset.row);
+          if (occupiedMap()[`${c},${r}`]) return;
+          ev.preventDefault();
+          isSelecting = true; selAnchor = { col: c, row: r }; selCurrent = { col: c, row: r };
+          cfgPanel.style.display = 'none';
+          renderGrid();
+        });
+        grid.addEventListener('mousemove', ev => {
+          if (!isSelecting) return;
+          const cell = ev.target.closest('.cg-grid-cell'); if (!cell) return;
+          selCurrent = { col: parseInt(cell.dataset.col), row: parseInt(cell.dataset.row) };
+          renderGrid();
+        });
+        grid.addEventListener('mouseup', ev => {
+          if (!isSelecting) return;
+          isSelecting = false;
+          const r = getSelRect(); if (!r) return;
+          if (rectOverlaps(r)) { selAnchor = null; selCurrent = null; renderGrid(); return; }
+          showCfgPanel(r);
+        });
+      }
+      return grid;
+    }
+
+    function renderGrid() {
+      gridWrap.innerHTML = '';
+
+      const row = document.createElement('div');
+      row.className = 'cg-cards-row';
+      // --cg-card-cols drives equal flex widths
+      row.style.setProperty('--cg-editor-cols', String(panel.cardColumns || 1));
+
+      for (let i = 0; i < (panel.cardColumns || 1); i++) {
+        const slot = document.createElement('div');
+        slot.className = 'cg-card-slot' + (i > 0 ? ' cg-card-slot-ghost' : '');
+
+        if (i === 0) {
+          const badge = document.createElement('div'); badge.className = 'cg-slot-badge'; badge.textContent = 'editable';
+          slot.appendChild(badge);
+        } else {
+          const badge = document.createElement('div'); badge.className = 'cg-slot-badge cg-slot-badge-ghost'; badge.textContent = 'mirror';
+          slot.appendChild(badge);
+        }
+
+        slot.appendChild(buildGridDOM(i === 0));
+        row.appendChild(slot);
+      }
+
+      gridWrap.appendChild(row);
+    }
+
+    function renderSidebar() {
+      const list = document.getElementById('cg-regions-list'); if (!list) return;
+      list.innerHTML = '';
+      if (!regions.length) {
+        list.innerHTML = '<div class="cg-hint">No regions yet — drag on the grid to define one.</div>';
+        return;
+      }
+      regions.forEach((reg, idx) => {
+        const row = document.createElement('div'); row.className = 'cg-region-row';
+        row.style.borderLeftColor = regionColor(reg.id);
+        const info = document.createElement('span'); info.className = 'cg-region-info';
+        const pos = `${reg.col},${reg.row} → ${reg.col+reg.colSpan-1},${reg.row+reg.rowSpan-1}`;
+        const src = reg.type === 'image' ? `🖼 ${reg.field}` :
+                    reg.source === 'constant' ? `📝 "${reg.value}"${reg.align === 'right' ? ' →' : ''}` :
+                    `📝 field: ${reg.field}`;
+        info.textContent = `${reg.id}: ${src}  [${pos}]`;
+        const del = document.createElement('button'); del.className = 'cg-region-del'; del.textContent = '×'; del.title = 'Remove region';
+        del.addEventListener('click', () => { regions.splice(idx, 1); renderGrid(); renderSidebar(); });
+        row.append(info, del);
+        list.appendChild(row);
+      });
+    }
+
+    function showCfgPanel(rect) {
+      cfgPanel.style.display = '';
+      cfgPanel.innerHTML = '';
+
+      const title = document.createElement('div'); title.className = 'cg-cfg-title';
+      title.textContent = `New region: col ${rect.col}–${rect.col+rect.colSpan-1}, row ${rect.row}–${rect.row+rect.rowSpan-1}  (${rect.colSpan}×${rect.rowSpan})`;
+      cfgPanel.appendChild(title);
+
+      const body2 = document.createElement('div'); body2.className = 'cg-cfg-body';
+
+      // Type toggle
+      let selType = 'text';
+      const typeRow = document.createElement('div'); typeRow.className = 'cg-cfg-row';
+      const typeLbl = document.createElement('span'); typeLbl.className = 'cg-cfg-lbl'; typeLbl.textContent = 'Type:';
+      const imgBtn  = document.createElement('button'); imgBtn.className = 'cg-cfg-toggle'; imgBtn.textContent = '🖼 Image';
+      const txtBtn  = document.createElement('button'); txtBtn.className = 'cg-cfg-toggle cg-cfg-toggle-active'; txtBtn.textContent = '📝 Text';
+      typeRow.append(typeLbl, imgBtn, txtBtn);
+
+      // Image config
+      const imgCfg = document.createElement('div'); imgCfg.className = 'cg-cfg-row'; imgCfg.style.display = 'none';
+      imgCfg.innerHTML = `<span class="cg-cfg-lbl">Field key:</span><input class="cg-cfg-inp" id="cg-img-field" placeholder="e.g. portrait">`;
+
+      // Text config
+      const txtCfg = document.createElement('div'); txtCfg.className = 'cg-cfg-col';
+      let selSrc = 'field';
+      const srcRow = document.createElement('div'); srcRow.className = 'cg-cfg-row';
+      const srcLbl = document.createElement('span'); srcLbl.className = 'cg-cfg-lbl'; srcLbl.textContent = 'Source:';
+      const fldBtn = document.createElement('button'); fldBtn.className = 'cg-cfg-toggle cg-cfg-toggle-active'; fldBtn.textContent = 'Field';
+      const cnstBtn= document.createElement('button'); cnstBtn.className = 'cg-cfg-toggle'; cnstBtn.textContent = 'Constant';
+      srcRow.append(srcLbl, fldBtn, cnstBtn);
+
+      const fldRow = document.createElement('div'); fldRow.className = 'cg-cfg-row';
+      fldRow.innerHTML = `<span class="cg-cfg-lbl">Field key:</span><input class="cg-cfg-inp" id="cg-txt-field" placeholder="e.g. name">`;
+
+      const cnstRow = document.createElement('div'); cnstRow.className = 'cg-cfg-row'; cnstRow.style.display = 'none';
+      cnstRow.innerHTML = `<span class="cg-cfg-lbl">Text:</span><input class="cg-cfg-inp" id="cg-txt-const" placeholder="e.g. Likes:"><label class="cg-cfg-check"><input type="checkbox" id="cg-txt-align"> Right-align</label>`;
+
+      txtCfg.append(srcRow, fldRow, cnstRow);
+
+      // Toggle handlers
+      imgBtn.addEventListener('click', () => {
+        selType = 'image'; imgBtn.classList.add('cg-cfg-toggle-active'); txtBtn.classList.remove('cg-cfg-toggle-active');
+        imgCfg.style.display = ''; txtCfg.style.display = 'none';
+      });
+      txtBtn.addEventListener('click', () => {
+        selType = 'text'; txtBtn.classList.add('cg-cfg-toggle-active'); imgBtn.classList.remove('cg-cfg-toggle-active');
+        imgCfg.style.display = 'none'; txtCfg.style.display = '';
+      });
+      fldBtn.addEventListener('click', () => {
+        selSrc = 'field'; fldBtn.classList.add('cg-cfg-toggle-active'); cnstBtn.classList.remove('cg-cfg-toggle-active');
+        fldRow.style.display = ''; cnstRow.style.display = 'none';
+      });
+      cnstBtn.addEventListener('click', () => {
+        selSrc = 'constant'; cnstBtn.classList.add('cg-cfg-toggle-active'); fldBtn.classList.remove('cg-cfg-toggle-active');
+        fldRow.style.display = 'none'; cnstRow.style.display = '';
+      });
+
+      // Action buttons
+      const actRow = document.createElement('div'); actRow.className = 'cg-cfg-row cg-cfg-actions';
+      const cancelBtn = document.createElement('button'); cancelBtn.className = 'b-btn b-btn-ghost'; cancelBtn.style.fontSize = '11px'; cancelBtn.textContent = '✗ Cancel';
+      const confirmBtn = document.createElement('button'); confirmBtn.className = 'b-btn b-btn-primary'; confirmBtn.style.fontSize = '11px'; confirmBtn.textContent = '✓ Add Region';
+      actRow.append(cancelBtn, confirmBtn);
+
+      cancelBtn.addEventListener('click', () => {
+        selAnchor = null; selCurrent = null; cfgPanel.style.display = 'none'; renderGrid();
+      });
+
+      confirmBtn.addEventListener('click', () => {
+        let region;
+        if (selType === 'image') {
+          const field = cfgPanel.querySelector('#cg-img-field')?.value.trim();
+          if (!field) { alert('Enter a field key for the image.'); return; }
+          region = { id: `r${nextNum++}`, col: rect.col, row: rect.row, colSpan: rect.colSpan, rowSpan: rect.rowSpan, type: 'image', field };
+        } else {
+          if (selSrc === 'field') {
+            const field = cfgPanel.querySelector('#cg-txt-field')?.value.trim();
+            if (!field) { alert('Enter a field key.'); return; }
+            region = { id: `r${nextNum++}`, col: rect.col, row: rect.row, colSpan: rect.colSpan, rowSpan: rect.rowSpan, type: 'text', source: 'field', field };
+          } else {
+            const value = cfgPanel.querySelector('#cg-txt-const')?.value.trim();
+            if (!value) { alert('Enter constant text.'); return; }
+            const align = cfgPanel.querySelector('#cg-txt-align')?.checked ? 'right' : 'left';
+            region = { id: `r${nextNum++}`, col: rect.col, row: rect.row, colSpan: rect.colSpan, rowSpan: rect.rowSpan, type: 'text', source: 'constant', value, align };
+          }
+        }
+        regions.push(region);
+        selAnchor = null; selCurrent = null;
+        cfgPanel.style.display = 'none';
+        renderGrid(); renderSidebar();
+      });
+
+      body2.append(typeRow, imgCfg, txtCfg, actRow);
+      cfgPanel.appendChild(body2);
+    }
+
+    // ── Wiring ───────────────────────────────────────────────────────
+    document.getElementById('cg-cols-inp').addEventListener('change', ev => {
+      const v = Math.max(1, Math.min(12, parseInt(ev.target.value) || 1));
+      const { mc } = maxOccupied();
+      if (v < mc) { ev.target.value = gridCols; alert(`Can't shrink: a region occupies column ${mc}.`); return; }
+      gridCols = v; ev.target.value = v; renderGrid();
+    });
+    document.getElementById('cg-rows-inp').addEventListener('change', ev => {
+      const v = Math.max(1, Math.min(12, parseInt(ev.target.value) || 1));
+      const { mr } = maxOccupied();
+      if (v < mr) { ev.target.value = gridRows; alert(`Can't shrink: a region occupies row ${mr}.`); return; }
+      gridRows = v; ev.target.value = v; renderGrid();
+    });
+    document.getElementById('cg-done-btn').addEventListener('click', () => {
+      panel.grid    = { cols: gridCols, rows: gridRows };
+      panel.regions = regions;
+      if (!panel.items) panel.items = [];
+      // Restore tab-content styles
+      content.style.maxWidth = '';
+      content.style.padding  = '';
+      S.gridEditorActive = false;
+      rp();
+    });
+
+    renderGrid();
+    renderSidebar();
+  }
+
   function appendDeferred(el, msg) {
     const d = document.createElement('div');
     d.className = 'f-hint';
@@ -647,6 +1096,7 @@
     if (panel.panelType === 'keyvalue')  return panel.rows   || [];
     if (panel.panelType === 'table')     return panel.rows   || [];
     if (panel.panelType === 'cards')     return panel.cards  || [];
+    if (panel.panelType === 'cardgrid')  return panel.items  || [];
     return [];
   }
   function appendRow(panel, row) {
@@ -654,6 +1104,7 @@
     else if (panel.panelType === 'keyvalue')  { if (!panel.rows)   panel.rows   = []; panel.rows.push(row);   }
     else if (panel.panelType === 'table')     { if (!panel.rows)   panel.rows   = []; panel.rows.push(row);   }
     else if (panel.panelType === 'cards')     { if (!panel.cards)  panel.cards  = []; panel.cards.push(row);  }
+    else if (panel.panelType === 'cardgrid')  { if (!panel.items)  panel.items  = []; panel.items.push(row);  }
   }
   function setRow(panel, idx, row)  {
     const a = getPanelRows(panel);
@@ -669,6 +1120,11 @@
     if (panel.panelType === 'keyvalue')  return row.key ? `${row.key}: ${String(row.value || '').slice(0, 40)}` : `Row ${idx + 1}`;
     if (panel.panelType === 'table')     return Array.isArray(row) ? (row[0] || `Row ${idx + 1}`) : `Row ${idx + 1}`;
     if (panel.panelType === 'cards')     { const f = panel.cardFields?.[0]; return f ? (row[f.key] || `Card ${idx + 1}`) : `Card ${idx + 1}`; }
+    if (panel.panelType === 'cardgrid')  {
+      // Use the first field-type region's key as the label source
+      const firstField = (panel.regions || []).find(r => r.type === 'text' && r.source !== 'constant');
+      return firstField ? (row[firstField.field] || `Card ${idx + 1}`) : `Card ${idx + 1}`;
+    }
     return `Row ${idx + 1}`;
   }
 
@@ -676,6 +1132,10 @@
   function openAddRowSheet(tabId, panelId) {
     const panel = findPanel(tabId, panelId);
     if (!panel) return;
+    if (panel.panelType === 'cardgrid') {
+      openAddCardSheet(tabId, panelId, null);
+      return;
+    }
     const { el, read } = buildRowForm(panel, null);
     openSheet(`Add Row — ${panel.title}`, el, () => {
       const row = read(); if (!row) return false;
@@ -686,11 +1146,74 @@
   function openEditRowSheet(tabId, panelId, rowIdx) {
     const panel = findPanel(tabId, panelId);
     if (!panel) return;
+    if (panel.panelType === 'cardgrid') {
+      openAddCardSheet(tabId, panelId, rowIdx);
+      return;
+    }
     const { el, read } = buildRowForm(panel, getPanelRows(panel)[rowIdx]);
     openSheet(`Edit Row — ${panel.title}`, el, () => {
       const row = read(); if (!row) return false;
       setRow(panel, rowIdx, row); renderPreview(); return true;
     }, 'Save Row');
+  }
+
+  // cardgrid-specific Add/Edit Card sheet with live rendered preview
+  function openAddCardSheet(tabId, panelId, rowIdx) {
+    const panel    = findPanel(tabId, panelId);
+    if (!panel) return;
+    const existing = rowIdx != null ? getPanelRows(panel)[rowIdx] : null;
+    const isEdit   = rowIdx != null;
+
+    const { el: formEl, read, onAnyChange } = buildRowForm(panel, existing);
+
+    // Wrapper: form on top, preview below
+    const wrapper = document.createElement('div');
+
+    // Preview area
+    const previewWrap = document.createElement('div'); previewWrap.className = 'cg-card-preview-wrap';
+    const previewLbl  = document.createElement('div'); previewLbl.className = 'cg-preview-lbl'; previewLbl.textContent = 'Preview';
+    const previewEl   = document.createElement('div'); previewEl.className = 'cg-card-preview-area';
+    previewWrap.append(previewLbl, previewEl);
+    wrapper.append(formEl, previewWrap);
+
+    function refreshPreview() {
+      // Build a snapshot of current form values (sync only — images use stored data)
+      const snap = read(true /* snapOnly */);
+      if (!snap) return;
+      previewEl.innerHTML = '';
+      try {
+        const mockPanel = {
+          panelType: 'cardgrid', title: '', id: '_prev',
+          cardColumns: 1, grid: panel.grid, regions: panel.regions,
+          items: [snap],
+        };
+        const rendered = window.GuideRender.panel(mockPanel, { save: () => {}, load: () => false, preview: true });
+        // Expand the card so it's always visible in the preview
+        rendered.querySelectorAll('.gr-card').forEach(c => c.classList.remove('gr-collapsed'));
+        // Strip the outer panel chrome — just show the inner cg-outer
+        const inner = rendered.querySelector('.cg-outer');
+        if (inner) previewEl.appendChild(inner);
+        else previewEl.appendChild(rendered);
+      } catch (e) {
+        previewEl.textContent = '⚠ Preview unavailable';
+      }
+    }
+
+    // Wire live refresh
+    if (typeof onAnyChange === 'function') onAnyChange(refreshPreview);
+
+    const label = isEdit ? `Edit Card — ${panel.title}` : `Add Card — ${panel.title}`;
+    const btn   = isEdit ? 'Save Card' : 'Add Card';
+
+    openSheet(label, wrapper, () => {
+      const row = read(); if (!row) return false;
+      if (isEdit) setRow(panel, rowIdx, row);
+      else appendRow(panel, row);
+      renderPreview(); return true;
+    }, btn);
+
+    // Initial preview render after sheet is open
+    setTimeout(refreshPreview, 0);
   }
 
   function openManageRowsSheet(tabId, panelId) {
@@ -830,6 +1353,73 @@
       }};
     }
 
+    if (panel.panelType === 'cardgrid') {
+      const fieldRegions = (panel.regions || []).filter(r => r.type !== 'constant' && (r.type === 'image' || r.source !== 'constant'));
+      const seenKeys = new Set();
+      const fieldDefs = [];
+      fieldRegions.forEach(r => {
+        if (r.field && !seenKeys.has(r.field)) { seenKeys.add(r.field); fieldDefs.push({ key: r.field, isImage: r.type === 'image' }); }
+      });
+      if (!fieldDefs.length) {
+        el.appendChild(fGroup('', (() => {
+          const d2 = document.createElement('div'); d2.className = 'f-hint';
+          d2.textContent = 'No field regions defined — edit the grid layout first.'; return d2;
+        })()));
+        return { el, read: () => ({}), onAnyChange: () => {} };
+      }
+
+      // imageCache holds base64 data URLs for image fields as they are loaded
+      const imageCache = {};
+      Object.keys(d).forEach(k => { if (d[k]?.startsWith?.('data:')) imageCache[k] = d[k]; });
+
+      const changeListeners = [];
+      const notifyChange = () => changeListeners.forEach(fn => fn());
+
+      const inputs = fieldDefs.map((fd, i) => {
+        if (fd.isImage) {
+          const wrap = document.createElement('div'); wrap.className = 'f-group';
+          const lbl  = document.createElement('label'); lbl.className = 'f-label'; lbl.textContent = `${fd.key} (image)`;
+          const fileInp = document.createElement('input'); fileInp.type = 'file'; fileInp.accept = 'image/webp';
+          fileInp.className = 'f-input'; fileInp.style.padding = '5px';
+          const hint2 = document.createElement('div'); hint2.className = 'f-hint'; hint2.textContent = 'WebP only. Leave blank to keep existing image.';
+          // Pre-fill thumb if existing
+          if (d[fd.key]) { imageCache[fd.key] = d[fd.key]; }
+          fileInp.addEventListener('change', () => {
+            const file = fileInp.files[0]; if (!file) return;
+            const reader = new FileReader();
+            reader.onload = ev => { imageCache[fd.key] = ev.target.result; notifyChange(); };
+            reader.readAsDataURL(file);
+          });
+          wrap.append(lbl, fileInp, hint2);
+          el.appendChild(wrap);
+          return { key: fd.key, isImage: true, el: fileInp };
+        } else {
+          const inp = fInput(`cg-f-${fd.key}`, fd.key, d[fd.key] || '');
+          inp.addEventListener('input', notifyChange);
+          el.appendChild(fGroup(fd.key + (i === 0 ? ' *' : ''), inp));
+          return { key: fd.key, isImage: false, el: inp };
+        }
+      });
+
+      // read(snapOnly=false) — when snapOnly=true, returns current state without validation for preview
+      function read(snapOnly = false) {
+        if (!snapOnly && !inputs[0]?.isImage && !inputs[0]?.el.value.trim()) {
+          alert(`${fieldDefs[0].key} is required.`); return null;
+        }
+        const card = { id: d.id || uid('cg') };
+        inputs.forEach(f => {
+          if (f.isImage) {
+            if (imageCache[f.key]) card[f.key] = imageCache[f.key];
+          } else {
+            if (f.el.value.trim()) card[f.key] = f.el.value.trim();
+          }
+        });
+        return card;
+      }
+
+      return { el, read, onAnyChange: fn => changeListeners.push(fn) };
+    }
+
     return { el, read: () => ({}) };
   }
 
@@ -843,6 +1433,7 @@
     openMetaSheet,
     openAddTabSheet, openEditTabSheet,
     openAddPanelSheet, openEditPanelSheet,
+    openCardGridEditor,
     openAddRowSheet, openEditRowSheet, openManageRowsSheet,
     getPanelRows,
   };

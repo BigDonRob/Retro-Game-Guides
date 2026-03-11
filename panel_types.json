@@ -59,5 +59,20 @@
         "hint": "Define the fields each card has. The first field becomes the card's title/name." },
       { "key": "cards",      "type": "card-list",  "label": "Cards",        "required": true }
     ]
+  },
+
+  "cardgrid": {
+    "label": "Card Grid",
+    "icon": "🃏",
+    "description": "Fully customisable card layout. Define a grid of cells, assign each region a type (image or text), then fill in entries. Card density (full/half/thirds) controls how many cards sit side-by-side on desktop.",
+    "fields": [
+      { "key": "title",       "type": "text",      "label": "Panel Title",   "required": true },
+      { "key": "cardColumns", "type": "number",    "label": "Card Columns",  "required": true,
+        "hint": "1 = full width, 2 = half, 3 = thirds. Desktop only — mobile always shows 1 column." },
+      { "key": "grid",        "type": "grid-def",  "label": "Grid",          "required": true,
+        "hint": "Cols × Rows defines the internal cell grid each card is divided into." },
+      { "key": "regions",     "type": "region-def","label": "Regions",       "required": true,
+        "hint": "Each region maps a rectangular block of cells to a field or constant." }
+    ]
   }
 }

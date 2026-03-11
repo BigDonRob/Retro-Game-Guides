@@ -243,3 +243,158 @@
 .swatch-desc { font-size: 10px; color: var(--b-textMid); margin-top: 2px; font-family: var(--b-ff); }
 .swatch-dot-row { display: flex; gap: 4px; margin-bottom: 6px; }
 .swatch-dot { width: 14px; height: 14px; border-radius: 50%; }
+
+/* ── CARD GRID DENSITY PICKER (in Add Panel sheet) ── */
+.cg-density-row { display: flex; gap: 12px; margin-top: 8px; }
+.cg-density-opt {
+  flex: 1; padding: 10px 8px; border: 2px solid var(--b-border);
+  border-radius: 8px; cursor: pointer; transition: all .15s; text-align: center;
+}
+.cg-density-opt:hover { border-color: var(--b-blue); }
+.cg-density-opt.selected { border-color: var(--b-accent); background: var(--b-accentD); }
+.cg-density-preview { display: flex; gap: 4px; justify-content: center; margin-bottom: 6px; min-height: 36px; }
+.cg-density-card { flex: 1; background: var(--b-surf2); border: 1px solid var(--b-border); border-radius: 4px; min-height: 36px; }
+.cg-density-label { font-family: var(--b-mono); font-size: 10px; color: var(--b-textMid); }
+.cg-density-opt.selected .cg-density-label { color: var(--b-accent); }
+
+/* ── CARD GRID EDITOR (full-area takeover) ── */
+#cg-editor { display: flex; flex-direction: column; min-height: 60vh; padding: 0; }
+.cg-editor-hdr {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  padding: 12px 16px; background: var(--b-surf); border-bottom: 1px solid var(--b-border);
+  position: sticky; top: calc(var(--header-h) + var(--tabbar-h)); z-index: 30;
+}
+.cg-editor-title { font-family: var(--b-ff); font-size: 13px; color: var(--b-textMid); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cg-editor-title strong { color: var(--b-accent); }
+.cg-editor-dims { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+.cg-dim-lbl { font-family: var(--b-mono); font-size: 10px; color: var(--b-textMid); }
+.cg-dim-inp {
+  width: 52px; padding: 5px 8px; background: var(--b-bg); border: 1px solid var(--b-border);
+  border-radius: 5px; color: var(--b-text); font-family: var(--b-mono); font-size: 13px;
+  text-align: center; outline: none; transition: border-color .15s;
+}
+.cg-dim-inp:focus { border-color: var(--b-blue); }
+
+.cg-hint {
+  font-family: var(--b-mono); font-size: 10.5px; color: var(--b-textMid);
+  padding: 8px 16px; background: var(--b-surf); border-bottom: 1px solid var(--b-border);
+  line-height: 1.5;
+}
+
+.cg-editor-body { display: flex; flex: 1; overflow: hidden; }
+
+#cg-grid-wrap { flex: 1; padding: 20px; overflow: auto; background: var(--b-bg); user-select: none; }
+
+.cg-grid {
+  display: grid; gap: 4px;
+  width: fit-content; min-width: 100%;
+}
+.cg-grid-cell {
+  min-width: 80px; min-height: 56px; border: 1.5px solid var(--b-border);
+  border-radius: 5px; cursor: crosshair; transition: background .1s, border-color .1s;
+  background: var(--b-surf); position: relative; overflow: hidden;
+}
+.cg-grid-cell:not(.cg-cell-occ):hover { background: var(--b-surf2); border-color: var(--b-textMid); }
+.cg-cell-occ   { cursor: default; }
+.cg-cell-sel   { background: rgba(88,166,255,0.18) !important; border-color: var(--b-blue) !important; }
+.cg-cell-sel-bad { background: rgba(248,81,73,0.18) !important; border-color: var(--b-danger) !important; }
+.cg-cell-lbl {
+  position: absolute; bottom: 3px; left: 4px; right: 4px;
+  font-family: var(--b-mono); font-size: 9px; color: var(--b-textMid);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.3;
+  pointer-events: none;
+}
+
+.cg-sidebar {
+  width: 240px; flex-shrink: 0; background: var(--b-surf); border-left: 1px solid var(--b-border);
+  padding: 14px 12px; overflow-y: auto;
+}
+.cg-sidebar-title { font-family: var(--b-mono); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--b-textMid); margin-bottom: 10px; }
+
+.cg-region-row {
+  display: flex; align-items: flex-start; gap: 6px; padding: 7px 8px;
+  background: var(--b-surf2); border: 1px solid var(--b-border); border-left: 3px solid #888;
+  border-radius: 6px; margin-bottom: 6px;
+}
+.cg-region-info { font-family: var(--b-mono); font-size: 9.5px; color: var(--b-text); flex: 1; line-height: 1.5; word-break: break-all; }
+.cg-region-del { background: transparent; border: none; color: var(--b-textMid); cursor: pointer; font-size: 14px; padding: 0 2px; transition: color .15s; flex-shrink: 0; margin-top: -1px; }
+.cg-region-del:hover { color: var(--b-danger); }
+
+/* Config panel */
+#cg-cfg {
+  background: var(--b-surf); border-top: 1px solid var(--b-border);
+  padding: 12px 16px; flex-shrink: 0;
+}
+.cg-cfg-title { font-family: var(--b-mono); font-size: 10px; color: var(--b-textMid); margin-bottom: 10px; }
+.cg-cfg-body { display: flex; flex-direction: column; gap: 8px; }
+.cg-cfg-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.cg-cfg-col { display: flex; flex-direction: column; gap: 6px; }
+.cg-cfg-lbl { font-family: var(--b-mono); font-size: 10px; color: var(--b-textMid); white-space: nowrap; min-width: 60px; }
+.cg-cfg-inp {
+  padding: 5px 9px; background: var(--b-bg); border: 1px solid var(--b-border);
+  border-radius: 5px; color: var(--b-text); font-family: var(--b-mono); font-size: 12px;
+  outline: none; transition: border-color .15s; flex: 1; min-width: 120px;
+}
+.cg-cfg-inp:focus { border-color: var(--b-blue); }
+.cg-cfg-toggle {
+  font-family: var(--b-mono); font-size: 11px; padding: 4px 12px;
+  border: 1px solid var(--b-border); border-radius: 20px; background: transparent;
+  color: var(--b-textMid); cursor: pointer; transition: all .15s;
+}
+.cg-cfg-toggle:hover { border-color: var(--b-textMid); color: var(--b-text); }
+.cg-cfg-toggle-active { background: rgba(88,166,255,0.15); border-color: var(--b-blue); color: var(--b-blue); }
+.cg-cfg-check { font-family: var(--b-mono); font-size: 11px; color: var(--b-textMid); display: flex; align-items: center; gap: 5px; cursor: pointer; white-space: nowrap; }
+.cg-cfg-actions { margin-top: 4px; gap: 8px; }
+
+/* ── CARD GRID EDITOR — multi-card preview row ── */
+.cg-cards-row {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 20px;
+}
+.cg-card-slot {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.cg-card-slot-ghost {
+  opacity: 0.38;
+  pointer-events: none;
+}
+.cg-slot-badge {
+  font-family: var(--b-mono);
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--b-accent);
+  padding: 2px 0;
+}
+.cg-slot-badge-ghost { color: var(--b-textMid); }
+
+/* ── ADD CARD SHEET — live preview ── */
+.cg-card-preview-wrap {
+  margin-top: 18px;
+  border-top: 1px solid var(--b-border);
+  padding-top: 14px;
+}
+.cg-preview-lbl {
+  font-family: var(--b-mono);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--b-textMid);
+  margin-bottom: 10px;
+}
+.cg-card-preview-area {
+  border-radius: 8px;
+  overflow: hidden;
+}
+/* Expand the inner cg-outer so all cards are visible in preview */
+.cg-card-preview-area .cg-outer {
+  grid-template-columns: 1fr !important;
+}

@@ -142,6 +142,7 @@
       case 'checklist': return renderChecklist(def, ctx);
       case 'table':     return renderTable(def);
       case 'cards':     return renderCards(def);
+      case 'cardgrid':  return renderCardGrid(def);
       default: {
         const d = document.createElement('div');
         d.style.cssText = 'padding:8px;font-size:12px;color:var(--textMuted)';
@@ -367,6 +368,66 @@
     });
 
     return wrap;
+  }
+
+  // ── CARD GRID ─────────────────────────────────────────────────────────
+  function renderCardGrid(def) {
+    const entryKey = Object.keys(def).find(k => k.startsWith('entry_'));
+    const items    = (entryKey ? def[entryKey] : def.items) || [];
+    const regions  = def.regions     || [];
+    const grid     = def.grid        || { cols: 1, rows: 1 };
+    const cardCols = def.cardColumns || 1;
+
+    const outer = document.createElement('div');
+    outer.className = 'cg-outer';
+    outer.style.setProperty('--cg-card-cols', String(cardCols));
+
+    if (!items.length) {
+      const empty = document.createElement('div');
+      empty.style.cssText = 'padding:16px;font-size:12px;color:var(--textMuted);text-align:center';
+      empty.textContent = 'No cards added yet.';
+      outer.appendChild(empty);
+      return outer;
+    }
+
+    items.forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'cg-card';
+      card.style.gridTemplateColumns = `repeat(${grid.cols}, 1fr)`;
+
+      regions.forEach(region => {
+        const cell = document.createElement('div');
+        cell.className = 'cg-cell';
+        cell.style.gridColumn = `${region.col} / span ${region.colSpan}`;
+        cell.style.gridRow    = `${region.row} / span ${region.rowSpan}`;
+
+        if (region.type === 'image') {
+          const src = region.field ? item[region.field] : null;
+          if (src) {
+            const img = document.createElement('img');
+            img.src = src;
+            img.className = 'cg-img';
+            cell.appendChild(img);
+          }
+        } else {
+          if (region.source === 'constant') {
+            cell.classList.add('cg-text', 'cg-constant');
+            if (region.align === 'right') cell.classList.add('cg-text-right');
+            cell.textContent = region.value || '';
+          } else {
+            const val = region.field ? item[region.field] : '';
+            cell.classList.add('cg-text', 'cg-field');
+            cell.textContent = val != null ? String(val) : '';
+          }
+        }
+
+        card.appendChild(cell);
+      });
+
+      outer.appendChild(card);
+    });
+
+    return outer;
   }
 
   // ── EXPORTS ───────────────────────────────────────────────────────────
