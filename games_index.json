@@ -1231,14 +1231,6 @@
         2,
         3
       ]
-    },{
-  "raId": 123,
-  "slug": "abc",
-  "name": "abc",
-  "system": 10,
-  "icon": "🎮",
-  "theme": 1,
-  "palette": 7
-}
+    }
   ]
 }
