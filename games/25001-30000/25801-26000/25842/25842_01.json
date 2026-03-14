@@ -944,7 +944,15 @@
           "chapter": "Ch.10: Greenlands",
           "area": "Greenlands North Plain",
           "label": "D",
-          "contents": "500 Silver Pieces, Adderstone x1, Self-Help Book (10 SP), Diary (8 SP), Chianti (60 SP) x2"
+          "contents": "500 Silver Pieces, Adderstone x1"
+        },
+        {
+          "id": "25842_t01_902",
+          "flag": "",
+          "chapter": "Ch.10: Greenlands",
+          "area": "Greenlands North Plain",
+          "label": "E",
+          "contents": "Self-Help Book (10 SP), Diary (8 SP), Chianti (60 SP) x2"
         },
         {
           "id": "25842_t01_100",
@@ -1090,7 +1098,7 @@
           "area": "The Farm",
           "label": "B",
           "contents": "approx. 300 Silver Pieces, Token: Four Leaf Clover, Adderstone x1",
-          "note": "TOKEN: Four Leaf Clover (+2 Luck)"
+          "note": "TOKEN: Four Leaf Clover (+3 Luck)"
         },
         {
           "id": "25842_t01_117",
@@ -1114,8 +1122,16 @@
           "flag": "",
           "chapter": "Ch.12: Firbolg Mines",
           "area": "The Firbolg Mines",
+          "label": "A",
+          "contents": "1000 Silver Pieces, Coal (1 SP) x3"
+        },
+        {
+          "id": "25842_t01_319",
+          "flag": "",
+          "chapter": "Ch.12: Firbolg Mines",
+          "area": "The Firbolg Mines",
           "label": "B",
-          "contents": "1000 Silver Pieces, Coal (1 SP) x3, Diamond (300 SP), Ruby (100 SP), Amethyst (80 SP), Adderstone x1"
+          "contents": "Diamond (300 SP), Ruby (100 SP), Amethyst (80 SP), Adderstone x1"
         },
         {
           "id": "25842_t01_120",
@@ -1633,8 +1649,26 @@
           "chapter": "Extra Dungeon 4",
           "area": "Ruin of Emain Macha",
           "label": "F",
-          "contents": "1200 Silver Pieces, Ruby (100 SP), Adderstone x1, Token: White Book of Hergest",
+          "contents": "Token: White Book of Hergest",
           "note": "TOKEN: White Book of Hergest (+10% mana regen) — final chamber"
+        },
+        {
+          "id": "25842_t01_975",
+          "flag": "",
+          "chapter": "Extra Dungeon 4",
+          "area": "Ruin of Emain Macha",
+          "label": "F",
+          "contents": "1200 Silver Pieces",
+          "note": "Unmarked — final chamber"
+        },
+        {
+          "id": "25842_t01_976",
+          "flag": "",
+          "chapter": "Extra Dungeon 4",
+          "area": "Ruin of Emain Macha",
+          "label": "F",
+          "contents": "Ruby (100 SP), Adderstone x1",
+          "note": "Unmarked — final chamber"
         },
         {
           "id": "25842_t01_176",
