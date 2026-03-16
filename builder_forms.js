@@ -478,6 +478,11 @@
     openSheet('Edit Panel Structure', formEl, () => {
       const updated = readStructureForm(formEl, panel.panelType);
       if (!updated) return false;
+      // Handle infobox removal explicitly
+      if (updated.infobox === undefined) {
+        delete panel.infobox;
+        delete updated.infobox;
+      }
       Object.assign(panel, updated);
       renderPreview();
       return true;
@@ -584,7 +589,7 @@
     const colLbl   = document.createElement('label'); colLbl.className = 'f-label';
     colLbl.textContent = 'Extra Columns';
     const colHint  = document.createElement('div'); colHint.className = 'f-hint';
-    colHint.textContent = 'Name + Checkbox are always included. Add extras e.g. Location, Price, Notes.';
+    colHint.textContent = 'Checkbox and row number are always included. Add extras e.g. Entry Name, Location, Price, Notes.';
     const colList  = document.createElement('div'); colList.className = 'list-section'; colList.id = 'cl-cols';
     colGroup.append(colLbl, colHint, colList);
     (d.columns || []).forEach(c => addColRow(colList, c.label, c.key, c.style));
