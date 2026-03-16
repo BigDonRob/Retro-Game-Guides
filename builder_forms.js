@@ -452,6 +452,13 @@
       }
       const panel = readStructureForm(formArea, selectedType);
       if (!panel) return false;
+      
+      // Validate checklist has at least one column
+      if (selectedType === 'checklist' && (!panel.columns || panel.columns.length === 0)) {
+        alert('Checklist panels must have at least one column. Add columns using the "+ Add Column" button.');
+        return false;
+      }
+      
       panel.id        = uid('panel');
       panel.panelType = selectedType;
       // Initialise empty data arrays so row management works immediately
@@ -478,6 +485,13 @@
     openSheet('Edit Panel Structure', formEl, () => {
       const updated = readStructureForm(formEl, panel.panelType);
       if (!updated) return false;
+      
+      // Validate checklist has at least one column
+      if (panel.panelType === 'checklist' && (!updated.columns || updated.columns.length === 0)) {
+        alert('Checklist panels must have at least one column. Add columns using the "+ Add Column" button.');
+        return false;
+      }
+      
       // Handle infobox removal explicitly
       if (updated.infobox === undefined) {
         delete panel.infobox;
@@ -1293,21 +1307,55 @@
     }
 
     if (panel.panelType === 'checklist') {
-      const nameInp = fInput('row-name', 'Item name *', d.name || '');
-      el.appendChild(fGroup('Name *', nameInp));
+      // Check if there's at least one column defined
+      const hasColumns = (panel.columns || []).length > 0;
+      
+      // Only show name field if no columns are defined (fallback behavior)
+      let nameInp = null;
+      if (!hasColumns) {
+        nameInp = fInput('row-name', 'Item name', d.name || '');
+        el.appendChild(fGroup('Item name', nameInp));
+      }
+      
       const colInputs = (panel.columns || []).map(col => {
         const inp = fInput('col-' + col.key, col.label, d[col.key] || '');
         el.appendChild(fGroup(col.label, inp));
         return { key: col.key, inp };
       });
-      const noteInp = fInput('row-note', 'Optional sub-note under name', d.note || '');
-      el.appendChild(fGroup('Note (optional)', noteInp));
+      
+      // Add a separator before the note field
+      const separator = document.createElement('div');
+      separator.style.cssText = 'border-top: 1px solid var(--border); margin: 1rem 0;';
+      el.appendChild(separator);
+      
+      // Create full-width note field
+      const noteGroup = document.createElement('div');
+      noteGroup.style.cssText = 'margin-top: 0.5rem;';
+      const noteLabel = document.createElement('label');
+      noteLabel.className = 'f-label';
+      noteLabel.textContent = 'Note (optional)';
+      noteLabel.style.display = 'block';
+      noteLabel.style.marginBottom = '0.25rem';
+      const noteInp = fInput('row-note', '', d.note || '');
+      noteInp.style.width = '100%';
+      noteInp.placeholder = 'Optional sub-note for this checklist item...';
+      noteGroup.appendChild(noteLabel);
+      noteGroup.appendChild(noteInp);
+      el.appendChild(noteGroup);
       return { el, read: () => {
-        const name = nameInp.value.trim();
-        if (!name) { alert('Name is required.'); return null; }
-        const entry = { id: d.id || uid('item'), name };
-        const note  = noteInp.value.trim();
-        if (note) entry.note = note;
+        // Validate that at least one field has content
+        const nameValue = !hasColumns && nameInp ? nameInp.value.trim() : '';
+        const colValues = colInputs.map(({ key, inp }) => inp.value.trim()).filter(v => v);
+        const noteValue = noteInp.value.trim();
+        
+        if (!hasColumns && !nameValue && colValues.length === 0 && !noteValue) {
+          alert('At least one field must have content.');
+          return null;
+        }
+        
+        const entry = { id: d.id || uid('item') };
+        if (!hasColumns && nameValue) entry.name = nameValue;
+        if (noteValue) entry.note = noteValue;
         colInputs.forEach(({ key, inp }) => { if (inp.value.trim()) entry[key] = inp.value.trim(); });
         return entry;
       }};
