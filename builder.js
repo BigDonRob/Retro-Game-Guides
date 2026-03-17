@@ -59,6 +59,7 @@
     _themes:     {},
     _palettes:   {},
     _panelTypes: {},
+    _panelTemplates: {},
     // Index lookups (from games_index.json)
     _systems:      {},   // { "41": "PlayStation Portable", ... }
     _series:       {},   // { "8495": "Harvest Moon | Story of Seasons", ... }
@@ -297,7 +298,21 @@
     if (!activeTab) {
       content.innerHTML = '<div class="b-no-tab">Select a tab or add one to get started.</div>';
     } else {
-      const previewCtx = { save: () => {}, load: () => false, preview: true };
+      // Create preview context that can access saved collapse states
+      const previewCtx = { 
+        save: (key, value) => {
+          if (key && key.startsWith('__c_')) {
+            try { localStorage.setItem(key, value); } catch (_) {}
+          }
+        },
+        load: key => {
+          if (key && key.startsWith('__c_')) {
+            try { return localStorage.getItem(key); } catch (_) { return false; }
+          }
+          return false;
+        }, 
+        preview: true 
+      };
       activeTab.panels.forEach(panel => {
         const wrap    = document.createElement('div'); wrap.className = 'b-panel-wrap';
         const rendered = GuideRender.panel(panel, previewCtx);
@@ -305,6 +320,8 @@
         overlay.innerHTML = `
           <button class="b-ov-btn b-ov-up"  title="Move Up">↑</button>
           <button class="b-ov-btn b-ov-dn"  title="Move Down">↓</button>
+          <button class="b-ov-btn"           title="Copy Panel">📋 Copy</button>
+          <button class="b-ov-btn"           title="Export Panel">💾 Export</button>
           <button class="b-ov-btn"           title="Edit Structure">✎ Structure</button>
           <button class="b-ov-btn b-ov-del" title="Delete">🗑</button>`;
         overlay.querySelector('.b-ov-del').addEventListener('click', () => {
@@ -315,6 +332,10 @@
         });
         overlay.querySelector('[title="Edit Structure"]').addEventListener('click', () =>
           window.BForms.openEditPanelSheet(activeTab.id, panel.id));
+        overlay.querySelector('[title="Copy Panel"]').addEventListener('click', () =>
+          copyPanel(activeTab, panel.id));
+        overlay.querySelector('[title="Export Panel"]').addEventListener('click', () =>
+          exportPanel(panel));
         overlay.querySelector('.b-ov-up').addEventListener('click', () =>
           movePanel(activeTab, panel.id, -1));
         overlay.querySelector('.b-ov-dn').addEventListener('click', () =>
@@ -358,11 +379,24 @@
         content.appendChild(wrap);
       });
 
+      const buttonContainer = document.createElement('div');
+      buttonContainer.style.cssText = 'display: flex; gap: 8px; margin-top: 12px;';
+      
       const addBtn = document.createElement('button');
       addBtn.className = 'b-add-panel'; addBtn.textContent = '+ Add Panel';
+      addBtn.style.flex = '1';
       addBtn.addEventListener('click', () =>
         window.BForms.openAddPanelSheet(activeTab.id));
-      content.appendChild(addBtn);
+      buttonContainer.appendChild(addBtn);
+
+      const importBtn = document.createElement('button');
+      importBtn.className = 'b-import-panel'; importBtn.textContent = '📥 Import Panel';
+      importBtn.style.flex = '1';
+      importBtn.addEventListener('click', () =>
+        window.BForms.openImportPanelSheet(activeTab.id));
+      buttonContainer.appendChild(importBtn);
+      
+      content.appendChild(buttonContainer);
     }
 
     attachLinkListeners();
@@ -373,6 +407,109 @@
     if (j >= 0 && j < tab.panels.length)
       [tab.panels[i], tab.panels[j]] = [tab.panels[j], tab.panels[i]];
     renderPreview();
+  }
+
+  function regeneratePanelIds(panel) {
+    // Create deep copy and regenerate all IDs to avoid conflicts
+    const newPanel = JSON.parse(JSON.stringify(panel));
+    
+    // Always regenerate main panel ID
+    newPanel.id = uid('panel');
+    
+    // Regenerate IDs based on panel type
+    switch (newPanel.panelType) {
+      case 'checklist':
+        if (newPanel.items && Array.isArray(newPanel.items)) {
+          newPanel.items = newPanel.items.map(item => ({
+            ...item,
+            id: uid('item')
+          }));
+        }
+        break;
+        
+      case 'table':
+        if (newPanel.rows && Array.isArray(newPanel.rows)) {
+          newPanel.rows = newPanel.rows.map(row => ({
+            ...row,
+            id: uid('row')
+          }));
+        }
+        break;
+        
+      case 'cards':
+        if (newPanel.cards && Array.isArray(newPanel.cards)) {
+          newPanel.cards = newPanel.cards.map(card => ({
+            ...card,
+            id: uid('card')
+          }));
+        }
+        break;
+        
+      case 'cardgrid':
+        if (newPanel.items && Array.isArray(newPanel.items)) {
+          newPanel.items = newPanel.items.map(item => ({
+            ...item,
+            id: uid('card')
+          }));
+        }
+        // Regenerate region IDs for cardgrid
+        if (newPanel.regions && Array.isArray(newPanel.regions)) {
+          newPanel.regions = newPanel.regions.map(region => ({
+            ...region,
+            id: uid('region')
+          }));
+        }
+        break;
+        
+      case 'keyvalue':
+        if (newPanel.rows && Array.isArray(newPanel.rows)) {
+          newPanel.rows = newPanel.rows.map(row => ({
+            ...row,
+            id: uid('kv')
+          }));
+        }
+        break;
+    }
+    
+    return newPanel;
+  }
+
+  function copyPanel(tab, panelId) {
+    const panel = tab.panels.find(p => p.id === panelId);
+    if (!panel) return;
+    
+    // Create deep copy with regenerated IDs
+    const copiedPanel = regeneratePanelIds(panel);
+    
+    // Update title to indicate it's a copy
+    if (copiedPanel.title) {
+      copiedPanel.title = copiedPanel.title + ' (Copy)';
+    }
+    
+    // Find current index and insert copy right after
+    const currentIndex = tab.panels.findIndex(p => p.id === panelId);
+    tab.panels.splice(currentIndex + 1, 0, copiedPanel);
+    renderPreview();
+  }
+
+  function exportPanel(panel) {
+    // Create exportable deep copy without the ID
+    const exportData = JSON.parse(JSON.stringify(panel));
+    delete exportData.id;
+    
+    // Add metadata for import
+    exportData._exportMeta = {
+      version: '1.0',
+      exportedAt: new Date().toISOString(),
+      panelType: panel.panelType
+    };
+    
+    const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `${panel.title || 'panel'}_${panel.panelType}_template.json`;
+    a.click();
+    URL.revokeObjectURL(a.href);
   }
 
   // Internal links are navigable in editor
@@ -657,15 +794,17 @@
     document.head.appendChild(gFonts);
 
     try {
-      const [themes, palettes, panelTypes, index] = await Promise.all([
+      const [themes, palettes, panelTypes, panelTemplates, index] = await Promise.all([
         fetchJSON('./themes.json').catch(() => ({})),
         fetchJSON('./palettes.json').catch(() => ({})),
         fetchJSON('./panel_types.json').catch(() => ({})),
+        fetchJSON('./panel_templates.json').catch(() => ({})),
         fetchJSON('./games_index.json').catch(() => ({})),
       ]);
       state._themes       = themes;
       state._palettes     = palettes;
       state._panelTypes   = panelTypes;
+      state._panelTemplates = panelTemplates;
       state._systems      = index.systems      || {};
       state._series       = index.series       || {};
       state._tagsList     = index.tags         || [];
@@ -730,7 +869,7 @@
 
   // ── EXPORT shared interface for builder_forms.js ──────────────────────
   // Set before DOMContentLoaded so builder_forms.js can read it on load.
-  window.B = { state, uid, esc, fGroup, fInput, fTextarea, openSheet, closeSheet, confirmSheet, renderPreview };
+  window.B = { state, uid, esc, fGroup, fInput, fTextarea, openSheet, closeSheet, confirmSheet, renderPreview, regeneratePanelIds };
 
   // ── INIT ─────────────────────────────────────────────────────────────
   if (document.readyState === 'loading') {

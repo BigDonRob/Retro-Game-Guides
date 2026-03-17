@@ -116,15 +116,15 @@
 .b-ov-btn:hover { color: var(--b-text); border-color: var(--b-textMid); background: var(--b-surf2); }
 .b-ov-del:hover { color: var(--b-danger); border-color: var(--b-danger); }
 
-/* ── ADD PANEL BUTTON ── */
-.b-add-panel {
+/* ── ADD PANEL BUTTONS ── */
+.b-add-panel, .b-import-panel {
   display: flex; align-items: center; justify-content: center; gap: 8px;
   margin: 12px 0 20px; padding: 12px;
   border: 2px dashed var(--borderL); border-radius: var(--radius-card);
   background: transparent; color: var(--textMuted);
   font-family: var(--b-ff); font-size: 13px; cursor: pointer; transition: all .15s; width: 100%;
 }
-.b-add-panel:hover { border-color: var(--emphasis); color: var(--emphasis); }
+.b-add-panel:hover, .b-import-panel:hover { border-color: var(--emphasis); color: var(--emphasis); }
 .b-no-tab {
   text-align: center; padding: 40px 20px; font-size: 13px;
   color: var(--textMuted); font-family: var(--b-ff);
