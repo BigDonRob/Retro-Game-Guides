@@ -62,6 +62,7 @@
     _panelTemplates: {},
     // Index lookups (from games_index.json)
     _systems:      {},   // { "41": "PlayStation Portable", ... }
+    _systemsByDate: {},  // { id: { name, releaseYear }, ... } for chronological sorting
     _series:       {},   // { "8495": "Harvest Moon | Story of Seasons", ... }
     _tagsList:     [],   // ["Achievement Guide", "Checklist", "Reference", "Walkthrough"]
     _themesList:   [],   // ["bubbles", "clean", "editorial", "retro", "sharp"]
@@ -809,7 +810,59 @@
       state._series       = index.series       || {};
       state._tagsList     = index.tags         || [];
       state._themesList   = index.themes       || [];
-      state._palettesList = index.palettes     || [];
+      state._palettesList = index.palettes     || {};
+
+      // Create systems with release dates for chronological sorting
+      state._systemsByDate = {
+        "1": { name: "Genesis/Mega Drive", releaseYear: 1988 },
+        "2": { name: "Nintendo 64", releaseYear: 1996 },
+        "3": { name: "SNES/Super Famicom", releaseYear: 1990 },
+        "4": { name: "Game Boy", releaseYear: 1989 },
+        "5": { name: "Game Boy Advance", releaseYear: 2001 },
+        "6": { name: "Game Boy Color", releaseYear: 1998 },
+        "7": { name: "NES/Famicom", releaseYear: 1983 },
+        "8": { name: "PC Engine/TurboGrafx-16", releaseYear: 1987 },
+        "9": { name: "Sega CD", releaseYear: 1991 },
+        "10": { name: "32X", releaseYear: 1994 },
+        "11": { name: "Master System", releaseYear: 1985 },
+        "12": { name: "PlayStation", releaseYear: 1994 },
+        "13": { name: "Atari Lynx", releaseYear: 1989 },
+        "14": { name: "Neo Geo Pocket", releaseYear: 1998 },
+        "15": { name: "Game Gear", releaseYear: 1990 },
+        "16": { name: "GameCube", releaseYear: 2001 },
+        "17": { name: "Atari Jaguar", releaseYear: 1993 },
+        "18": { name: "Nintendo DS", releaseYear: 2004 },
+        "19": { name: "Wii", releaseYear: 2006 },
+        "21": { name: "PlayStation 2", releaseYear: 2000 },
+        "23": { name: "Magnavox Odyssey 2", releaseYear: 1978 },
+        "24": { name: "Pokemon Mini", releaseYear: 2001 },
+        "25": { name: "Atari 2600", releaseYear: 1977 },
+        "27": { name: "Arcade", releaseYear: 1971 },
+        "28": { name: "Virtual Boy", releaseYear: 1995 },
+        "29": { name: "MSX", releaseYear: 1983 },
+        "33": { name: "SG-1000", releaseYear: 1983 },
+        "37": { name: "Amstrad CPC", releaseYear: 1984 },
+        "38": { name: "Apple II", releaseYear: 1977 },
+        "39": { name: "Saturn", releaseYear: 1994 },
+        "40": { name: "Dreamcast", releaseYear: 1998 },
+        "41": { name: "PlayStation Portable", releaseYear: 2004 },
+        "43": { name: "3DO Interactive Multiplayer", releaseYear: 1993 },
+        "44": { name: "ColecoVision", releaseYear: 1982 },
+        "45": { name: "Intellivision", releaseYear: 1979 },
+        "46": { name: "Vectrex", releaseYear: 1982 },
+        "47": { name: "PC-8000/8800", releaseYear: 1979 },
+        "49": { name: "PC-FX", releaseYear: 1994 },
+        "51": { name: "Atari 7800", releaseYear: 1986 },
+        "53": { name: "WonderSwan", releaseYear: 1999 },
+        "56": { name: "Neo Geo CD", releaseYear: 1994 },
+        "57": { name: "Fairchild Channel F", releaseYear: 1976 },
+        "63": { name: "Watara Supervision", releaseYear: 1992 },
+        "69": { name: "Mega Duck", releaseYear: 1993 },
+        "71": { name: "Arduboy", releaseYear: 2016 },
+        "72": { name: "WASM-4", releaseYear: 2021 },
+        "73": { name: "Arcadia 2001", releaseYear: 1982 },
+        "74": { name: "Interton VC 4000", releaseYear: 1978 }
+      };
 
       // Apply theme immediately after loading
       applyThemePalette();

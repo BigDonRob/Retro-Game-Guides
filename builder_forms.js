@@ -23,18 +23,18 @@
     const m  = state.meta;
     const el = document.createElement('div');
 
-    // Build system options sorted by name
-    const systemOptions = Object.entries(state._systems)
-      .sort(([, a], [, b]) => a.localeCompare(b))
-      .map(([id, name]) =>
-        `<option value="${id}"${parseInt(id) === m.systemId ? ' selected' : ''}>${esc(name)}</option>`
+    // Build system options sorted by release date (newest to oldest)
+    const systemOptions = Object.entries(state._systemsByDate)
+      .sort(([, a], [, b]) => b.releaseYear - a.releaseYear) // Newest first
+      .map(([id, system]) =>
+        `<option value="${id}"${parseInt(id) === m.systemId ? ' selected' : ''}>${esc(system.name)} (${system.releaseYear})</option>`
       ).join('');
 
-    // Build alt-system multi-select (same list)
-    const altSystemOptions = Object.entries(state._systems)
-      .sort(([, a], [, b]) => a.localeCompare(b))
-      .map(([id, name]) =>
-        `<option value="${id}"${(m.altSystemIds || []).includes(parseInt(id)) ? ' selected' : ''}>${esc(name)}</option>`
+    // Build alt-system multi-select (same chronological order)
+    const altSystemOptions = Object.entries(state._systemsByDate)
+      .sort(([, a], [, b]) => b.releaseYear - a.releaseYear) // Newest first
+      .map(([id, system]) =>
+        `<option value="${id}"${(m.altSystemIds || []).includes(parseInt(id)) ? ' selected' : ''}>${esc(system.name)} (${system.releaseYear})</option>`
       ).join('');
 
     el.innerHTML = `
