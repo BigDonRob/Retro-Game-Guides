@@ -4,7 +4,7 @@
 
    Exports window.BForms = {
      openMetaSheet, openAddTabSheet, openEditTabSheet,
-     openAddPanelSheet, openEditPanelSheet,
+     openAddPanelSheet, openEditPanelSheet, openImportPanelSheet,
      openAddRowSheet, openEditRowSheet, openManageRowsSheet,
      getPanelRows,
    }
@@ -23,18 +23,18 @@
     const m  = state.meta;
     const el = document.createElement('div');
 
-    // Build system options sorted by name
-    const systemOptions = Object.entries(state._systems)
-      .sort(([, a], [, b]) => a.localeCompare(b))
-      .map(([id, name]) =>
-        `<option value="${id}"${parseInt(id) === m.systemId ? ' selected' : ''}>${esc(name)}</option>`
+    // Build system options sorted by release date (newest to oldest)
+    const systemOptions = Object.entries(state._systemsByDate)
+      .sort(([, a], [, b]) => b.releaseYear - a.releaseYear) // Newest first
+      .map(([id, system]) =>
+        `<option value="${id}"${parseInt(id) === m.systemId ? ' selected' : ''}>${esc(system.name)} (${system.releaseYear})</option>`
       ).join('');
 
-    // Build alt-system multi-select (same list)
-    const altSystemOptions = Object.entries(state._systems)
-      .sort(([, a], [, b]) => a.localeCompare(b))
-      .map(([id, name]) =>
-        `<option value="${id}"${(m.altSystemIds || []).includes(parseInt(id)) ? ' selected' : ''}>${esc(name)}</option>`
+    // Build alt-system multi-select (same chronological order)
+    const altSystemOptions = Object.entries(state._systemsByDate)
+      .sort(([, a], [, b]) => b.releaseYear - a.releaseYear) // Newest first
+      .map(([id, system]) =>
+        `<option value="${id}"${(m.altSystemIds || []).includes(parseInt(id)) ? ' selected' : ''}>${esc(system.name)} (${system.releaseYear})</option>`
       ).join('');
 
     el.innerHTML = `
@@ -1148,6 +1148,27 @@
   }
 
   // ── ROW SHEETS ────────────────────────────────────────────────────────
+  // Helper functions to preserve panel collapse state during operations
+  function savePanelCollapseStates() {
+    const states = {};
+    document.querySelectorAll('.gr-panel-wrap').forEach((panelWrap, index) => {
+      const card = panelWrap.querySelector('.gr-card');
+      if (card && card.classList.contains('gr-collapsed')) {
+        states[index] = true;
+      }
+    });
+    return states;
+  }
+
+  function restorePanelCollapseStates(states) {
+    document.querySelectorAll('.gr-panel-wrap').forEach((panelWrap, index) => {
+      if (states[index] === true) {
+        const card = panelWrap.querySelector('.gr-card');
+        if (card) card.classList.add('gr-collapsed');
+      }
+    });
+  }
+
   function openAddRowSheet(tabId, panelId) {
     const panel = findPanel(tabId, panelId);
     if (!panel) return;
@@ -1158,7 +1179,17 @@
     const { el, read } = buildRowForm(panel, null);
     openSheet(`Add Row — ${panel.title}`, el, () => {
       const row = read(); if (!row) return false;
-      appendRow(panel, row); renderPreview(); return true;
+      
+      // Preserve collapse state before adding row
+      const collapseStates = savePanelCollapseStates();
+      
+      appendRow(panel, row);
+      renderPreview(); 
+      
+      // Restore collapse state after render
+      setTimeout(() => restorePanelCollapseStates(collapseStates), 0);
+      
+      return true;
     }, 'Add Row');
   }
 
@@ -1172,7 +1203,17 @@
     const { el, read } = buildRowForm(panel, getPanelRows(panel)[rowIdx]);
     openSheet(`Edit Row — ${panel.title}`, el, () => {
       const row = read(); if (!row) return false;
-      setRow(panel, rowIdx, row); renderPreview(); return true;
+      
+      // Preserve collapse state before editing row
+      const collapseStates = savePanelCollapseStates();
+      
+      setRow(panel, rowIdx, row);
+      renderPreview(); 
+      
+      // Restore collapse state after render
+      setTimeout(() => restorePanelCollapseStates(collapseStates), 0);
+      
+      return true;
     }, 'Save Row');
   }
 
@@ -1270,14 +1311,26 @@
         const editBtn = mkBtn('✎ Edit', '', 'Edit row');
         const delBtn  = mkBtn('🗑',  'b-ov-del', 'Delete row'); delBtn.style.padding = '4px 7px';
 
-        upBtn.addEventListener('click',  () => { moveRow(panel, idx, -1); rebuild(); renderPreview(); });
-        dnBtn.addEventListener('click',  () => { moveRow(panel, idx,  1); rebuild(); renderPreview(); });
+        upBtn.addEventListener('click',  () => { 
+          const collapseStates = savePanelCollapseStates();
+          moveRow(panel, idx, -1); rebuild(); renderPreview(); 
+          setTimeout(() => restorePanelCollapseStates(collapseStates), 0);
+        });
+        dnBtn.addEventListener('click',  () => { 
+          const collapseStates = savePanelCollapseStates();
+          moveRow(panel, idx, 1); rebuild(); renderPreview(); 
+          setTimeout(() => restorePanelCollapseStates(collapseStates), 0);
+        });
         editBtn.addEventListener('click', () => {
           closeSheet();
           setTimeout(() => openEditRowSheet(tabId, panelId, idx), 200);
         });
         delBtn.addEventListener('click', () => {
-          if (confirm('Delete this row?')) { deleteRow(panel, idx); rebuild(); renderPreview(); }
+          if (confirm('Delete this row?')) { 
+            const collapseStates = savePanelCollapseStates();
+            deleteRow(panel, idx); rebuild(); renderPreview(); 
+            setTimeout(() => restorePanelCollapseStates(collapseStates), 0);
+          }
         });
 
         item.append(label, upBtn, dnBtn, editBtn, delBtn);
@@ -1476,6 +1529,161 @@
     return { el, read: () => ({}) };
   }
 
+  // ── IMPORT PANEL SHEET ───────────────────────────────────────────────────
+  function openImportPanelSheet(tabId) {
+    const el = document.createElement('div');
+    el.innerHTML = `
+      <div class="f-group">
+        <label class="f-label">Import Method</label>
+        <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+            <input type="radio" name="import-method" value="template" checked>
+            <span>Choose Template</span>
+          </label>
+          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+            <input type="radio" name="import-method" value="file">
+            <span>Upload JSON File</span>
+          </label>
+        </div>
+      </div>
+
+      <div id="template-section" class="f-group">
+        <label class="f-label">Select Template</label>
+        <div class="type-grid" id="template-grid"></div>
+      </div>
+
+      <div id="file-section" class="f-group" style="display: none;">
+        <label class="f-label">Upload Panel JSON</label>
+        <input type="file" id="panel-file-input" accept=".json" style="margin-bottom: 8px;">
+        <div class="f-hint">Upload a JSON file exported from another panel.</div>
+      </div>
+    `;
+
+    const templateGrid = el.querySelector('#template-grid');
+    const fileSection = el.querySelector('#file-section');
+    const templateSection = el.querySelector('#template-section');
+    const fileInput = el.querySelector('#panel-file-input');
+
+    // Render template cards from loaded templates
+    const templates = state._panelTemplates || {};
+    
+    Object.entries(templates).forEach(([key, template]) => {
+      const card = document.createElement('div');
+      card.className = 'type-card';
+      card.dataset.templateKey = key;
+      
+      let icon;
+      if (template._templateInfo && template._templateInfo.icon) {
+        icon = template._templateInfo.icon;
+      } else if (template.panelType === 'checklist') {
+        icon = '☑️';
+      } else if (template.panelType === 'table') {
+        icon = '📊';
+      } else if (template.panelType === 'keyvalue') {
+        icon = '🗂️';
+      } else if (template.panelType === 'cards') {
+        icon = '🃏';
+      } else {
+        icon = '📝';
+      }
+      
+      const cardHTML = `
+        <div class="type-card-icon">${icon}</div>
+        <div class="type-card-label">${template._templateInfo?.name || template.title}</div>
+        <div class="type-card-desc">${template._templateInfo?.description || 'Template panel'}</div>
+      `;
+      
+      card.innerHTML = cardHTML;
+      
+      card.addEventListener('click', () => {
+        templateGrid.querySelectorAll('.type-card').forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+      });
+      
+      templateGrid.appendChild(card);
+    });
+
+    // Toggle between template and file import
+    el.querySelectorAll('input[name="import-method"]').forEach(radio => {
+      radio.addEventListener('change', () => {
+        if (radio.value === 'template') {
+          templateSection.style.display = '';
+          fileSection.style.display = 'none';
+        } else {
+          templateSection.style.display = 'none';
+          fileSection.style.display = '';
+        }
+      });
+    });
+
+    openSheet('Import Panel', el, () => {
+      const importMethod = el.querySelector('input[name="import-method"]:checked').value;
+      let panelData = null;
+
+      if (importMethod === 'template') {
+        const selectedCard = templateGrid.querySelector('.type-card.selected');
+        if (!selectedCard) {
+          alert('Please select a template.');
+          return false;
+        }
+        const templateKey = selectedCard.dataset.templateKey;
+        panelData = JSON.parse(JSON.stringify(templates[templateKey]));
+      } else {
+        const file = fileInput.files[0];
+        if (!file) {
+          alert('Please select a JSON file.');
+          return false;
+        }
+        
+        return new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            try {
+              const imported = JSON.parse(e.target.result);
+              panelData = imported;
+              resolve(importPanelData(tabId, panelData));
+            } catch (err) {
+              alert('Invalid JSON file: ' + err.message);
+              resolve(false);
+            }
+          };
+          reader.readAsText(file);
+        });
+      }
+
+      return importPanelData(tabId, panelData);
+    }, 'Import Panel');
+  }
+
+  function importPanelData(tabId, panelData) {
+    // Remove template metadata
+    const { _templateInfo, _exportMeta, ...cleanPanelData } = panelData;
+    
+    // Validate required fields
+    if (!cleanPanelData.panelType) {
+      alert('Invalid panel data: missing panel type.');
+      return false;
+    }
+    
+    if (!cleanPanelData.title) {
+      alert('Invalid panel data: missing title.');
+      return false;
+    }
+
+    // Create new panel with regenerated IDs to avoid conflicts
+    const newPanel = window.B.regeneratePanelIds(cleanPanelData);
+
+    // Add panel to the specified tab
+    const tab = state.tabs.find(t => t.id === tabId);
+    if (tab) {
+      tab.panels.push(newPanel);
+      renderPreview();
+      return true;
+    }
+    
+    return false;
+  }
+
   // ── HELPERS ───────────────────────────────────────────────────────────
   function findPanel(tabId, panelId) {
     return state.tabs.find(t => t.id === tabId)?.panels.find(p => p.id === panelId) || null;
@@ -1485,7 +1693,7 @@
   window.BForms = {
     openMetaSheet,
     openAddTabSheet, openEditTabSheet,
-    openAddPanelSheet, openEditPanelSheet,
+    openAddPanelSheet, openEditPanelSheet, openImportPanelSheet,
     openCardGridEditor,
     openAddRowSheet, openEditRowSheet, openManageRowsSheet,
     getPanelRows,

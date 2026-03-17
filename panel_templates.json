@@ -1,0 +1,91 @@
+{
+  "checklist_detailed": {
+    "panelType": "checklist",
+    "title": "Detailed Checklist",
+    "columns": [
+      { "label": "Item Name", "key": "name", "style": "plain" },
+      { "label": "Location", "key": "location", "style": "plain" },
+      { "label": "Notes", "key": "notes", "style": "plain" }
+    ],
+    "items": [
+      {"name": "Master Sword", "location": "Crystal Cave - Behind waterfall", "notes": "Requires Crystal Key to access"},
+      {"name": "Dragon Shield", "location": "Volcano Peak - Boss room", "notes": "Fire resistant, essential for final boss"},
+      {"name": "Health Upgrade", "location": "Ancient Temple - Puzzle room", "notes": "Solve the statue puzzle first"},
+      {"name": "Magic Tome", "location": "Wizard Tower - Top floor", "notes": "Talk to sage after defeating 4 elementals"},
+      {"name": "Boots of Speed", "location": "Hidden Forest - Speed shrine", "notes": "Offer rare herb to shrine spirit"},
+      {"name": "Invisibility Cloak", "location": "Shadow Realm - Treasure chest", "notes": "Use during stealth sections"}
+    ],
+    "_templateInfo": {
+      "name": "Detailed Checklist",
+      "description": "Checklist with name, location, and notes columns",
+      "category": "checklist",
+      "icon": "☑️"
+    }
+  },
+  "table_comparison": {
+    "panelType": "table",
+    "title": "Comparison Table",
+    "columns": [
+      { "label": "Item", "key": "item" },
+      { "label": "Option A", "key": "option_a" },
+      { "label": "Option B", "key": "option_b" },
+      { "label": "Best Choice", "key": "best_choice" }
+    ],
+    "rows": [
+      {"item": "Weapon", "option_a": "15 ATK", "option_b": "12 ATK + Fire", "best_choice": "Option B - Fire bonus"},
+      {"item": "Armor", "option_a": "10 DEF", "option_b": "8 DEF + Magic", "best_choice": "Option B - Magic bonus"},
+      {"item": "Boots", "option_a": "+5 SPD", "option_b": "+3 SPD + No Slip", "best_choice": "Option A - More speed"},
+      {"item": "Accessory", "option_a": "+10 Magic", "option_b": "+5 Magic + HP Regen", "best_choice": "Option B - Versatility"}
+    ],
+    "_templateInfo": {
+      "name": "Comparison Table",
+      "description": "Compare multiple options side by side",
+      "category": "table",
+      "icon": "📊"
+    }
+  },
+  "keyvalue_controls": {
+    "panelType": "keyvalue",
+    "title": "Controls",
+    "rows": [
+      {"key": "START", "value": "Start Game"},
+      {"key": "SELECT", "value": "Open Menu/Inventory"},
+      {"key": "A", "value": "Action/Confirm"},
+      {"key": "B", "value": "Cancel/Back"},
+      {"key": "X", "value": "Jump/Attack"},
+      {"key": "Y", "value": "Switch Weapon"},
+      {"key": "Inventory", "value": "View Items"},
+      {"key": "Pause", "value": "Pause Game"},
+      {"key": "Equipment", "value": "Manage Gear"},
+      {"key": "Sword Strike", "value": "Basic Attack"}
+    ],
+    "_templateInfo": {
+      "name": "Controls",
+      "description": "Key/value pairs for game controls or settings",
+      "category": "keyvalue",
+      "icon": "🗂️"
+    }
+  },
+  "text_introduction": {
+    "panelType": "text",
+    "title": "Introduction",
+    "content": "# Welcome to the Game Guide\n\nThis comprehensive guide will help you master every aspect of the game. Whether you're a newcomer looking for basic guidance or a veteran seeking to optimize your playthrough, you'll find everything you need right here.\n\n## Getting Started\n\n- **New Players**: Start with the **Character Creation** section below\n- **Returning Players**: Check the **Quick Reference** for key mechanics\n- **Experienced Players**: Jump to **Advanced Strategies**\n\n## Guide Navigation\n\nUse the tabs above to navigate between different sections:\n- **Characters & Stats**: Complete character information\n- **Walkthrough**: Step-by-step progression guide\n- **Items & Equipment**: Comprehensive database\n- **Side Quests**: Optional content checklist\n\n> **Pro Tip**: Bookmark this guide and use Ctrl+F to quickly find what you need!",
+    "_templateInfo": {
+      "name": "Introduction",
+      "description": "Introduction panel with markdown support",
+      "category": "text",
+      "icon": "📝"
+    }
+  },
+  "text_tips": {
+    "panelType": "text",
+    "title": "Tips & Tricks",
+    "content": "# Essential Tips & Tricks\n\n## Combat Tips\n\n- **Perfect Dodge**: Time your dodges just before enemy attacks for invincibility frames\n- **Critical Hits**: Most enemies have vulnerable moments after certain attacks\n- **Elemental Weaknesses**: Use opposite elements for 2x damage\n- **Status Effects**: Poison/Paralyze can turn tough fights into easy wins\n\n## Exploration Tips\n\n- **Save Often**: Multiple save points prevent progress loss\n- **Hidden Areas**: Check behind waterfalls and suspicious walls\n- **NPC Schedules**: Some characters appear only at specific times\n- **Environmental Clues**: Audio/visual cues often hint at secrets\n\n## Efficiency Tips\n\n- **Route Optimization**: Plan your path to minimize backtracking\n- **Resource Management**: Don't waste healing items outside of boss fights\n- **Experience Farming**: Certain areas give better XP/minute ratios\n- **Speedrun Techniques**: Master movement cancel and frame-perfect tricks\n\n## Pro Strategies\n\n> **Boss Pattern**: Most bosses have 3-5 attack patterns before repeating\n> **Item Synthesis**: Combine items at the right time for unique gear\n> **Level Scaling**: Some areas scale with your level - revisit when overleveled\n> **Hidden Mechanics**: The game doesn't tell you everything - experiment!",
+    "_templateInfo": {
+      "name": "Tips & Tricks",
+      "description": "Tips and tricks panel with helpful information",
+      "category": "text",
+      "icon": "📝"
+    }
+  }
+}
