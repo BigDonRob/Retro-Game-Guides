@@ -102,6 +102,29 @@ main {
   display: inline-block;
 }
 .builder-btn:hover { background: rgba(0,204,204,0.15); box-shadow: 0 0 10px rgba(0,204,204,0.15); }
+.dev-link {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 8px 14px;
+  border-radius: 5px;
+  border: 1px solid #8c50ff;
+  background: rgba(140,80,255,0.07);
+  color: #c4a7ff;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s;
+  letter-spacing: 0.4px;
+  flex-shrink: 0;
+  text-decoration: none;
+  display: inline-block;
+}
+.dev-link:hover { background: rgba(140,80,255,0.14); border-color: rgba(180,140,255,0.6); box-shadow: 0 0 10px rgba(140,80,255,0.15); }
+.builder-divider {
+  width: 1px;
+  background: var(--border);
+  flex-shrink: 0;
+}
 
 /* ── Filter section ── */
 .filters { margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0; }
@@ -436,6 +459,8 @@ footer {
       <div class="builder-bar-title">🛠 Build a Guide</div>
       <div class="builder-bar-sub">Start a new guide or <button id="import-wip-btn" class="import-wip-btn">import a WIP</button></div>
     </div>
+    <a class="dev-link" href="guide.html?game=0" title="Open the blank RAM scouting template. Use ?edit to customise and save a local copy.">🔬 RAM Digging</a>
+    <div class="builder-divider"></div>
     <a class="builder-btn" href="guide.html?edit">New Guide →</a>
   </div>
 

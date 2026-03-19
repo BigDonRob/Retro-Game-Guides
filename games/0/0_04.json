@@ -1,0 +1,124 @@
+{
+  "label": "⚔️ RPG",
+  "panels": [
+    {
+      "id": "panel_rpg_tips",
+      "panelType": "text",
+      "title": "RPGs — things to investigate",
+      "content": "## Game state\n\nRPGs often have three or more distinct major states: the field, battle, menus, and cutscenes. A state index or flag set that identifies which of these is active is one of the first things worth finding, because many other values only exist or are only valid within a specific state.\n\n## Party data as a struct\n\nParty member stats — HP, max HP, MP, level, status effects — are frequently stored in a repeating block. Each character occupies a fixed number of bytes, and the second character begins exactly that many bytes after the first. Once you know the size of one character's block, the rest follow automatically.\n\n## Currency\n\nCurrency is a reliable anchor because you control it precisely. Earning or spending an exact amount and searching for a value that changed by that same amount is a direct path. Currency may be stored as a standard integer, as BCD, or spread across multiple bytes for very large values.\n\n## Bitmasks and flag arrays\n\nKey items, boss defeats, story flags, and skill unlocks are often packed into bitmasks rather than stored as individual addresses. A byte that changes from 0 to 4 instead of 0 to 1 when you acquire a key item is storing multiple items in its individual bits. Investigating each bit separately will reveal what each position represents.\n\n## Battle state\n\nMany values — enemy HP slots, active status effects, the outcome flag — may only be written to RAM while a battle is active. Searching for these values outside of a battle may return no results or unreliable ones."
+    },
+    {
+      "id": "panel_rpg_protection",
+      "panelType": "checklist",
+      "title": "Protection",
+      "infobox": "Identify these before writing achievement logic.",
+      "columns": [
+        { "key": "name", "label": "Target", "style": "plain" },
+        { "key": "tNote", "label": "Note", "style": "plain" }
+      ],
+      "entry_Protection": [
+        { "id": "rpg_prot_demo",  "name": "Demo mode",         "tNote": "Check for a specific value that is set or cleared only on the main menu or when demo mode initiates. May be part of a larger game state index rather than a standalone flag." },
+        { "id": "rpg_prot_save",  "name": "Save protection",   "tNote": "Find values that match a loading state or last loaded in-game state so that you can confirm the player is in-game for at least one frame by checking Delta = in-game." },
+        { "id": "rpg_prot_cheat", "name": "Cheat protection",  "tNote": "Investigate old guides or walkthroughs for possible cheats. If they offer an advantage, block them. Look for on/off flags, unnatural resource increases during a menu or pause scenario." },
+        { "id": "rpg_prot_c1", "name": "Invincibility / no damage cheat", "tNote": "If this exists, damageless achievements must require it to be off." },
+        { "id": "rpg_prot_c2", "name": "Infinite MP / resource cheat",    "tNote": "If this exists, resource-based challenge achievements must require it to be off." },
+        { "id": "rpg_prot_c3", "name": "Max gold / currency cheat",       "tNote": "If this exists, currency collection achievements must require it to be off." },
+        { "id": "rpg_prot_c4", "name": "All items cheat",                 "tNote": "If this exists, collection achievements must require it to be off." },
+        { "id": "rpg_prot_c5", "name": "Encounter rate modifier",         "tNote": "Some RPGs allow toggling random encounters. Investigate whether this affects achievement validity." },
+        { "id": "rpg_prot_c6", "name": "New Game+ flag",                  "tNote": "Whether the current run is NG+. Affects item and stat availability. May need to be blocked or specifically allowed depending on the achievement." },
+        { "id": "rpg_prot_c7", "name": "Difficulty setting",              "tNote": "Scope anchor for difficulty-gated achievements. May be encoded into save data rather than active RAM." }
+      ]
+    },
+    {
+      "id": "panel_rpg_progression",
+      "panelType": "checklist",
+      "title": "Progression",
+      "infobox": "Values that track forward movement through story, chapters, and mandatory events.",
+      "columns": [
+        { "key": "name", "label": "Target", "style": "plain" },
+        { "key": "tNote", "label": "Note", "style": "plain" }
+      ],
+      "entry_Progression": [
+        { "id": "rpg_prog_01", "name": "Game state (field/battle/menu/cutscene)", "tNote": "Which major state the game is currently in." },
+        { "id": "rpg_prog_02", "name": "Map / area ID",                   "tNote": "The identifier for the current location. Changes on every room, area, or zone transition." },
+        { "id": "rpg_prog_03", "name": "Chapter / act index",             "tNote": "Which chapter, act, or narrative segment is currently active." },
+        { "id": "rpg_prog_04", "name": "Story flag array — byte 0",      "tNote": "The first byte of the story flag array. Each bit represents a triggered story event." },
+        { "id": "rpg_prog_05", "name": "Story flag array — byte 1",      "tNote": "Second byte. Adjacent to byte 0." },
+        { "id": "rpg_prog_06", "name": "Story flag array — byte 2",      "tNote": "Continue for as many bytes as the array uses." },
+        { "id": "rpg_prog_07", "name": "Boss defeat flag — boss 1",      "tNote": "Whether this boss has been permanently defeated." },
+        { "id": "rpg_prog_08", "name": "Boss defeat flag — boss 2",      "tNote": "Same investigation as boss 1." },
+        { "id": "rpg_prog_09", "name": "Boss defeat flag — boss 3",      "tNote": "Continue for each mandatory boss." },
+        { "id": "rpg_prog_10", "name": "Party member recruited — char 2","tNote": "Whether the second character has joined the party." },
+        { "id": "rpg_prog_11", "name": "Party member recruited — char 3","tNote": "Whether the third character has joined." },
+        { "id": "rpg_prog_12", "name": "Quest state flags",               "tNote": "Which optional quests are active, completed, or failed." },
+        { "id": "rpg_prog_13", "name": "NPC dialogue flags",              "tNote": "Which NPC conversations have occurred." },
+        { "id": "rpg_prog_14", "name": "Key item flags",                  "tNote": "Which story-critical items have been acquired. Frequently a bitmask." },
+        { "id": "rpg_prog_15", "name": "Door / area unlock flags",        "tNote": "Whether specific locked areas have been opened." },
+        { "id": "rpg_prog_16", "name": "Battle active flag",              "tNote": "A value that changes when a battle begins or ends. Scope anchor for combat logic." },
+        { "id": "rpg_prog_17", "name": "Battle outcome flag",             "tNote": "Whether the battle ended in victory, escape, or game over." },
+        { "id": "rpg_prog_18", "name": "Game completion flag",            "tNote": "A value set when the credits roll or the final screen is reached." },
+        { "id": "rpg_prog_19", "name": "Ending variant",                  "tNote": "Which ending was reached, for games with multiple outcomes." },
+        { "id": "rpg_prog_20", "name": "Clears per character",            "tNote": "If the game tracks completion separately per character, where that data lives." }
+      ]
+    },
+    {
+      "id": "panel_rpg_collections",
+      "panelType": "checklist",
+      "title": "Collections",
+      "infobox": "Things the player has collected or learned that persist across sessions.",
+      "columns": [
+        { "key": "name", "label": "Target", "style": "plain" },
+        { "key": "tNote", "label": "Note", "style": "plain" }
+      ],
+      "entry_Collection": [
+        { "id": "rpg_col_01", "name": "Gold / currency",                "tNote": "May be a standard integer, BCD, or split across multiple bytes for large values." },
+        { "id": "rpg_col_02", "name": "Inventory slot 0 — item ID",    "tNote": "Which item occupies slot 0." },
+        { "id": "rpg_col_03", "name": "Inventory slot 0 — quantity",   "tNote": "How many of that item are held. May be adjacent to the item ID." },
+        { "id": "rpg_col_04", "name": "Inventory slot 1 — item ID",    "tNote": "Slot 1. Compare address offset from slot 0 to determine entry size." },
+        { "id": "rpg_col_05", "name": "Equipment — weapon",             "tNote": "Currently equipped weapon." },
+        { "id": "rpg_col_06", "name": "Equipment — armor",              "tNote": "Currently equipped armor." },
+        { "id": "rpg_col_07", "name": "Equipment — accessory",          "tNote": "Currently equipped accessory." },
+        { "id": "rpg_col_08", "name": "Key item flags",                 "tNote": "Which key items have been obtained. Frequently a bitmask." },
+        { "id": "rpg_col_09", "name": "Skill / spell learned — char 1","tNote": "Which skills or spells character 1 has learned." },
+        { "id": "rpg_col_10", "name": "Skill / spell learned — char 2","tNote": "Same for character 2." },
+        { "id": "rpg_col_11", "name": "Bestiary entries — byte 0",     "tNote": "Which enemy types have been recorded. May be a bitmask." },
+        { "id": "rpg_col_12", "name": "Bestiary entries — byte 1",     "tNote": "Adjacent to byte 0." },
+        { "id": "rpg_col_13", "name": "Crafting materials",             "tNote": "Gathered materials and their quantities, if a crafting system exists." },
+        { "id": "rpg_col_14", "name": "Party member unlock flags",      "tNote": "All recruitable characters tracked together, if a combined flag exists." },
+        { "id": "rpg_col_15", "name": "Rare / unique item flags",       "tNote": "One-of-a-kind items that cannot be obtained again once acquired." }
+      ]
+    },
+    {
+      "id": "panel_rpg_challenges",
+      "panelType": "checklist",
+      "title": "Challenges",
+      "infobox": "Values for achievements with pass/fail conditions.",
+      "columns": [
+        { "key": "name", "label": "Target", "style": "plain" },
+        { "key": "tNote", "label": "Note", "style": "plain" }
+      ],
+      "entry_Challenge": [
+        { "id": "rpg_chl_01", "name": "Party leader HP (current)",     "tNote": "Current health of the lead character. Take damage to isolate." },
+        { "id": "rpg_chl_02", "name": "Party leader HP (max)",         "tNote": "Maximum health. May be adjacent to current HP." },
+        { "id": "rpg_chl_03", "name": "Party member 2 HP (current)",   "tNote": "May follow at a fixed offset from the leader's HP." },
+        { "id": "rpg_chl_04", "name": "Party member 3 HP (current)",   "tNote": "Same offset pattern from member 2." },
+        { "id": "rpg_chl_05", "name": "Party leader MP (current)",     "tNote": "Current magic resource. May be adjacent to HP within the character struct." },
+        { "id": "rpg_chl_06", "name": "Player level",                  "tNote": "Current character level. Increments on level-up." },
+        { "id": "rpg_chl_07", "name": "Experience points",             "tNote": "Accumulated experience. May overflow or reset at level-up." },
+        { "id": "rpg_chl_08", "name": "Enemy HP — slot 0",             "tNote": "Health of the first enemy slot. Only valid during an active battle." },
+        { "id": "rpg_chl_09", "name": "Enemy HP — slot 1",             "tNote": "Second enemy slot. Compare offset from slot 0 to determine entry size." },
+        { "id": "rpg_chl_10", "name": "Enemy HP — slot 2",             "tNote": "Third slot. Same offset pattern." },
+        { "id": "rpg_chl_11", "name": "Status effects — member 1",    "tNote": "Active status conditions on character 1. May be a flag byte with one bit per condition." },
+        { "id": "rpg_chl_12", "name": "Status effects — member 2",    "tNote": "Same for character 2." },
+        { "id": "rpg_chl_13", "name": "Damage dealt (last hit)",       "tNote": "The value of the most recent attack. A short-lived value." },
+        { "id": "rpg_chl_14", "name": "Critical hit flag",             "tNote": "A short-lived value that fires when a critical hit occurs." },
+        { "id": "rpg_chl_15", "name": "Turn counter (battle)",         "tNote": "How many turns have elapsed in the current battle." },
+        { "id": "rpg_chl_16", "name": "Steps / encounter counter",     "tNote": "Steps taken toward the next random encounter trigger." },
+        { "id": "rpg_chl_17", "name": "Battle timer",                  "tNote": "Time elapsed in the current battle, if one exists. May be a float, frame count, integer, BCD, centiseconds, or split across multiple addresses." },
+        { "id": "rpg_chl_18", "name": "Flee attempt flag",             "tNote": "A value that fires when the player attempts to flee from battle." },
+        { "id": "rpg_chl_19", "name": "Death counter",                 "tNote": "Total game overs recorded. May be in save data or active RAM." },
+        { "id": "rpg_chl_20", "name": "Clears per character",          "tNote": "How many times each character has cleared the game or a major challenge." }
+      ]
+    }
+  ]
+}

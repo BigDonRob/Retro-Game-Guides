@@ -1,0 +1,138 @@
+{
+  "label": "🏁 Racing",
+  "panels": [
+    {
+      "id": "panel_racing_tips",
+      "panelType": "text",
+      "title": "Racing games — things to investigate",
+      "content": "## Game state and mode\n\nRacing games tend to separate their modes clearly — there is usually a value that changes between the main menu, car selection, active race, and results screen. That value may be a standalone state index, part of a larger mode structure, or split across multiple flags. The demo flag, if one exists, may live inside this same state index rather than as its own address.\n\n## Position and finish\n\nLive race position and the position recorded at the finish line are worth treating as separate searches. Some games write the final result to a different address only at the moment the player crosses the line, and it may revert or become invalid shortly after.\n\n## Timers\n\nTimers in racing games can take many forms and all of them are worth investigating: a float value, a frame counter that increments once per frame, an integer stored in hex, a BCD value, centiseconds stored in a single address, or time split across separate addresses for minutes, seconds, and centiseconds. When searching, try increasing and decreasing scans during and between races and compare results across formats.\n\n## Flags and bitmasks\n\nUnlock states for cars, tracks, and bonus modes are often packed together. A single byte may represent several unlocks at once — if a value changes by 2 or 4 instead of 1, individual bits are worth inspecting. The same applies to per-race completion records and cheat states.\n\n## Special mechanics\n\nValues for nitrous, tricks, drafting, and similar mechanics may only be written to RAM while the relevant mode is active. If a search returns nothing, check that the game mode supports the mechanic before concluding the address does not exist."
+    },
+    {
+      "id": "panel_racing_protection",
+      "panelType": "checklist",
+      "title": "Protection",
+      "infobox": "Identify these before writing achievement logic. What qualifies as a demo, a valid save, or an active cheat varies by game — investigate each one.",
+      "columns": [
+        { "key": "name", "label": "Target", "style": "plain" },
+        { "key": "tNote", "label": "Note", "style": "plain" }
+      ],
+      "entry_Protection": [
+        { "id": "rc_prot_demo",  "name": "Demo mode",         "tNote": "Check for a specific value that is set or cleared only on the main menu or when demo mode initiates. This may be a dedicated flag, a value inside a larger game state index, or tied to content limits such as track count or lap cap." },
+        { "id": "rc_prot_save",  "name": "Save protection",   "tNote": "Find values that match a loading state or last loaded in-game state so that you can confirm the player is in-game for at least one frame by checking Delta = in-game. Consider what a brand-new or missing save looks like versus a valid loaded session." },
+        { "id": "rc_prot_cheat", "name": "Cheat protection",  "tNote": "Investigate old guides or walkthroughs for possible cheats. If they offer an advantage, block them. Look for on/off flags, unnatural resource increases during a menu or pause scenario, or values that change outside of normal gameplay." },
+        { "id": "rc_prot_c1", "name": "Unlimited nitrous cheat",    "tNote": "If this cheat exists, nitrous-based achievements must require it to be off. Check what changes in RAM when it is active versus inactive." },
+        { "id": "rc_prot_c2", "name": "Invincibility / no damage cheat", "tNote": "If this cheat exists, clean-race and collision-based achievements must require it to be off." },
+        { "id": "rc_prot_c3", "name": "Unlock all cars cheat",       "tNote": "If this cheat exists, car collection achievements must require it to be off." },
+        { "id": "rc_prot_c4", "name": "Unlock all tracks cheat",     "tNote": "If this cheat exists, track and progression achievements must require it to be off." },
+        { "id": "rc_prot_c5", "name": "Speed modifier cheat",        "tNote": "Any cheat that alters base vehicle speed or handling beyond normal tuning options." },
+        { "id": "rc_prot_c6", "name": "Catch-up / rubberband assist","tNote": "Some games allow this to be toggled by the player. If so, challenge achievements may need to require it to be off." },
+        { "id": "rc_prot_c7", "name": "2-player mode active",        "tNote": "A second human player changes race dynamics. Investigate whether this needs to be excluded from solo challenges." }
+      ]
+    },
+    {
+      "id": "panel_racing_progression",
+      "panelType": "checklist",
+      "title": "Progression",
+      "infobox": "Values that track forward movement through career, championship, or story structure.",
+      "columns": [
+        { "key": "name", "label": "Target", "style": "plain" },
+        { "key": "tNote", "label": "Note", "style": "plain" }
+      ],
+      "entry_Progression": [
+        { "id": "rc_prog_01", "name": "Game state / screen index",      "tNote": "A value that changes between the main menu, car select, active race, results screen, and any other major screens. May be a standalone index or part of a larger structure." },
+        { "id": "rc_prog_02", "name": "Race mode ID",                   "tNote": "What separates Championship from Single Race, Time Trial, Arcade, Practice, and any other named modes." },
+        { "id": "rc_prog_03", "name": "Track / stage ID",               "tNote": "The identifier for whichever track is currently loaded or selected." },
+        { "id": "rc_prog_04", "name": "Championship stage index",       "tNote": "Which race within a championship series the player is currently on." },
+        { "id": "rc_prog_05", "name": "Difficulty setting",             "tNote": "The selected difficulty level. May be an index, an enum, or individual flags per difficulty tier." },
+        { "id": "rc_prog_06", "name": "Race completion state",          "tNote": "A value that changes when a race ends, separate from position at the finish line." },
+        { "id": "rc_prog_07", "name": "Championship completion state",  "tNote": "A value that changes when a full championship series is won." },
+        { "id": "rc_prog_08", "name": "Easy championship cleared",      "tNote": "A flag or value indicating the easy championship has been completed. May unlock a bonus mode." },
+        { "id": "rc_prog_09", "name": "Medium championship cleared",    "tNote": "A flag or value indicating the medium championship has been completed. May unlock a bonus mode." },
+        { "id": "rc_prog_10", "name": "Hard championship cleared",      "tNote": "A flag or value indicating the hard championship has been completed. May unlock a bonus mode." },
+        { "id": "rc_prog_11", "name": "Per-race event completion flags","tNote": "Individual flags or bits indicating which races in a championship have been finished. May be packed into one or more bytes." },
+        { "id": "rc_prog_12", "name": "Mode unlock: Reverse",           "tNote": "Whether the Reverse mode bonus has been unlocked." },
+        { "id": "rc_prog_13", "name": "Mode unlock: Pocket Bike",       "tNote": "Whether the Pocket Bike mode bonus has been unlocked." },
+        { "id": "rc_prog_14", "name": "Mode unlock: Reverse Pocket",    "tNote": "Whether the Reverse Pocket mode bonus has been unlocked." },
+        { "id": "rc_prog_15", "name": "Bonus mode unlock flags (combined)", "tNote": "All bonus mode states may live in a single byte rather than separate addresses. Investigate both possibilities." },
+        { "id": "rc_prog_16", "name": "Podium result",                  "tNote": "Whether the player finished in a top-3 position. May be a separate flag from raw race position." },
+        { "id": "rc_prog_17", "name": "DNF / disqualification flag",    "tNote": "A state that is set when a race ends in failure rather than completion." },
+        { "id": "rc_prog_18", "name": "Checkpoint index",               "tNote": "Which checkpoint the player last passed. Changes as the player progresses through a race." },
+        { "id": "rc_prog_19", "name": "Total career races completed",   "tNote": "A running count of finished races, if one exists." },
+        { "id": "rc_prog_20", "name": "Region / season progress index", "tNote": "For games with a world-tour or multi-region structure, which region or leg is currently active." }
+      ]
+    },
+    {
+      "id": "panel_racing_collections",
+      "panelType": "checklist",
+      "title": "Collections",
+      "infobox": "Things the player has unlocked or accumulated that carry across sessions.",
+      "columns": [
+        { "key": "name", "label": "Target", "style": "plain" },
+        { "key": "tNote", "label": "Note", "style": "plain" }
+      ],
+      "entry_Collection": [
+        { "id": "rc_col_01", "name": "Car unlock state",               "tNote": "Which cars are available. May be individual flags, a bitmask, a count, or a combination." },
+        { "id": "rc_col_02", "name": "Garage slot 0 — car ID",        "tNote": "Which car is stored in the first garage slot. Additional slots may follow a repeating offset pattern." },
+        { "id": "rc_col_03", "name": "Garage slot 1 — car ID",        "tNote": "Second garage slot. Compare address offset from slot 0 to determine the slot entry size." },
+        { "id": "rc_col_04", "name": "Garage slot 2 — car ID",        "tNote": "Third slot. The same offset pattern from slot 1 should apply." },
+        { "id": "rc_col_05", "name": "Garage slot 3 — car ID",        "tNote": "Fourth slot. Continue the pattern for any additional slots." },
+        { "id": "rc_col_06", "name": "Track unlock state",             "tNote": "Which tracks are available. May be individual flags, a bitmask, a count, or a combination." },
+        { "id": "rc_col_07", "name": "Livery / color unlock state",    "tNote": "Whether alternate car colors or liveries have been unlocked. May not exist." },
+        { "id": "rc_col_08", "name": "Stat / upgrade: Acceleration",  "tNote": "Current value or tier of the acceleration stat." },
+        { "id": "rc_col_09", "name": "Stat / upgrade: Top Speed",     "tNote": "Current value or tier of the top speed stat." },
+        { "id": "rc_col_10", "name": "Stat / upgrade: Brakes",        "tNote": "Current value or tier of the brakes stat." },
+        { "id": "rc_col_11", "name": "Stat / upgrade: Grip",          "tNote": "Current value or tier of the grip stat." },
+        { "id": "rc_col_12", "name": "Career credits / currency",      "tNote": "Accumulated currency used for purchases. May not exist if the game has no shop." },
+        { "id": "rc_col_13", "name": "Medal / result per track",       "tNote": "Performance record for each individual track. May be a rating, a medal tier, or a best-finish position." },
+        { "id": "rc_col_14", "name": "Total medals count",             "tNote": "A running total of medals earned. May exist alongside per-track records." },
+        { "id": "rc_col_15", "name": "Championship reward car",        "tNote": "A car granted as a championship reward rather than through normal selection." },
+        { "id": "rc_col_16", "name": "Special edition car flag",       "tNote": "Vehicles unlocked through specific conditions separate from the main roster." },
+        { "id": "rc_col_17", "name": "Challenge / playlist completion flags", "tNote": "Which challenge events or online playlists have been completed." }
+      ]
+    },
+    {
+      "id": "panel_racing_challenges",
+      "panelType": "checklist",
+      "title": "Challenges",
+      "infobox": "Values needed to build achievements with pass/fail conditions.",
+      "columns": [
+        { "key": "name", "label": "Target", "style": "plain" },
+        { "key": "tNote", "label": "Note", "style": "plain" }
+      ],
+      "entry_Challenge": [
+        { "id": "rc_chl_01", "name": "Race timer",                     "tNote": "May be a float, a frame counter, an integer in hex, a BCD value, centiseconds in a single address, or split across separate addresses for minutes, seconds, and centiseconds. Search for an increasing value during a race and investigate all formats." },
+        { "id": "rc_chl_02", "name": "Lap timer",                      "tNote": "The timer for the current lap in progress. May share a format with the race timer or use a different one. Resets at the end of each lap." },
+        { "id": "rc_chl_03", "name": "Best lap time",                  "tNote": "A stored record of the fastest lap set this session. Updates when a faster lap is completed." },
+        { "id": "rc_chl_04", "name": "Best times array — track 0",    "tNote": "Stored personal best for track 0. Additional tracks may follow a repeating offset pattern." },
+        { "id": "rc_chl_05", "name": "Best times array — track 1",    "tNote": "Track 1. Compare address offset from track 0 to determine the entry size." },
+        { "id": "rc_chl_06", "name": "Best times array — track 2",    "tNote": "Track 2. The same offset from track 1 should apply." },
+        { "id": "rc_chl_07", "name": "Best times array — track 3",    "tNote": "Continue the pattern for each additional track." },
+        { "id": "rc_chl_08", "name": "Race position (live)",           "tNote": "The player's current rank within the active race field." },
+        { "id": "rc_chl_09", "name": "Race position (at finish)",      "tNote": "The position recorded when the player crosses the finish line. May be written to a different address from live position." },
+        { "id": "rc_chl_10", "name": "Car ID (currently driven)",      "tNote": "Which car the player is racing in during the current race." },
+        { "id": "rc_chl_11", "name": "Collision / crash flag",         "tNote": "A value that changes when the player collides with a wall, obstacle, or another vehicle." },
+        { "id": "rc_chl_12", "name": "Collision counter",              "tNote": "A count of collisions during the current race. May exist alongside the flag or instead of it." },
+        { "id": "rc_chl_13", "name": "Damage state",                   "tNote": "The current damage level of the vehicle. May be a percentage, a tier value, or a multi-step enum." },
+        { "id": "rc_chl_14", "name": "Nitrous level (current)",        "tNote": "Current nitrous charge. May deplete continuously or in steps." },
+        { "id": "rc_chl_15", "name": "Nitrous active flag",            "tNote": "A value that is set while nitrous is actively being used." },
+        { "id": "rc_chl_16", "name": "Nitrous max / capacity",         "tNote": "Maximum nitrous capacity. May change with upgrades." },
+        { "id": "rc_chl_17", "name": "Trick ID (active)",              "tNote": "Which trick the player is currently performing. Only populated while a trick is in progress." },
+        { "id": "rc_chl_18", "name": "Trick landed flag",              "tNote": "A value that changes when a trick is successfully completed." },
+        { "id": "rc_chl_19", "name": "Trick counter",                  "tNote": "A count of tricks completed during the current race or session." },
+        { "id": "rc_chl_20", "name": "Airtime flag",                   "tNote": "A value that indicates the player's vehicle is currently airborne." },
+        { "id": "rc_chl_21", "name": "Airtime accumulator",            "tNote": "Total air time accumulated during the race. May be in frames, centiseconds, or another unit." },
+        { "id": "rc_chl_22", "name": "Drafting / slipstream active",   "tNote": "A value that is set while the player is in another vehicle's slipstream." },
+        { "id": "rc_chl_23", "name": "Drafting accumulator",           "tNote": "Total time or distance spent drafting during the race." },
+        { "id": "rc_chl_24", "name": "Slingshot / draft pass flag",    "tNote": "A value that fires when a slipstream boost is used to overtake another vehicle." },
+        { "id": "rc_chl_25", "name": "Wheelie state flag",             "tNote": "A value that is set while the player is performing a wheelie." },
+        { "id": "rc_chl_26", "name": "Wheelie accumulator",            "tNote": "Total wheelie distance or time accumulated. May not exist." },
+        { "id": "rc_chl_27", "name": "Near miss counter",              "tNote": "A count that increments when the player narrowly avoids a collision. May not exist." },
+        { "id": "rc_chl_28", "name": "Current speed",                  "tNote": "The player's current speed. The displayed value and the internal value may use different units or scales." },
+        { "id": "rc_chl_29", "name": "Lap counter",                    "tNote": "Which lap the player is currently on." },
+        { "id": "rc_chl_30", "name": "Reset token count",              "tNote": "How many resets the player has remaining in the current race. May not exist in all games." },
+        { "id": "rc_chl_31", "name": "Opponent / cop engagement",      "tNote": "A value that changes when police or rival AI actively engage the player." },
+        { "id": "rc_chl_32", "name": "Dirty pass / contact flag",      "tNote": "A value that fires when the player makes contact with another vehicle while passing." }
+      ]
+    }
+  ]
+}

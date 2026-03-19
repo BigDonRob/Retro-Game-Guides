@@ -161,6 +161,16 @@ This file contains guide display metadata and the tab manifest. Browse/filter me
 
 **Fields that must NOT appear in `_00.json`:** `theme`, `palette`, `series`, `contentTags`, `altNames`. These belong in `games_index.json` only.
 
+**URL parameters:**
+
+The viewer supports deep-linking into a guide via URL parameters. All indices are 1-based.
+
+| Parameter | Effect |
+|---|---|
+| `?game=2919` | Load guide for game ID 2919. |
+| `?game=2919&tab=3` | Open at tab 3. |
+| `?game=2919&tab=3&panel=2` | Open at tab 3, scroll to and expand panel 2. |
+
 **Tab descriptor:**
 
 ```json
@@ -190,7 +200,9 @@ See [Theme Reference](#theme-reference) and [Palette Reference](#palette-referen
 - `label`: Must match the corresponding entry in `games_index.json`.
 - `panels`: Ordered array. Panels render top-to-bottom.
 
-Every panel must have a unique `id` within the guide and a `panelType`. The `id` is also used as a localStorage key prefix for checklist state — **changing an existing item's `id` will lose user progress**.
+Every panel must have a unique `id` within the guide and a `panelType`. The `id` is also used as a localStorage key prefix for checklist state and panel collapse state — **changing an existing panel's `id` resets that panel's saved state for all users**.
+
+**Panel collapse behaviour:** All panels start collapsed by default. Users click a panel header to expand it; the expanded/collapsed state is then saved to localStorage per panel ID. Deep-linking to a specific panel via URL parameter (`&panel=N`) automatically expands that panel before scrolling to it.
 
 ---
 
@@ -198,7 +210,7 @@ Every panel must have a unique `id` within the guide and a `panelType`. The `id`
 
 ### Text Panel
 
-Free-form content with minimal Markdown support (`**bold**`, `*italic*`, `` `code` ``, `### Heading`, `- list`).
+Free-form content rendered as HTML from the Markdown subset listed below.
 
 ```json
 {
@@ -209,6 +221,27 @@ Free-form content with minimal Markdown support (`**bold**`, `*italic*`, `` `cod
   "content": "## Welcome\n\nThis is **Markdown** content.\n\n- Item one\n- Item two"
 }
 ```
+
+**Supported Markdown syntax:**
+
+| Syntax | Result |
+|---|---|
+| `## Heading` or `### Heading` | Section header (both map to the same `h3` style) |
+| `**bold**` | Bold text |
+| `*italic*` | Italic text |
+| `` `code` `` | Inline code |
+| `---` (on its own line) | Thin horizontal rule |
+| `===` (on its own line) | Thick horizontal rule |
+| `- item` | Unordered list item |
+| `> text` | Styled blockquote (indented, left-bordered) |
+| `[text](url)` | External link (opens in new tab) |
+| `[text](N)` | Internal link — navigates to tab N (1-based) |
+| `[text](N, M)` | Internal link — navigates to panel M on tab N (both 1-based) |
+| `[Label]{content}` | Collapsible box — starts collapsed; click to expand |
+
+Blank lines between text create paragraph breaks. Single newlines within a paragraph become `<br>`.
+
+The `infobox` field (if present) renders as a highlighted callout above the main content. It is distinct from the `> blockquote` syntax — `infobox` is a panel-level field in the JSON, not part of the `content` string.
 
 ---
 
@@ -236,7 +269,9 @@ A two-column key/value reference table. Rows are added one at a time; no column 
 
 An interactive list where users can check off items. Progress is saved to localStorage.
 
-The items array key uses an `entry_` prefix followed by a PascalCase description of the contents. This makes the JSON self-documenting and lets the renderer locate the array without a fixed key name.
+The renderer always prepends a checkbox column and a row-number column automatically. All other columns — including the primary label column — are user-defined in the `columns` array. The builder hints that the first column should be the item's name or label, but the renderer makes no distinction: it renders whichever columns are defined, in order.
+
+The items array key uses an `entry_` prefix followed by a PascalCase description of the contents. This makes the JSON self-documenting and lets the renderer locate the array without a fixed key name. The builder's internal representation uses `items` (without a prefix), but the canonical exported format uses `entry_*`. The renderer accepts both.
 
 ```json
 {
@@ -276,8 +311,8 @@ The key name after `entry_` is free-form but should be a short PascalCase noun d
 | Field | Notes |
 |---|---|
 | `id` | **Required. Must be unique across the entire guide** (not just the tab). Changing this resets user progress for that item. |
-| `name` | Required. The main label for the row. |
-| `note` | Optional. Small secondary text displayed under the name. Use for warnings, tips, or clarifications. |
+| `name` | Required by convention. The value for the first column key — displayed as the item's primary label. |
+| `note` | Optional. Small secondary text rendered beneath the first column's cell content. Use for warnings, tips, or clarifications. Notes do not appear if no columns are defined. |
 | *(column keys)* | Any keys matching a column's `key` value are rendered in that column. |
 
 > **Old format warning:** An older `categories: [{ label, items }]` format and a `type: "checklist"` tab format both exist in legacy files but are **not supported** by the current engine or renderer. If you encounter files using either of these, they need to be converted to the `panelType: "checklist"` format described above.
@@ -302,7 +337,7 @@ A non-interactive reference table. Rows support Markdown in all cells.
 }
 ```
 
-Rows are arrays of strings (matched to columns by position). Column headers can also be objects `{ "key": "name", "label": "Name" }` if you want named-key rows, but positional arrays are simpler for static tables.
+Rows are arrays of strings matched to columns by position. Columns can also be objects with `key` and `label` fields, in which case rows may be keyed objects instead of arrays — the renderer accepts both formats. Positional arrays with string column headers are simpler for static reference tables. All cell values support Markdown.
 
 ---
 

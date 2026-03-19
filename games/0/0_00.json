@@ -1,0 +1,22 @@
+{
+  "storagePrefix": "0_",
+  "primaryName":   "Achievement Dev — RAM Digging Template",
+  "primarySystem": "Generic",
+  "icon":          "🔬",
+  "subtitle":      "RAM digging tips and checklists for achievement development of various genres",
+  "author":        "Template",
+  "theme":         "retro",
+  "palette":       "midnight",
+  "tabs": [
+    { "num": "01", "label": "📋 How RAM Digs Me",    "type": "panels" },
+    { "num": "02", "label": "🎮 Console Specifics",   "type": "panels" },
+    { "num": "03", "label": "📍 Big, Bad Pointers",  "type": "panels" },
+    { "num": "04", "label": "⚔️ RPG",                "type": "panels" },
+    { "num": "05", "label": "🔫 Shooter",             "type": "panels" },
+    { "num": "06", "label": "🥊 Fighting",            "type": "panels" },
+    { "num": "07", "label": "🧩 Puzzle",              "type": "panels" },
+    { "num": "08", "label": "🗡️ Action / Adventure",  "type": "panels" },
+    { "num": "09", "label": "🏁 Racing",              "type": "panels" },
+    { "num": "10", "label": "🍄 Platformer",          "type": "panels" }
+  ]
+}

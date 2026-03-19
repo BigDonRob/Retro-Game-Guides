@@ -32,6 +32,10 @@
 
   // ── PATH HELPER ──────────────────────────────────────────────────────
   function getGamePath(id) {
+    // Special case for raId = 0 (Dev Scour template)
+    if (id === 0) {
+      return 'games/0';
+    }
     const topEnd   = Math.ceil(id / 5000) * 5000, topStart = topEnd - 4999;
     const subEnd   = Math.ceil(id / 200)  * 200,  subStart = subEnd - 199;
     return `games/${topStart}-${topEnd}/${subStart}-${subEnd}/${id}`;
@@ -72,7 +76,10 @@
 
   // ── BOOT ─────────────────────────────────────────────────────────────
   async function boot() {
-    if (!raId) { panic('Missing ?game= parameter in URL.'); return; }
+    if (raId === null || raId === undefined || isNaN(raId)) { 
+      panic('Missing ?game= parameter in URL.'); 
+      return; 
+    }
 
     let config, themes, palettes, index;
     try {
@@ -91,8 +98,8 @@
     const indexEntry    = Array.isArray(index.games) ? index.games.find(e => e.raId === raId) : null;
     allThemes           = themes;
     allPalettes         = palettes;
-    guideThemeKey       = (index.themes   || [])[indexEntry?.theme]   || '';
-    guidePaletteKey     = (index.palettes || [])[indexEntry?.palette] || '';
+    guideThemeKey       = (index.themes   || [])[indexEntry?.theme]   || config.theme || '';
+    guidePaletteKey     = (index.palettes || [])[indexEntry?.palette] || config.palette || '';
     if (config.storagePrefix) storagePrefix = config.storagePrefix;
 
     applyThemePalette(guideThemeKey, guidePaletteKey, themes, palettes);

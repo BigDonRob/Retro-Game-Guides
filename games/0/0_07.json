@@ -1,0 +1,109 @@
+{
+  "label": "🧩 Puzzle",
+  "panels": [
+    {
+      "id": "panel_pzl_tips",
+      "panelType": "text",
+      "title": "Puzzle games — things to investigate",
+      "content": "## Game state\n\nPuzzle games often have clearly separated states: the menu or world map, an active puzzle, a completion fanfare, and any tutorial or story segments. A state index that changes across these transitions is worth finding early.\n\n## Board and grid state\n\nThe current state of a puzzle board is usually a byte array — one byte per cell, encoding the piece type or empty state. Searching for this will return many results initially. Making exactly one move and filtering for values that changed is the most direct way to narrow it down.\n\n## Move counters\n\nA move counter that increments exactly once per player action is one of the more reliable values in puzzle games. It provides a clean anchor for efficiency-based challenge achievements.\n\n## Timers\n\nTimers in timed puzzle stages may be a float, frame counter, integer in hex, BCD, centiseconds in a single address, or split across separate addresses for minutes, seconds, and centiseconds. Search for a changing value during an active timed stage and investigate each format.\n\n## Combo and chain tracking\n\nIn match-3 or falling-block games, chain and combo counters only increment during an active cascade. Letting the cascade fully resolve before reading the value produces more reliable results.\n\n## Clears per character\n\nIf the game has character-specific modes, difficulty characters, or story routes per character, each may have its own completion record."
+    },
+    {
+      "id": "panel_pzl_protection",
+      "panelType": "checklist",
+      "title": "Protection",
+      "infobox": "Identify these before writing achievement logic.",
+      "columns": [
+        { "key": "name", "label": "Target", "style": "plain" },
+        { "key": "tNote", "label": "Note", "style": "plain" }
+      ],
+      "entry_Protection": [
+        { "id": "pzl_prot_demo",  "name": "Demo mode",         "tNote": "Check for a specific value that is set or cleared only on the main menu or when demo mode initiates." },
+        { "id": "pzl_prot_save",  "name": "Save protection",   "tNote": "Find values that match a loading state or last loaded in-game state so that you can confirm the player is in-game for at least one frame by checking Delta = in-game." },
+        { "id": "pzl_prot_cheat", "name": "Cheat protection",  "tNote": "Investigate old guides or walkthroughs for possible cheats. If they offer an advantage, block them. Look for on/off flags, unnatural resource increases during a menu or pause scenario." },
+        { "id": "pzl_prot_c1", "name": "Unlimited moves cheat",   "tNote": "If this exists, move-count achievements must require it to be off." },
+        { "id": "pzl_prot_c2", "name": "Unlimited time cheat",    "tNote": "If this exists, timed achievements must require it to be off." },
+        { "id": "pzl_prot_c3", "name": "Unlimited hints cheat",   "tNote": "If this exists, no-hint achievements must require it to be off." },
+        { "id": "pzl_prot_c4", "name": "Skip puzzle cheat",       "tNote": "If this exists, completion achievements must require it to be off." },
+        { "id": "pzl_prot_c5", "name": "Solution display cheat",  "tNote": "Any feature that reveals the answer. Must be off for challenge achievements." },
+        { "id": "pzl_prot_c6", "name": "2-player mode active",    "tNote": "Competitive puzzle mode. Investigate whether this needs to be excluded from solo achievements." },
+        { "id": "pzl_prot_c7", "name": "Difficulty setting",      "tNote": "Scope anchor for difficulty-gated achievements." }
+      ]
+    },
+    {
+      "id": "panel_pzl_progression",
+      "panelType": "checklist",
+      "title": "Progression",
+      "infobox": "Values that track forward movement through puzzle packs, worlds, and story.",
+      "columns": [
+        { "key": "name", "label": "Target", "style": "plain" },
+        { "key": "tNote", "label": "Note", "style": "plain" }
+      ],
+      "entry_Progression": [
+        { "id": "pzl_prog_01", "name": "Game state / screen index",         "tNote": "A value that changes between the menu, world map, active puzzle, and completion screens." },
+        { "id": "pzl_prog_02", "name": "Puzzle pack / world ID",            "tNote": "Which puzzle pack or world is currently active." },
+        { "id": "pzl_prog_03", "name": "Puzzle / stage ID",                 "tNote": "Which specific puzzle within the active pack is loaded." },
+        { "id": "pzl_prog_04", "name": "Puzzle completion flag",            "tNote": "A value that changes when the current puzzle is solved." },
+        { "id": "pzl_prog_05", "name": "Pack completion flag",              "tNote": "A value that changes when all puzzles in a pack are cleared." },
+        { "id": "pzl_prog_06", "name": "Story / event flags",               "tNote": "Flags for story events or tutorial triggers." },
+        { "id": "pzl_prog_07", "name": "Puzzle completion flags — pack 0", "tNote": "Which puzzles in pack 0 have been permanently solved. May be a bitmask." },
+        { "id": "pzl_prog_08", "name": "Puzzle completion flags — pack 1", "tNote": "Pack 1. Compare address offset from pack 0 to determine entry size." },
+        { "id": "pzl_prog_09", "name": "Puzzle completion flags — pack 2", "tNote": "Continue the pattern for each additional pack." },
+        { "id": "pzl_prog_10", "name": "Star or medal per puzzle",          "tNote": "Performance rating for each puzzle. May be a numerical tier or a medal type." },
+        { "id": "pzl_prog_11", "name": "Total puzzles cleared (count)",     "tNote": "A running count of all puzzles completed." },
+        { "id": "pzl_prog_12", "name": "New puzzle unlock flag",            "tNote": "A value that changes when completing a puzzle unlocks a new one." },
+        { "id": "pzl_prog_13", "name": "Clears per character",              "tNote": "If the game has character-specific routes or difficulty modes, where per-character completion is stored." },
+        { "id": "pzl_prog_14", "name": "Game completion flag",              "tNote": "A value set when all puzzles are cleared or the true ending is reached." }
+      ]
+    },
+    {
+      "id": "panel_pzl_collections",
+      "panelType": "checklist",
+      "title": "Collections",
+      "infobox": "Things the player owns or has unlocked that persist across sessions.",
+      "columns": [
+        { "key": "name", "label": "Target", "style": "plain" },
+        { "key": "tNote", "label": "Note", "style": "plain" }
+      ],
+      "entry_Collection": [
+        { "id": "pzl_col_01", "name": "Hint stock",                    "tNote": "Number of hints held in reserve." },
+        { "id": "pzl_col_02", "name": "Power-up inventory — type 0",  "tNote": "Quantity of the first power-up type." },
+        { "id": "pzl_col_03", "name": "Power-up inventory — type 1",  "tNote": "Second type. Compare offset from type 0." },
+        { "id": "pzl_col_04", "name": "Power-up inventory — type 2",  "tNote": "Continue for each type." },
+        { "id": "pzl_col_05", "name": "In-game currency / coins",     "tNote": "Accumulated currency for purchasing hints or power-ups." },
+        { "id": "pzl_col_06", "name": "Stars earned — pack 0",        "tNote": "Total stars accumulated for pack 0." },
+        { "id": "pzl_col_07", "name": "Stars earned — pack 1",        "tNote": "Same for pack 1." },
+        { "id": "pzl_col_08", "name": "Total stars (global)",         "tNote": "A running total across all packs." },
+        { "id": "pzl_col_09", "name": "Bonus level unlock flags",     "tNote": "Whether hidden or bonus levels have been unlocked." },
+        { "id": "pzl_col_10", "name": "Character unlock flags",       "tNote": "If the game has unlockable characters or modes." },
+        { "id": "pzl_col_11", "name": "Gallery / extra content flags","tNote": "Bonus content unlocked through star or clear milestones." },
+        { "id": "pzl_col_12", "name": "Special item obtained",        "tNote": "One-of-a-kind rewards earned for specific completions." }
+      ]
+    },
+    {
+      "id": "panel_pzl_challenges",
+      "panelType": "checklist",
+      "title": "Challenges",
+      "infobox": "Values for achievements with pass/fail conditions.",
+      "columns": [
+        { "key": "name", "label": "Target", "style": "plain" },
+        { "key": "tNote", "label": "Note", "style": "plain" }
+      ],
+      "entry_Challenge": [
+        { "id": "pzl_chl_01", "name": "Move counter (current puzzle)", "tNote": "A count that increments once per player action. Resets on puzzle load." },
+        { "id": "pzl_chl_02", "name": "Move par (target)",             "tNote": "The target move count for a perfect solve, if one is defined." },
+        { "id": "pzl_chl_03", "name": "Puzzle timer",                  "tNote": "May be a float, frame counter, integer in hex, BCD, centiseconds in a single address, or split across minutes, seconds, and centiseconds." },
+        { "id": "pzl_chl_04", "name": "Best time (current puzzle)",    "tNote": "The stored personal best for the active puzzle." },
+        { "id": "pzl_chl_05", "name": "Score",                         "tNote": "May factor in speed, move count, and bonuses." },
+        { "id": "pzl_chl_06", "name": "Board / grid state",            "tNote": "The current state of the puzzle board. Make exactly one move and search for changed values." },
+        { "id": "pzl_chl_07", "name": "Active piece ID",               "tNote": "Which piece or element is currently selected or falling." },
+        { "id": "pzl_chl_08", "name": "Combo / chain counter",         "tNote": "Cascades or chains. The value may only be meaningful after a cascade fully resolves." },
+        { "id": "pzl_chl_09", "name": "Hint used (this puzzle)",       "tNote": "Whether a hint has been used on the current puzzle. May reset on load." },
+        { "id": "pzl_chl_10", "name": "Hints used (total)",            "tNote": "Total hints used across all puzzles, if tracked persistently." },
+        { "id": "pzl_chl_11", "name": "Undo counter (this puzzle)",    "tNote": "How many undos have been used on the current puzzle." },
+        { "id": "pzl_chl_12", "name": "Error / mistake counter",       "tNote": "A count of invalid moves or wrong answers, if the game tracks this." },
+        { "id": "pzl_chl_13", "name": "Lives / attempts remaining",    "tNote": "How many attempts remain, if the game has a limited-attempt system." },
+        { "id": "pzl_chl_14", "name": "Clears per character",          "tNote": "How many completions each character has, if character-specific tracking exists." }
+      ]
+    }
+  ]
+}

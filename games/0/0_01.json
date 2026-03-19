@@ -1,0 +1,47 @@
+{
+  "label": "📋 How RAM Digs Me",
+  "panels": [
+    {
+      "id": "panel_ram_tips",
+      "panelType": "text",
+      "title": "How RAM Digs Me",
+      "infobox": "Each tab here is a starting point — a list of things worth investigating. Not every value will exist in every game, and the ones that do may look different than described. That's part of the process.",
+      "content": "## Where to start\n\nThe first thing worth finding in any game is a value that changes on a known input and stays stable when nothing is happening. A stage ID, a position number, a health value — anything that gives you something to confirm. Once one address is verified, it becomes a reference point for narrowing down everything else.\n\nA game state or screen index is often the most useful early find. Something that reads one value on the main menu and a different value during active gameplay scopes almost every other search. The demo flag, if one exists, may live inside this same index rather than at its own address.\n\n## Data types in the inspector\n\nThe type dropdown in the memory inspector determines how the viewer interprets the bytes at each address. Available types:\n\n- **4-bit** — a single nibble (0–15)\n- **8-bit** — one byte; the most common starting point\n- **16-bit / 32-bit** — little-endian multi-byte integers\n- **16-bit BE / 32-bit BE** — same sizes, big-endian byte order\n- **BitCount** — counts how many bits in the byte are set to 1\n- **Float / Double32** — IEEE 754 floating point, little-endian\n- **Float BE / Double32 BE** — same, big-endian\n- **MBF32 / MBF32 BE** — Microsoft Binary Format float\n- **ASCII Text** — interprets bytes as ASCII characters; visible in the preview panel to the right of the hex view, but **only if the inspector window is wide enough to display it**\n\nA value that doesn't behave as expected under one type may make sense under another. The format a game uses for any given value is something to investigate, not something to assume.\n\n## How values are stored\n\nThe same kind of value can be stored differently from game to game — or between two values in the same game:\n\n- A timer may be a **float**, a **frame counter**, an **integer in hex**, **BCD**, **centiseconds** in a single address, or **split across multiple addresses** for hours, minutes, seconds, and centiseconds.\n- A flag may be a **standalone byte**, a **single bit inside a shared byte** (bitmask), or a **value inside a larger structure**.\n- A count may use a standard integer or **BCD** — where decimal 10 is stored as 0x10 rather than 0x0A.\n\n## Filter operators and comparisons\n\nThe filter row in the inspector has two parts — the **operator** and the **comparison type**.\n\nOperators: `=` `<` `<=` `>` `>=` `!=`\n\nComparison types:\n- **Constant** — compare against a number you type in\n- **Last Value** — compare against what the address held on the previous scan\n- **Last Value Plus** — last value plus a constant\n- **Last Value Minus** — last value minus a constant\n- **Initial Value** — compare against the value from the very first scan of the session\n\nCombining these covers most search patterns. A value that increased by exactly 1 is `> Last Value` followed by `= Last Value Plus 1`. A value that hasn't moved is `= Last Value`.\n\n## Bitmasks\n\nA value that changes by a power of 2 (1, 2, 4, 8, 16, 32, 64, 128) rather than by 1 is a signal that individual bits may be in use. A single byte holds eight independent on/off states. The pattern to watch for:\n\n`Bit0 = 0x01 · Bit1 = 0x02 · Bit2 = 0x04 · Bit3 = 0x08 · Bit4 = 0x10 · Bit5 = 0x20 · Bit6 = 0x40 · Bit7 = 0x80`\n\nCombinations of these values appearing as a counter suggest a bitfield rather than a plain integer.\n\n## Values that depend on game state\n\nSome values are only written to RAM while a specific state is active. Searching outside the relevant state may return nothing or unreliable results. Confirming the game is in the right state before searching is part of the investigation.\n\n## Documenting as you go\n\nFor each confirmed address: the address, the data type, the range of observed values, which game state it's valid in, and what triggers a change. An address that isn't written down has to be found again."
+    },
+    {
+      "id": "panel_code_notes",
+      "panelType": "text",
+      "title": "Code note standards — quick reference",
+      "infobox": "Notes are written into the address in the inspector. They document size, type, and known values for anyone reading the set later.",
+      "content": "## Size notation\n\n- Size with a hyphen: `[8-bit]`, `[16-bit]`, `[32-bit]`\n- Byte counts with a space: `[2 bytes]`, `[4 bytes]`\n\n## Bitfields\n\nAlways include size. Note bits from least significant (0) to most significant (7). Unused bits are omitted.\n\n```\n[8-bit] [Bitfield] Sword Upgrade\n0 | Level 1\n2 | Level 2\n4 | Level 3\n```\n\nAcceptable delimiters: `=` `-` `|` — keep them consistent across the set.\n\nBit 0 = Off by default means not collected / not active / not completed. If the game reverses this, use `[Inverted Bitfield]` on the whole field, or `[Inverted]` on individual bits.\n\n## Order of values\n\nList known values from `0x00` upward. For long lists, break into sections:\n\n```\n[8-bit] Screen ID\n0x00 - Main Menu\n0x02 - Level Select\n0x08 - Battle\n```\n\n## Arrays\n\n- **Without pointers** — noting the full array is useful only if the first address in it is the one used in achievement logic. Otherwise, note each address individually so every entry is readable in the GUI and RAWeb.\n- **Behind one pointer** — all information at the pointer destination goes in a single note. Viewing the offset in the inspector shows the relevant data.\n- **Deep pointer chains** — a Mem = Mem check can force an address into the GUI or RAWeb as a readable cheat sheet when the data can't be accessed directly.\n\n## PSP pointer headers\n\nPSP 32-bit pointers must include the memory segmentation mask in the note header:\n\n`[32-bit Pointer] Title (& 0x1FFFFFF)`\n\nor\n\n`[32-bit Pointer & 0x1FFFFFF] Title`\n\nThe Pointer Inspector applies the mask automatically when `& 0x1FFFFFF` is present in the note."
+    },
+    {
+      "id": "panel_achievement_categories",
+      "panelType": "keyvalue",
+      "title": "Achievement category reference",
+      "rows": [
+        { "key": "Progression",    "value": "Must be completed before any credits screen. Cannot be missed by a player who finishes the game." },
+        { "key": "Win Condition",  "value": "Directly triggers a credits screen. Capstone of the set." },
+        { "key": "Collection",     "value": "Things that persist across sessions — unlocks, gear, tracked items — or things that must be gathered within a single session without saving mid-task." },
+        { "key": "Challenge",      "value": "Anything that can be actively failed. Time trials, damageless runs, no-item restrictions. A mistake can invalidate the current attempt." },
+        { "key": "Fun",            "value": "Obscure or surprising things most players never discover on their own. Not required to finish the game. Showcases curiosity-rewarding content." }
+      ]
+    },
+    {
+      "id": "panel_unwelcome",
+      "panelType": "keyvalue",
+      "title": "Concepts to avoid",
+      "rows": [
+        { "key": "Achievement spam",               "value": "Two achievements for the same natural event — defeating a boss and collecting the item it drops, for example. Acceptable if one is challenge-based and not guaranteed, or if the achievements are stackable." },
+        { "key": "Playing poorly without purpose", "value": "Dying or failing without any payoff. Acceptable if failure reveals unique story content or earns an in-game acknowledgement that wouldn't appear otherwise." },
+        { "key": "Zero effort without purpose",    "value": "Starting the game, collecting one coin. Acceptable as a disclaimer achievement that warns players about missable content they might lock themselves out of without realizing it." },
+        { "key": "Requires glitches",              "value": "Not allowed in base sets. Acceptable in an approved [Subset - Glitch Showcase] with Developer Compliance sign-off, provided the player actually accomplishes something with the glitch." },
+        { "key": "Requires two players",           "value": "Not allowed in base sets. Acceptable in a dedicated [Subset - Multi]." },
+        { "key": "Requires complete perfection",   "value": "A long task where a single mistake — including from RNG or unpredictable behavior — ends the run. Acceptable in Extreme Challenge subsets, or when the community already pursues this goal." },
+        { "key": "Pointless excessive grinding",   "value": "Repetitive tasks tied to no in-game reward, completion requirement, or unique acknowledgement. Acceptable in an approved Bonus subset." },
+        { "key": "Overly RNG reliant",             "value": "Depends entirely on randomness with no meaningful purpose. Acceptable when randomness is a core mechanic, or when the outcome produces something unique — an item, dialogue, or cutscene." },
+        { "key": "Secret achievements",            "value": "No indication of what the player is working toward. Acceptable when vagueness prevents major spoilers, provided the achievement is on unmissable progression the player will reach regardless." }
+      ]
+    }
+  ]
+}
