@@ -1,0 +1,112 @@
+{
+  "label": "🔫 Shooter",
+  "panels": [
+    {
+      "id": "panel_sht_tips",
+      "panelType": "text",
+      "title": "Shooters — things to investigate",
+      "content": "## Game state\n\nShooters — whether arcade-style shmups, run-and-gun games, or third-person action shooters — tend to have clear state separations between menu, active stage, results, and game over. A state index or flag set is worth finding early, as it scopes most other searches.\n\n## Score and BCD\n\nOlder arcade-style shooters frequently store score in BCD (binary-coded decimal). If a score that should read as 1000 shows a different value in the memory viewer, BCD is worth investigating alongside standard integer formats.\n\n## Ammo and weapons\n\nAmmo counts may be per-weapon or shared across a slot system. When searching for ammo, fire exactly one shot and search immediately — other values change in the same frame as firing, and a larger window produces more noise. Each weapon may have its own ammo address or the active weapon ID may select which entry in an array is currently relevant.\n\n## Health\n\nSome shooters have no HP value — instead they use a single damage or death flag. One-hit-kill games will show a flag changing rather than a value decreasing. Both patterns are worth investigating.\n\n## Timers\n\nTimers in shooter stages may be a float, frame counter, integer in hex, BCD, centiseconds in a single address, or split across addresses for minutes and seconds. Search for a changing value during the active stage and investigate each format."
+    },
+    {
+      "id": "panel_sht_protection",
+      "panelType": "checklist",
+      "title": "Protection",
+      "infobox": "Identify these before writing achievement logic.",
+      "columns": [
+        { "key": "name", "label": "Target", "style": "plain" },
+        { "key": "tNote", "label": "Note", "style": "plain" }
+      ],
+      "entry_Protection": [
+        { "id": "sht_prot_demo",  "name": "Demo mode",         "tNote": "Check for a specific value that is set or cleared only on the main menu or when demo mode initiates. May be a standalone flag or part of a larger game state index." },
+        { "id": "sht_prot_save",  "name": "Save protection",   "tNote": "Find values that match a loading state or last loaded in-game state so that you can confirm the player is in-game for at least one frame by checking Delta = in-game." },
+        { "id": "sht_prot_cheat", "name": "Cheat protection",  "tNote": "Investigate old guides or walkthroughs for possible cheats. If they offer an advantage, block them. Look for on/off flags, unnatural resource increases during a menu or pause scenario." },
+        { "id": "sht_prot_c1", "name": "Invincibility cheat",      "tNote": "If this exists, damageless achievements must require it to be off." },
+        { "id": "sht_prot_c2", "name": "Infinite ammo cheat",      "tNote": "If this exists, ammo-based challenge achievements must require it to be off." },
+        { "id": "sht_prot_c3", "name": "Infinite lives cheat",     "tNote": "If this exists, lives-based achievements must require it to be off." },
+        { "id": "sht_prot_c4", "name": "All weapons cheat",        "tNote": "If this exists, weapon collection achievements must require it to be off." },
+        { "id": "sht_prot_c5", "name": "Stage select / skip cheat","tNote": "If this exists, progression achievements must require it to be off." },
+        { "id": "sht_prot_c6", "name": "2-player / co-op mode",    "tNote": "A second human player changes the game state. Investigate whether this needs to be excluded from solo achievements." },
+        { "id": "sht_prot_c7", "name": "Difficulty setting",       "tNote": "Scope anchor for difficulty-gated achievements." }
+      ]
+    },
+    {
+      "id": "panel_sht_progression",
+      "panelType": "checklist",
+      "title": "Progression",
+      "infobox": "Values that track forward movement through missions, stages, and story.",
+      "columns": [
+        { "key": "name", "label": "Target", "style": "plain" },
+        { "key": "tNote", "label": "Note", "style": "plain" }
+      ],
+      "entry_Progression": [
+        { "id": "sht_prog_01", "name": "Game state / screen index",   "tNote": "A value that changes between the title screen, active stage, results screen, and game over." },
+        { "id": "sht_prog_02", "name": "Stage / mission ID",          "tNote": "The identifier for the currently loaded stage or mission." },
+        { "id": "sht_prog_03", "name": "Difficulty setting",          "tNote": "The selected difficulty. Scope anchor for difficulty-gated achievements." },
+        { "id": "sht_prog_04", "name": "Stage completion flag",       "tNote": "A value that changes when the current stage ends cleanly." },
+        { "id": "sht_prog_05", "name": "Mission completion flags",    "tNote": "Per-mission permanent completion records. May be a bitmask or individual bytes." },
+        { "id": "sht_prog_06", "name": "Boss defeat flags",           "tNote": "Per-boss permanent defeat state." },
+        { "id": "sht_prog_07", "name": "Story / event flags",         "tNote": "Flags for cutscenes and story beats." },
+        { "id": "sht_prog_08", "name": "Weapon unlock flags",         "tNote": "Which weapons have been permanently unlocked." },
+        { "id": "sht_prog_09", "name": "Stage unlock flags",          "tNote": "Which stages are currently available." },
+        { "id": "sht_prog_10", "name": "Current objective / event ID","tNote": "The active mission objective or phase within the current stage." },
+        { "id": "sht_prog_11", "name": "Game completion flag",        "tNote": "A value set when the credits roll or the final screen is reached." },
+        { "id": "sht_prog_12", "name": "Clears per character",        "tNote": "If the game has multiple playable characters, where per-character completion is stored." }
+      ]
+    },
+    {
+      "id": "panel_sht_collections",
+      "panelType": "checklist",
+      "title": "Collections",
+      "infobox": "Things the player has permanently unlocked or accumulated.",
+      "columns": [
+        { "key": "name", "label": "Target", "style": "plain" },
+        { "key": "tNote", "label": "Note", "style": "plain" }
+      ],
+      "entry_Collection": [
+        { "id": "sht_col_01", "name": "Weapon unlock flags",          "tNote": "Which weapons are available. May be a bitmask, individual flags, or a count." },
+        { "id": "sht_col_02", "name": "Upgrade level — weapon 0",     "tNote": "Current upgrade tier of the first weapon." },
+        { "id": "sht_col_03", "name": "Upgrade level — weapon 1",     "tNote": "Second weapon. Compare address offset from weapon 0." },
+        { "id": "sht_col_04", "name": "In-game currency / credits",   "tNote": "Accumulated currency used for weapon or upgrade purchases." },
+        { "id": "sht_col_05", "name": "Power-up inventory",           "tNote": "Stored power-ups held between stages, if the game has this system." },
+        { "id": "sht_col_06", "name": "Extra lives (stock)",          "tNote": "Lives held in reserve." },
+        { "id": "sht_col_07", "name": "Stage medal / rank",           "tNote": "Performance rating per stage. May be a letter grade, a tier value, or a medal type." },
+        { "id": "sht_col_08", "name": "Total medals count",           "tNote": "A running total of medals earned across all stages." },
+        { "id": "sht_col_09", "name": "Character unlock flags",       "tNote": "Which playable characters have been unlocked." },
+        { "id": "sht_col_10", "name": "Gallery / extra content flags","tNote": "Bonus content unlocked through score or completion milestones." },
+        { "id": "sht_col_11", "name": "High score — stage 0",         "tNote": "Personal best score for stage 0. Additional stages may follow an offset pattern." }
+      ]
+    },
+    {
+      "id": "panel_sht_challenges",
+      "panelType": "checklist",
+      "title": "Challenges",
+      "infobox": "Values for achievements with pass/fail conditions.",
+      "columns": [
+        { "key": "name", "label": "Target", "style": "plain" },
+        { "key": "tNote", "label": "Note", "style": "plain" }
+      ],
+      "entry_Challenge": [
+        { "id": "sht_chl_01", "name": "Player HP (current)",          "tNote": "Current health. The data type depends on the game's health system." },
+        { "id": "sht_chl_02", "name": "Player HP (max)",              "tNote": "Maximum health. Useful for ratio-based logic." },
+        { "id": "sht_chl_03", "name": "Damage / death flag",          "tNote": "A value that changes when damage is taken. In one-hit-kill games, this may be the only health-related value." },
+        { "id": "sht_chl_04", "name": "Invincibility / i-frames",     "tNote": "A short-lived value active during post-hit recovery." },
+        { "id": "sht_chl_05", "name": "Player lives (current)",       "tNote": "Lives currently in reserve." },
+        { "id": "sht_chl_06", "name": "Score",                        "tNote": "May be a standard integer, BCD, or a scaled value." },
+        { "id": "sht_chl_07", "name": "Active weapon ID",             "tNote": "Which weapon is currently equipped." },
+        { "id": "sht_chl_08", "name": "Ammo count — primary weapon",  "tNote": "Fire one shot and search immediately after." },
+        { "id": "sht_chl_09", "name": "Ammo count — secondary weapon","tNote": "Same investigation method." },
+        { "id": "sht_chl_10", "name": "Ammo count — special weapon",  "tNote": "Additional weapon slots follow the same pattern." },
+        { "id": "sht_chl_11", "name": "Enemy kill counter",           "tNote": "A count of enemies defeated. May be global, per-type, or per-stage." },
+        { "id": "sht_chl_12", "name": "Boss HP (current)",            "tNote": "Only valid during an active boss encounter." },
+        { "id": "sht_chl_13", "name": "Boss HP (max)",                "tNote": "Useful for phase-threshold logic." },
+        { "id": "sht_chl_14", "name": "Combo / multiplier level",     "tNote": "Current hit streak level." },
+        { "id": "sht_chl_15", "name": "Combo decay timer",            "tNote": "Time remaining before the combo resets. May be a frame counter or a time value." },
+        { "id": "sht_chl_16", "name": "Stage timer",                  "tNote": "May be a float, frame counter, integer in hex, BCD, centiseconds in a single address, or split across minutes, seconds, and centiseconds." },
+        { "id": "sht_chl_17", "name": "Player X position",            "tNote": "Horizontal coordinate. Useful for positional achievements and Easter eggs." },
+        { "id": "sht_chl_18", "name": "Player Y position",            "tNote": "Vertical coordinate. In vertical shmups, this is the primary movement axis." },
+        { "id": "sht_chl_19", "name": "Checkpoint / respawn point",   "tNote": "Which checkpoint is active for the current respawn." },
+        { "id": "sht_chl_20", "name": "Death counter",                "tNote": "Deaths this run or total lifetime deaths." }
+      ]
+    }
+  ]
+}

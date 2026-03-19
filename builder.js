@@ -265,12 +265,28 @@
     // Tab bar
     const tabbar = document.getElementById('tab-bar');
     tabbar.innerHTML = '';
-    state.tabs.forEach(tab => {
+    state.tabs.forEach((tab, index) => {
       const btn = document.createElement('button');
       btn.className = 'gp-tab' + (tab.id === state.activeTabId ? ' active' : '');
       btn.dataset.tabId = tab.id;
-      btn.innerHTML = `<span>${esc(tab.label)}</span><span class="gp-tab-edit" title="Rename">✎</span><span class="gp-tab-del" title="Delete">×</span>`;
+      btn.innerHTML = `<span class="gp-tab-move-left" title="Move Left">◀</span><span>${esc(tab.label)}</span><span class="gp-tab-edit" title="Rename">✎</span><span class="gp-tab-del" title="Delete">×</span><span class="gp-tab-move-right" title="Move Right">▶</span>`;
       btn.addEventListener('click', e => {
+        if (e.target.classList.contains('gp-tab-move-left')) {
+          if (index > 0) {
+            // Move tab left
+            [state.tabs[index], state.tabs[index - 1]] = [state.tabs[index - 1], state.tabs[index]];
+            renderPreview();
+          }
+          return;
+        }
+        if (e.target.classList.contains('gp-tab-move-right')) {
+          if (index < state.tabs.length - 1) {
+            // Move tab right
+            [state.tabs[index], state.tabs[index + 1]] = [state.tabs[index + 1], state.tabs[index]];
+            renderPreview();
+          }
+          return;
+        }
         if (e.target.classList.contains('gp-tab-edit')) {
           window.BForms.openEditTabSheet(tab.id); return;
         }

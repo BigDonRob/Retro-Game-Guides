@@ -1,0 +1,127 @@
+{
+  "label": "🍄 Platformer",
+  "panels": [
+    {
+      "id": "panel_plat_tips",
+      "panelType": "text",
+      "title": "Platformers — things to investigate",
+      "content": "## Game state and structure\n\nPlatformers typically have a clear separation between the overworld or menu, active stage, pause, and game over states. These may live in a single state index, separate flags, or a combination. The demo flag may be part of the same index.\n\n## Health and lives\n\nPlatformers handle player health in many different ways. Some games use a discrete integer for hit points. Some use a power-up state that doubles as health (taking damage removes the power-up). Some use only a damage flag with no persistent health value. Some use lives as the only resource, with a single hit ending the current life. Investigate what changes when the player takes damage and work from there.\n\n## Score and BCD\n\nOlder arcade-style platformers often store score in BCD (binary-coded decimal) rather than a standard integer. If a score that should read as 1000 shows a different value in the memory viewer, BCD is worth investigating.\n\n## Collectibles and flags\n\nCollectibles gathered within a level and permanent collectibles across the whole game may be tracked differently. Per-level counts often reset on exit. Permanent collection state is often a bitmask — several items packed into one byte. Watch for values that change by powers of 2 rather than by 1.\n\n## Position\n\nPlayer X and Y coordinates may be split across two bytes each or stored as larger values. Walking in one direction and watching for a consistently increasing or decreasing value is the starting point."
+    },
+    {
+      "id": "panel_plat_protection",
+      "panelType": "checklist",
+      "title": "Protection",
+      "infobox": "Identify these before writing achievement logic.",
+      "columns": [
+        { "key": "name", "label": "Target", "style": "plain" },
+        { "key": "tNote", "label": "Note", "style": "plain" }
+      ],
+      "entry_Protection": [
+        { "id": "pl_prot_demo",  "name": "Demo mode",         "tNote": "Check for a specific value that is set or cleared only on the main menu or when demo mode initiates. The demo flag may be a standalone address or part of a larger game state index." },
+        { "id": "pl_prot_save",  "name": "Save protection",   "tNote": "Find values that match a loading state or last loaded in-game state so that you can confirm the player is in-game for at least one frame by checking Delta = in-game." },
+        { "id": "pl_prot_cheat", "name": "Cheat protection",  "tNote": "Investigate old guides or walkthroughs for possible cheats. If they offer an advantage, block them. Look for on/off flags, unnatural resource increases during a menu or pause scenario." },
+        { "id": "pl_prot_c1", "name": "Invincibility cheat",       "tNote": "If this exists, damageless and lives-based achievements must require it to be off." },
+        { "id": "pl_prot_c2", "name": "Infinite lives cheat",      "tNote": "If this exists, achievements tied to surviving without extra lives must require it to be off." },
+        { "id": "pl_prot_c3", "name": "All levels unlocked cheat", "tNote": "If this exists, progression achievements must require it to be off." },
+        { "id": "pl_prot_c4", "name": "All power-ups cheat",       "tNote": "If this exists, power-up collection achievements must require it to be off." },
+        { "id": "pl_prot_c5", "name": "Infinite time cheat",       "tNote": "If this exists, timed stage achievements must require it to be off." },
+        { "id": "pl_prot_c6", "name": "Skip stage / level select", "tNote": "If stage skipping is accessible as a cheat, progression achievements must require it to be off." },
+        { "id": "pl_prot_c7", "name": "2-player mode active",      "tNote": "Co-op or versus mode. Investigate whether this needs to be excluded from solo achievements." },
+        { "id": "pl_prot_c8", "name": "Continue used flag",        "tNote": "Whether a continue has been used. Useful for no-continue challenge protection." }
+      ]
+    },
+    {
+      "id": "panel_plat_progression",
+      "panelType": "checklist",
+      "title": "Progression",
+      "infobox": "Values that track forward movement through worlds, stages, and story.",
+      "columns": [
+        { "key": "name", "label": "Target", "style": "plain" },
+        { "key": "tNote", "label": "Note", "style": "plain" }
+      ],
+      "entry_Progression": [
+        { "id": "pl_prog_01", "name": "Game state / screen index",    "tNote": "A value that changes between the title screen, overworld, active stage, pause, cutscene, game over, and credits." },
+        { "id": "pl_prog_02", "name": "World ID",                     "tNote": "Which world or region the player is currently in." },
+        { "id": "pl_prog_03", "name": "Stage / level ID",             "tNote": "Which level within the current world is loaded." },
+        { "id": "pl_prog_04", "name": "Difficulty setting",           "tNote": "The selected difficulty. May be an index, separate flags, or encoded into the save data." },
+        { "id": "pl_prog_05", "name": "Stage completion flag",        "tNote": "A value that changes when the current stage is cleared." },
+        { "id": "pl_prog_06", "name": "World completion flag",        "tNote": "A value that changes when all stages in a world are cleared." },
+        { "id": "pl_prog_07", "name": "Boss defeat flag — boss 1",   "tNote": "Whether boss 1 has been permanently defeated. May be an individual flag or a bit in a shared byte." },
+        { "id": "pl_prog_08", "name": "Boss defeat flag — boss 2",   "tNote": "Whether boss 2 has been permanently defeated." },
+        { "id": "pl_prog_09", "name": "Boss defeat flag — boss 3",   "tNote": "Whether boss 3 has been permanently defeated." },
+        { "id": "pl_prog_10", "name": "Boss defeat flag — boss 4",   "tNote": "Whether boss 4 has been permanently defeated." },
+        { "id": "pl_prog_11", "name": "Boss defeat flags (combined)", "tNote": "All boss states may be packed into a single byte rather than individual addresses." },
+        { "id": "pl_prog_12", "name": "Story / event flags",          "tNote": "Flags for cutscenes, NPC triggers, or story beats." },
+        { "id": "pl_prog_13", "name": "Area unlock flags",            "tNote": "Whether specific locked areas or paths have been opened." },
+        { "id": "pl_prog_14", "name": "Character select unlock",      "tNote": "Whether alternate playable characters are available." },
+        { "id": "pl_prog_15", "name": "Game completion flag",         "tNote": "A value set when the credits roll or the final screen is reached." },
+        { "id": "pl_prog_16", "name": "NG+ / second loop flag",       "tNote": "Whether the current run is a New Game+ or second loop state." },
+        { "id": "pl_prog_17", "name": "Total stages cleared (count)", "tNote": "A running total of stages completed, if one exists." },
+        { "id": "pl_prog_18", "name": "Clears per character",         "tNote": "If the game tracks completion separately per playable character, where that data lives." },
+        { "id": "pl_prog_19", "name": "Ending variant",               "tNote": "Which ending was reached, for games with multiple possible conclusions." },
+        { "id": "pl_prog_20", "name": "Cutscene / dialogue seen",     "tNote": "Whether a specific cutscene or NPC conversation has been viewed." }
+      ]
+    },
+    {
+      "id": "panel_plat_collections",
+      "panelType": "checklist",
+      "title": "Collections",
+      "infobox": "Things the player has permanently collected or unlocked.",
+      "columns": [
+        { "key": "name", "label": "Target", "style": "plain" },
+        { "key": "tNote", "label": "Note", "style": "plain" }
+      ],
+      "entry_Collection": [
+        { "id": "pl_col_01", "name": "Coins / collectibles (current level)",  "tNote": "Count of items gathered in the active level. Investigate whether this resets on exit or carries over." },
+        { "id": "pl_col_02", "name": "Coins / collectibles (total)",          "tNote": "Global running total across all levels, if one exists." },
+        { "id": "pl_col_03", "name": "Collectible flags — world 1",           "tNote": "Which collectibles in world 1 have been permanently gathered. May be a bitmask." },
+        { "id": "pl_col_04", "name": "Collectible flags — world 2",           "tNote": "World 2. Compare address offset from world 1 to determine entry size." },
+        { "id": "pl_col_05", "name": "Collectible flags — world 3",           "tNote": "World 3. The same offset pattern from world 2 should apply." },
+        { "id": "pl_col_06", "name": "Secret area found flags",               "tNote": "Which hidden or optional areas have been entered." },
+        { "id": "pl_col_07", "name": "Secondary collectible (stars, gems)",   "tNote": "If the game has a secondary collectible type, where its count lives." },
+        { "id": "pl_col_08", "name": "Power-up inventory",                    "tNote": "Stored power-ups held between stages, if the game has this system." },
+        { "id": "pl_col_09", "name": "Character unlock flags",                "tNote": "Which playable characters have been unlocked." },
+        { "id": "pl_col_10", "name": "Costume / skin unlock flags",           "tNote": "Alternate visual unlocks, if they exist." },
+        { "id": "pl_col_11", "name": "Item chest or container opened flags",  "tNote": "Which treasure chests or item boxes have been permanently opened." },
+        { "id": "pl_col_12", "name": "In-game currency / points",             "tNote": "Spendable currency if the game has a shop system." },
+        { "id": "pl_col_13", "name": "Upgrade flags",                         "tNote": "Which permanent upgrades or skills have been purchased or learned." },
+        { "id": "pl_col_14", "name": "Extra lives (current)",                 "tNote": "How many lives the player currently has in reserve." },
+        { "id": "pl_col_15", "name": "Bonus / gallery content unlocks",       "tNote": "Music, artwork, or extra modes unlocked through collection milestones." }
+      ]
+    },
+    {
+      "id": "panel_plat_challenges",
+      "panelType": "checklist",
+      "title": "Challenges",
+      "infobox": "Values for achievements with pass/fail conditions.",
+      "columns": [
+        { "key": "name", "label": "Target", "style": "plain" },
+        { "key": "tNote", "label": "Note", "style": "plain" }
+      ],
+      "entry_Challenge": [
+        { "id": "pl_chl_01", "name": "Player HP (current)",           "tNote": "Current health value. The data type and range depend on the game's health system." },
+        { "id": "pl_chl_02", "name": "Player HP (max)",               "tNote": "Maximum health. May increase with upgrades. Useful for ratio-based logic." },
+        { "id": "pl_chl_03", "name": "Damage / hit flag",             "tNote": "A value that changes when the player takes damage." },
+        { "id": "pl_chl_04", "name": "Invincibility / i-frames",      "tNote": "A short-lived value active during post-hit recovery. The window may be only a few frames." },
+        { "id": "pl_chl_05", "name": "Power-up state (active)",       "tNote": "Which power-up is currently active. May also serve as a health indicator in games where taking damage removes the power-up." },
+        { "id": "pl_chl_06", "name": "Score",                         "tNote": "Current score. May be a standard integer, BCD, or a scaled value." },
+        { "id": "pl_chl_07", "name": "Combo counter",                 "tNote": "Consecutive hits or enemy defeats without interruption." },
+        { "id": "pl_chl_08", "name": "Stage timer",                   "tNote": "May be a float, frame counter, integer in hex, BCD, centiseconds in a single address, or split across minutes, seconds, and centiseconds. Search for a changing value during an active timed stage." },
+        { "id": "pl_chl_09", "name": "Player X position",             "tNote": "Horizontal coordinate in the level. May be split across multiple bytes." },
+        { "id": "pl_chl_10", "name": "Player Y position",             "tNote": "Vertical coordinate. May be adjacent to X or at a separate address." },
+        { "id": "pl_chl_11", "name": "Checkpoint reached",            "tNote": "Which checkpoint is currently active as the respawn point." },
+        { "id": "pl_chl_12", "name": "Boss HP (current)",             "tNote": "Only populated while a boss encounter is active." },
+        { "id": "pl_chl_13", "name": "Boss HP (max)",                 "tNote": "Useful for phase-threshold logic. May be adjacent to boss current HP." },
+        { "id": "pl_chl_14", "name": "Enemy kill counter",            "tNote": "A count of enemies defeated. May be global or per-type." },
+        { "id": "pl_chl_15", "name": "Player lives (current)",        "tNote": "How many lives are currently in reserve." },
+        { "id": "pl_chl_16", "name": "Death counter (session)",       "tNote": "How many times the player has died in the current run." },
+        { "id": "pl_chl_17", "name": "Death counter (total)",         "tNote": "Lifetime death count, if stored persistently." },
+        { "id": "pl_chl_18", "name": "Clears per character — char 1", "tNote": "How many completions character 1 has, if tracked separately." },
+        { "id": "pl_chl_19", "name": "Clears per character — char 2", "tNote": "How many completions character 2 has." },
+        { "id": "pl_chl_20", "name": "Clears per character — char 3", "tNote": "Continue for each additional playable character." },
+        { "id": "pl_chl_21", "name": "Jump state flag",               "tNote": "Whether the player is currently airborne." },
+        { "id": "pl_chl_22", "name": "Speed / velocity",              "tNote": "Current movement speed. Useful for speed-based conditions." }
+      ]
+    }
+  ]
+}

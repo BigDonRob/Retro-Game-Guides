@@ -1,0 +1,86 @@
+{
+  "label": "🎮 Console Specifics",
+  "panels": [
+    {
+      "id": "panel_con_intro",
+      "panelType": "text",
+      "title": "Console Specifics — how to use this tab",
+      "infobox": "Each console has quirks that affect how memory is organised, what ranges to trust, and what to watch out for. Knowing the hardware before you open the inspector saves time and prevents bad addresses from ending up in achievement logic.",
+      "content": "## What you will find here\n\nEach section covers one console family. The details that matter most for RAM digging are:\n\n- **Where usable RAM actually lives** — not every address the inspector shows is trustworthy\n- **Mirrors and echo regions** — duplicate data that looks real but should never be used\n- **Byte order** — some consoles store multi-byte values big-endian, which affects every filter wider than 8-bit\n- **Bank switching** — some RAM regions swap out depending on a register value\n- **Hardware-specific protections** — things like the Neo Geo UniBIOS that every set on the platform must block\n\n## Pointers\n\nThe tab to the right of this one covers pointers specifically — why hardware addresses differ from RA addresses, and how masks convert between them. The console entries here note when a system commonly uses pointers and what prefix to expect, but the full pointer workflow is documented there."
+    },
+    {
+      "id": "panel_con_nes",
+      "panelType": "text",
+      "title": "NES",
+      "content": "## RAM layout\n\nThe NES has 2 KB of internal RAM, located at `0x0000–0x07FF`. This is the only region that should be used in achievement logic.\n\nThe hardware maps the same 2 KB three more times, filling `0x0800–0x1FFF`. These are mirrors — identical copies of the same data. The memory inspector will return four matching results for anything you search. Always use the first result, below `0x800`. Adding extra conditions on the mirror addresses does nothing and adds unnecessary logic.\n\n## Byte order\n\nNES is little-endian. Standard filter types apply."
+    },
+    {
+      "id": "panel_con_gb",
+      "panelType": "text",
+      "title": "Game Boy / Game Boy Color",
+      "content": "## Memory map — what to use and what to skip\n\n```\n0x0000–0x7FFF   ROM data           ❌ Do not use\n0x8000–0x9FFF   Graphics data      ❌ Do not use\n0xA000–0xBFFF   Cartridge RAM      ⚠️  Save data — prone to cheat save files\n0xC000–0xCFFF   Work RAM bank 0    ✔️  Safe\n0xD000–0xDFFF   Work RAM bank 1    ✔️  Safe (see GBC note below)\n0xE000–0xFDFF   ECHO RAM           ❌ Do not use\n0xFE00–0xFF7F   Graphics / misc    ❌ Do not use\n0xFF80–0xFFFF   High RAM           ✔️  Safe\n```\n\nAlmost everything useful lives in `0xC000–0xDFFF` and `0xFF80–0xFFFF`. Cartridge RAM (`0xA000–0xBFFF`) holds save data — values here are valid but are vulnerable to players loading a pre-completed save file.\n\n## ECHO RAM\n\nThe Game Boy mirrors its work RAM at `0xE000–0xFDFF`. The inspector will return two results for many searches — one in the `0xC` range and one in the `0xE` range. **Always use the `0xC` result.** Some emulators ignore or mis-emulate the echo region entirely.\n\nIf you find an address starting with `E`, replace the leading `E` with `C`. That is the real address.\n\n## GBC — bank switching\n\nOn the Game Boy Color, the `0xD000–0xDFFF` range is a switchable bank from a larger 32 KB block. Bits 0–2 of `0xFF70` select which bank is currently loaded there. If you write logic using an address in `0xD000–0xDFFF`, add a condition that `0xFF70` equals the specific bank value you observed, or the condition may fire on the wrong bank.\n\nWhere possible, prefer addresses in `0xC000–0xCFFF` — that range is not bank-switched and is always safe.\n\n## BIOS protection (GB/GBC)\n\nSome emulators support the optional Game Boy / GBC BIOS, which plays the Nintendo logo animation before loading the game. During those roughly four seconds, main RAM (`0xC000–0xDFFF`) has not been initialised. Achievements that fire on uninitialised values can trigger falsely for players who have the BIOS enabled.\n\nThe last four bytes of the BIOS block provide a reliable check:\n\n- **GBC:** `32-bit 0x00FC != 0x50E0113E` — add this condition to block the BIOS window\n- **GB:** `32-bit 0x00FC != 0x50E0013E`\n\nAfter the BIOS finishes it blanks those bytes to `0xFF`, so the condition becomes true (and achievements can fire normally) as soon as the game starts."
+    },
+    {
+      "id": "panel_con_gba",
+      "panelType": "text",
+      "title": "Game Boy Advance",
+      "content": "## RAM layout\n\n```\nHardware address         RA address         Size    Name\n0x02000000–0x0203FFFF   0x00000000–0x0003FFFF   256 KB   WRAM (external, on-board)\n0x03000000–0x03007FFF   0x00007000–0x00007FFF*  32 KB    IWRAM (internal, fast)\n```\n\n*RA mapping offsets vary by core — verify in the inspector.\n\nMost game data lives in external WRAM (`0x02...` hardware, RA `0x00000000`). Internal WRAM is faster and used for time-critical code, but often holds useful runtime values too.\n\n## Pointers\n\nGBA pointers in RAM begin with `0x02` (external WRAM) or `0x03` (internal WRAM). A **24-bit mask** converts a hardware address to its RA equivalent — strip the top byte by applying `& 0xFFFFFF`:\n\n```\n0x02031A40 & 0xFFFFFF = 0x0031A40   → RA address\n```\n\nIn the achievement editor this is expressed as:\n\n```\nAdd Address   32-bit   [pointer address]   & 0xFFFFFF\n```\n\n## Byte order\n\nGBA is little-endian. Standard filter types apply.\n\n## Floating point\n\nThe GBA has hardware support for IEEE-754 single-precision floats. If numeric data does not match any integer format, try the Float filter type."
+    },
+    {
+      "id": "panel_con_virtualboy",
+      "panelType": "text",
+      "title": "Virtual Boy",
+      "content": "## RAM layout\n\n```\nHardware address           Size    Name\n0x05000000–0x0500FFFF     64 KB   WRAM (work RAM)\n0x06000000–0x0601FFFF    128 KB   VRAM (video RAM — rarely useful)\n```\n\n## Floating point\n\nThe Virtual Boy has hardware support for IEEE-754 single-precision floating point operations. If a numeric value does not match any integer format during a search, try the Float data type before concluding the address does not exist."
+    },
+    {
+      "id": "panel_con_n64",
+      "panelType": "text",
+      "title": "Nintendo 64",
+      "content": "## RAM layout\n\nThe N64 has 8 MB of RDRAM, mapped at `0x80000000–0x807FFFFF` in hardware. In the RA inspector this is `0x00000000–0x007FFFFF`.\n\n## Byte order\n\nN64 is **big-endian**. Use the `BE` filter variants (`16-bit BE`, `32-bit BE`, `Float BE`) for any value wider than 8 bits. Using the non-BE types on a big-endian console will return byte-swapped results that look wrong.\n\n## Pointers\n\nN64 pointers begin with `0x80`. A **24-bit mask** converts them to RA addresses:\n\n```\n0x801A3C00 & 0xFFFFFF = 0x001A3C00   → RA address\n```\n\nIn the achievement editor:\n\n```\nAdd Address   32-bit BE   [pointer address]   & 0xFFFFFF\n```\n\n## Using GameShark codes to find addresses\n\nGameShark codes are a useful shortcut for locating known values without searching. Each line is 12 characters:\n\n```\n[AA][BBBBBB] [CCCC]\n```\n\n- `[AA]` is the code type. `80`/`88` = 8-bit write; `81`/`89` = 16-bit write.\n- `[BBBBBB]` is the hardware address (without the `0x80` prefix).\n- `[CCCC]` is the value being written.\n\n**Example — Paper Mario Infinite HP:**\n`80 10F292 0032` → Sets 8-bit value at `0x10F292` to `0x32` (50). Mario's HP is an 8-bit value at that address.\n\nD-type codes (`D0`, `D1`, `D2`, `D3`) are conditional checks rather than writes and describe what a value equals, which is also useful for identifying addresses."
+    },
+    {
+      "id": "panel_con_ds",
+      "panelType": "text",
+      "title": "Nintendo DS / DSi",
+      "content": "## DS — RAM layout\n\nMain RAM is 4 MB at hardware `0x02000000–0x023FFFFF`, mapped to RA `0x00000000–0x003FFFFF`.\n\n## DS — Pointers\n\nDS pointers begin with `0x02`. A **24-bit mask** converts them:\n\n```\n0x0213F944 & 0xFFFFFF = 0x0013F944   → RA address\n```\n\nIn the achievement editor:\n\n```\nAdd Address   32-bit   [pointer address]   & 0xFFFFFF\n```\n\nNote: DS stores pointers little-endian. Standard `32-bit` (not BE) is correct.\n\n## DS — Useful fixed addresses\n\n`0x3FFA8C` contains an ASCII string identifying the game being played (disc serial). This is unique per region and useful for multi-region set support.\n\n## DSi — Mode detection\n\nBit 0 and bit 1 at `0x400` are both set (`value & 0x03 == 0x03`) when the game is running in DSi mode. DSi mode can shift memory on some titles — if you need to protect against it, check this address.\n\n`0xFFFE00` contains an ASCII string identifying the DSi title when the DSi home screen is active. Useful for checking whether the player is in-game versus on the home screen.\n\n## Byte order\n\nDS is little-endian."
+    },
+    {
+      "id": "panel_con_gcwii",
+      "panelType": "text",
+      "title": "GameCube / Wii",
+      "content": "## Byte order — this is the most important thing\n\nBoth GameCube and Wii use a **PowerPC chipset, which is big-endian**. For any value wider than 8 bits, use the `BE` filter variants in the inspector: `16-bit BE`, `32-bit BE`, `Float BE`, `Double32 BE`. Using standard little-endian types will return byte-swapped nonsense.\n\nData is also typically aligned: 16-bit values live at even addresses, 32-bit values at multiples of 4. If a search returns nothing, check alignment.\n\n## GameCube — RAM layout\n\n```\nHardware address           RA address           Size   Name\n0x80000000–0x817FFFFF     0x00000000–0x017FFFFF  24 MB  Main RAM\n0xC0000000–0xC17FFFFF     0x00000000–0x017FFFFF  24 MB  Uncached mirror (same data)\n```\n\nPointers found in RAM begin with `0x8` (cached) or `0xC` (uncached). Both convert to the same RA address range using `& 0x1FFFFFFF`:\n\n```\n0x8013A400 & 0x1FFFFFFF = 0x0013A400   → RA address\n0xC013A400 & 0x1FFFFFFF = 0x0013A400   → same RA address\n```\n\nIn the achievement editor:\n\n```\nAdd Address   32-bit BE   [pointer address]   & 0x1FFFFFFF\n```\n\n## Wii — RAM layout\n\n```\nHardware address           RA address           Size   Name\n0x80000000–0x817FFFFF     0x00000000–0x017FFFFF  24 MB  MEM1 (GameCube-compatible)\n0x90000000–0x93FFFFFF     0x10000000–0x13FFFFFF  64 MB  MEM2 (extended)\n0xC0000000–0xC17FFFFF     0x00000000–0x017FFFFF  24 MB  Uncached MEM1 mirror\n0xD0000000–0xD3FFFFFF     0x10000000–0x13FFFFFF  64 MB  Uncached MEM2 mirror\n```\n\nThe same mask applies across all four regions — `& 0x1FFFFFFF` maps any `0x8`, `0x9`, `0xC`, or `0xD` pointer to its correct RA address:\n\n```\n0x801A3C00 & 0x1FFFFFFF = 0x001A3C00   → MEM1\n0x901A3C00 & 0x1FFFFFFF = 0x101A3C00   → MEM2\n```\n\n## Game / disc identification (both platforms)\n\nThe disc serial number is stored at `0x00000000` as an ASCII string. The disc number (for multi-disc games) is at `0x80000006` (hardware) — value `0` = Disc 1. The revision number is at `0x00000007`.\n\nThese can be used to distinguish regional versions and to confirm which disc is loaded in multi-disc sets."
+    },
+    {
+      "id": "panel_con_neogeo",
+      "panelType": "text",
+      "title": "Neo Geo — Mandatory UniBIOS Protection",
+      "infobox": "⚠️ This protection is not optional. Every Neo Geo achievement set must include it.",
+      "content": "## Why UniBIOS must be blocked\n\nUniBIOS is an aftermarket BIOS replacement that enables debug options and provides access to an in-game cheat database covering almost every Neo Geo title. A player running UniBIOS can trivially enable invincibility, infinite ammo, or any other advantage. Achievement logic written without blocking it can be defeated without any RAM editing.\n\n## How to detect UniBIOS\n\nWhen UniBIOS is active, the 32-bit value at `0x00FE30` is consistently `0x80025632` for every Neo Geo game. Under any other BIOS (including the standard AES and MVS BIOS), this value is `0`. The value also hits non-zero briefly during the RAM diagnostic that runs on boot, which this check also catches.\n\nThe protection condition:\n\n```\nReset if   32-bit   0x00FE30   != 0\n```\n\nAdd this as a Reset If condition to every achievement in the set. If `0x00FE30` is anything other than `0`, the achievement resets — blocking both UniBIOS and the brief diagnostic window on boot.\n\n## RAM layout\n\n```\nHardware address       Size    Name\n0x100000–0x10FFFF     64 KB   Work RAM (68000 main)\n0x200000–0x2007FF      2 KB   Backup RAM (battery-backed, cartridge)\n0x800000–0x8001FF      2 KB   Memory card\n0xD00000–0xD0FFFF     64 KB   MVS-only RAM (arcade hardware only)\n```"
+    },
+    {
+      "id": "panel_con_psx",
+      "panelType": "text",
+      "title": "PlayStation",
+      "infobox": "Note: If a core does not require a BIOS, the kernel RAM region may not be initialised.",
+      "content": "## RAM layout\n\nThe PlayStation has 2 MB of main RAM. It is accessible through multiple hardware address regions:\n\n```\nHardware address           RA address           Name\n0x00000000–0x001FFFFF     0x00000000–0x001FFFFF  Main RAM (KUSEG)\n0x80000000–0x801FFFFF     0x00000000–0x001FFFFF  Cached mirror (KSEG0)\n0xA0000000–0xA01FFFFF     0x00000000–0x001FFFFF  Uncached mirror (KSEG1)\n```\n\nAll three hardware regions map to the same RA range `0x00000000–0x001FFFFF`. Pointers found in game RAM will typically begin with `0x80`. The mask is `& 0x001FFFFF`:\n\n```\n0x801A3C00 & 0x001FFFFF = 0x001A3C00   → RA address\n```\n\n`0x0000–0xFFFF` is reserved for the kernel. Game variables almost always live above `0x10000`.\n\n## Region / version detection\n\nThe boot executable name is reliably placed at two addresses in RAM:\n- `0x9E18` — contains the disc serial, starting with a backslash character\n- `0xB8B0` — contains the full `cdrom:\\SCUS_942.28;1` style path\n\nThe serial is unique per region, making these addresses useful for distinguishing NTSC-U, NTSC-J, and PAL versions within a single set.\n\n## Byte order\n\nPlayStation is little-endian."
+    },
+    {
+      "id": "panel_con_psp",
+      "panelType": "text",
+      "title": "PlayStation Portable",
+      "content": "## RAM layout\n\nThe PSP has 32 MB of main DDR SDRAM, at hardware `0x08000000–0x09FFFFFF`, mapped to RA `0x00000000–0x01FFFFFF`.\n\n## Pointers\n\nPSP pointers begin with `0x08` or `0x09`. The mask is `& 0x01FFFFFF`:\n\n```\n0x089A3C00 & 0x01FFFFFF = 0x009A3C00   → RA address\n```\n\nIn code notes, PSP 32-bit pointer notes must include the mask in the header so the Pointer Inspector applies it automatically:\n\n```\n[32-bit Pointer] Title (& 0x1FFFFFF)\n```\nor\n```\n[32-bit Pointer & 0x1FFFFFF] Title\n```\n\nIn the achievement editor:\n\n```\nAdd Address   32-bit   [pointer address]   & 0x1FFFFFF\n```\n\n## DLC consideration\n\nPSP DLC is accessible without modified saves or patched game files. If a game has DLC that provides in-game advantages, investigate what changes in RAM when DLC content is active and consider whether it needs to be blocked for specific achievements.\n\n## Byte order\n\nPSP is little-endian."
+    },
+    {
+      "id": "panel_con_dreamcast",
+      "panelType": "text",
+      "title": "Dreamcast",
+      "content": "## RAM layout\n\nThe Dreamcast has 16 MB of main RAM at hardware `0x8C000000–0x8CFFFFFF`, mapped to RA `0x00000000–0x00FFFFFF`.\n\n## Pointers\n\nPointers begin with `0x8C`. A **24-bit mask** converts them to RA addresses:\n\n```\n0x8C1A3C00 & 0xFFFFFF = 0x001A3C00   → RA address\n```\n\nIn the achievement editor:\n\n```\nAdd Address   32-bit   [pointer address]   & 0xFFFFFF\n```\n\n## Byte order\n\nThe Dreamcast uses a Hitachi SH-4 CPU, which can operate in either byte order but is typically **little-endian** in practice. Confirm with the specific game if values look byte-swapped."
+    },
+    {
+      "id": "panel_con_mbf32",
+      "panelType": "text",
+      "title": "MBF32 Systems — Amstrad CPC / Apple II / PC-8800",
+      "content": "## Microsoft Binary Format\n\nGames written in BASIC on these platforms often store numeric values in **Microsoft Binary Format (MBF)** rather than standard IEEE-754 floats or integers. MBF is a floating-point representation that predates the IEEE standard and uses a different byte layout.\n\nIf a numeric value — a score, timer, currency amount — does not match any standard integer or float format, select **MBF32** (or **MBF32 BE** if the value looks byte-swapped) in the data type dropdown before concluding the address is unreadable.\n\n| System | Applicable filter |\n|---|---|\n| Amstrad CPC | MBF32 LE |\n| Apple II | MBF32 |\n| PC-8000 / PC-8800 | MBF32 |"
+    }
+  ]
+}

@@ -1,0 +1,124 @@
+{
+  "label": "🗡️ Action / Adventure",
+  "panels": [
+    {
+      "id": "panel_act_tips",
+      "panelType": "text",
+      "title": "Action / Adventure — things to investigate",
+      "content": "## Game state and area\n\nAction-adventure games change their active area or room constantly, and the room ID is one of the most frequently useful values in the genre. A state index that covers gameplay, menus, cutscenes, and game over screens is also worth finding early — many other searches scope to specific states.\n\n## Bitmasks and flag arrays\n\nBoss defeat flags, key item acquisition, ability unlocks, and door states are almost always packed into bitmasks. A single byte can track eight separate yes/no states. Watching for values that change by a power of 2 rather than by 1 is the signal to investigate individual bits.\n\n## Player position\n\nPlayer X and Y coordinates are worth investigating early in games with hidden rooms or Easter eggs. Once the coordinate system is understood, achievements can be gated on the player entering a specific area.\n\n## Timers\n\nPlay timers or stage timers may be a float, frame counter, integer in hex, BCD, centiseconds in a single address, or split across hours, minutes, seconds, and centiseconds. Search for a changing value during active gameplay and investigate each format.\n\n## Death counter\n\nMany action-adventure games silently track total deaths. This value is often stored near other save-persistent data and can support fun achievements that most players won't know to expect.\n\n## Clears per character\n\nIf the game has multiple playable characters, each may have independent completion flags within the save data structure."
+    },
+    {
+      "id": "panel_act_protection",
+      "panelType": "checklist",
+      "title": "Protection",
+      "infobox": "Identify these before writing achievement logic.",
+      "columns": [
+        { "key": "name", "label": "Target", "style": "plain" },
+        { "key": "tNote", "label": "Note", "style": "plain" }
+      ],
+      "entry_Protection": [
+        { "id": "act_prot_demo",  "name": "Demo mode",         "tNote": "Check for a specific value that is set or cleared only on the main menu or when demo mode initiates. May be a standalone flag or part of a larger game state index." },
+        { "id": "act_prot_save",  "name": "Save protection",   "tNote": "Find values that match a loading state or last loaded in-game state so that you can confirm the player is in-game for at least one frame by checking Delta = in-game." },
+        { "id": "act_prot_cheat", "name": "Cheat protection",  "tNote": "Investigate old guides or walkthroughs for possible cheats. If they offer an advantage, block them. Look for on/off flags, unnatural resource increases during a menu or pause scenario." },
+        { "id": "act_prot_c1", "name": "Invincibility cheat",       "tNote": "If this exists, damageless achievements must require it to be off." },
+        { "id": "act_prot_c2", "name": "Infinite health cheat",      "tNote": "If this exists, HP-based challenge achievements must require it to be off." },
+        { "id": "act_prot_c3", "name": "All items / abilities cheat","tNote": "If this exists, collection achievements must require it to be off." },
+        { "id": "act_prot_c4", "name": "All areas unlocked cheat",   "tNote": "If this exists, progression achievements must require it to be off." },
+        { "id": "act_prot_c5", "name": "No-clip / walk through walls","tNote": "If this exists, it may allow skipping required areas. Investigate whether achievements need to block it." },
+        { "id": "act_prot_c6", "name": "New Game+ flag",             "tNote": "Whether the current run is NG+. Affects item and enemy availability. Investigate whether this needs to be allowed or blocked per achievement." },
+        { "id": "act_prot_c7", "name": "Difficulty setting",         "tNote": "Scope anchor for difficulty-gated achievements." }
+      ]
+    },
+    {
+      "id": "panel_act_progression",
+      "panelType": "checklist",
+      "title": "Progression",
+      "infobox": "Values that track forward movement through areas, story beats, and boss encounters.",
+      "columns": [
+        { "key": "name", "label": "Target", "style": "plain" },
+        { "key": "tNote", "label": "Note", "style": "plain" }
+      ],
+      "entry_Progression": [
+        { "id": "act_prog_01", "name": "Room / area ID",                "tNote": "The identifier for the current room or area. Changes on every transition." },
+        { "id": "act_prog_02", "name": "Game state / screen index",     "tNote": "A value that changes between active gameplay, menus, cutscenes, and game over." },
+        { "id": "act_prog_03", "name": "Difficulty setting",            "tNote": "The selected difficulty. May be encoded into save data rather than active RAM." },
+        { "id": "act_prog_04", "name": "Boss defeat flag — boss 1",    "tNote": "Whether boss 1 has been permanently defeated. May be an individual flag or a bit in a shared byte." },
+        { "id": "act_prog_05", "name": "Boss defeat flag — boss 2",    "tNote": "Same investigation as boss 1." },
+        { "id": "act_prog_06", "name": "Boss defeat flag — boss 3",    "tNote": "Continue for each mandatory boss." },
+        { "id": "act_prog_07", "name": "Boss defeat flag — boss 4",    "tNote": "Continue for each mandatory boss." },
+        { "id": "act_prog_08", "name": "Boss defeat flags (combined)", "tNote": "All boss states may be packed into a single byte rather than at individual addresses." },
+        { "id": "act_prog_09", "name": "Key item acquisition flags",   "tNote": "Which story-critical items have been obtained. Frequently a bitmask." },
+        { "id": "act_prog_10", "name": "Story / event flags",          "tNote": "Flags for story beats, NPC events, and cutscenes." },
+        { "id": "act_prog_11", "name": "Door / area unlock state",     "tNote": "Whether specific locked areas or gates have been opened." },
+        { "id": "act_prog_12", "name": "Ability unlock flags",         "tNote": "Which movement or combat abilities have been acquired." },
+        { "id": "act_prog_13", "name": "Map reveal flags",             "tNote": "Which areas of the map have been visited." },
+        { "id": "act_prog_14", "name": "Quest stage / objective index","tNote": "The current step of the active quest or objective sequence." },
+        { "id": "act_prog_15", "name": "Party member recruited",       "tNote": "Whether additional characters have joined, if the game has a party system." },
+        { "id": "act_prog_16", "name": "Game completion flag",         "tNote": "A value set when the credits roll or the final screen is reached." },
+        { "id": "act_prog_17", "name": "Ending variant",               "tNote": "Which ending was reached, for games with multiple outcomes." },
+        { "id": "act_prog_18", "name": "Clears per character",         "tNote": "If the game has multiple playable characters, where per-character completion is stored." },
+        { "id": "act_prog_19", "name": "NG+ / second loop flag",       "tNote": "Whether the player is on a second or subsequent loop." },
+        { "id": "act_prog_20", "name": "Total area transitions",       "tNote": "A count of room transitions, if one exists." }
+      ]
+    },
+    {
+      "id": "panel_act_collections",
+      "panelType": "checklist",
+      "title": "Collections",
+      "infobox": "Things the player owns or has unlocked that persist across sessions.",
+      "columns": [
+        { "key": "name", "label": "Target", "style": "plain" },
+        { "key": "tNote", "label": "Note", "style": "plain" }
+      ],
+      "entry_Collection": [
+        { "id": "act_col_01", "name": "Currency / resource count",     "tNote": "The main spendable resource — rupees, coins, souls, or equivalent." },
+        { "id": "act_col_02", "name": "Equipment — weapon",            "tNote": "Currently held or equipped weapon." },
+        { "id": "act_col_03", "name": "Equipment — shield",            "tNote": "Currently equipped shield, if the game has one." },
+        { "id": "act_col_04", "name": "Equipment — accessory",         "tNote": "Currently equipped accessory or secondary item." },
+        { "id": "act_col_05", "name": "Collectible flags — area 0",   "tNote": "Which collectibles in area 0 have been permanently gathered. May be a bitmask." },
+        { "id": "act_col_06", "name": "Collectible flags — area 1",   "tNote": "Area 1. Compare address offset from area 0 to determine entry size." },
+        { "id": "act_col_07", "name": "Collectible flags — area 2",   "tNote": "Area 2. The same offset pattern from area 1 should apply." },
+        { "id": "act_col_08", "name": "Collectible total (count)",     "tNote": "A global count of all collectibles gathered, if one exists." },
+        { "id": "act_col_09", "name": "Ability unlock flags",          "tNote": "All unlocked abilities or skills tracked together." },
+        { "id": "act_col_10", "name": "Upgrade tier — health",         "tNote": "Current health capacity upgrade level." },
+        { "id": "act_col_11", "name": "Upgrade tier — attack",         "tNote": "Current attack upgrade level." },
+        { "id": "act_col_12", "name": "Upgrade tier — defense",        "tNote": "Current defense upgrade level." },
+        { "id": "act_col_13", "name": "Character unlock flags",        "tNote": "Which alternate playable characters have been unlocked." },
+        { "id": "act_col_14", "name": "Chest / container opened flags","tNote": "Which treasure chests or containers have been permanently opened." },
+        { "id": "act_col_15", "name": "Side quest completion flags",   "tNote": "Which optional quests have been completed." }
+      ]
+    },
+    {
+      "id": "panel_act_challenges",
+      "panelType": "checklist",
+      "title": "Challenges",
+      "infobox": "Values for achievements with pass/fail conditions.",
+      "columns": [
+        { "key": "name", "label": "Target", "style": "plain" },
+        { "key": "tNote", "label": "Note", "style": "plain" }
+      ],
+      "entry_Challenge": [
+        { "id": "act_chl_01", "name": "Player HP (current)",           "tNote": "Current health." },
+        { "id": "act_chl_02", "name": "Player HP (max)",               "tNote": "Maximum health. Useful for ratio-based and threshold logic." },
+        { "id": "act_chl_03", "name": "Damage / hit flag",             "tNote": "A value that changes when the player takes damage." },
+        { "id": "act_chl_04", "name": "Invincibility / i-frames",      "tNote": "A short-lived value active during post-hit recovery." },
+        { "id": "act_chl_05", "name": "Boss HP (current)",             "tNote": "Only valid while a boss encounter is active." },
+        { "id": "act_chl_06", "name": "Boss HP (max)",                 "tNote": "Useful for phase-threshold logic." },
+        { "id": "act_chl_07", "name": "Boss phase index",              "tNote": "Which phase of a multi-phase boss encounter is currently active." },
+        { "id": "act_chl_08", "name": "Player X position",             "tNote": "Horizontal coordinate. Useful for hidden room entry and positional achievements." },
+        { "id": "act_chl_09", "name": "Player Y position",             "tNote": "Vertical coordinate. May be adjacent to X or at a separate address." },
+        { "id": "act_chl_10", "name": "Enemy kill counter",            "tNote": "A count of enemies defeated. May be global, per-type, or per-area." },
+        { "id": "act_chl_11", "name": "Death counter (session)",       "tNote": "How many times the player has died in the current run." },
+        { "id": "act_chl_12", "name": "Death counter (total)",         "tNote": "Lifetime death count. May be stored in save data rather than active RAM." },
+        { "id": "act_chl_13", "name": "Play timer",                    "tNote": "Session or total play time. May be a float, frame counter, integer in hex, BCD, centiseconds in a single address, or split across hours, minutes, seconds, and centiseconds." },
+        { "id": "act_chl_14", "name": "Combo counter",                 "tNote": "Consecutive hits or kills without taking damage." },
+        { "id": "act_chl_15", "name": "Special resource (current)",    "tNote": "Mana, stamina, or the game's equivalent. Deplete it to isolate." },
+        { "id": "act_chl_16", "name": "Special resource (max)",        "tNote": "Maximum capacity. May change with upgrades." },
+        { "id": "act_chl_17", "name": "Score / points",                "tNote": "If the game has a score system." },
+        { "id": "act_chl_18", "name": "Clears per character — char 1","tNote": "How many times character 1 has cleared the game." },
+        { "id": "act_chl_19", "name": "Clears per character — char 2","tNote": "Same for character 2." },
+        { "id": "act_chl_20", "name": "Clears per character — char 3","tNote": "Continue for each playable character." }
+      ]
+    }
+  ]
+}

@@ -87,20 +87,22 @@ This matters because you can always add more rows later without touching the pan
 
 ### Text Panel
 
-Fill in the **Panel Title** and optionally a **Tip Box** (appears as a highlighted callout). Then write your content in the text area. Basic Markdown is supported:
+Fill in the **Panel Title** and optionally a **Tip Box** (appears as a highlighted callout above the panel content — this is a separate field in the panel definition, not a Markdown syntax). Then write your content in the text area. Supported Markdown:
 
 - `**bold**` → **bold**
 - `*italic*` → *italic*
 - `` `code` `` → `code`
-- `### Heading` → a section header
+- `## Heading` or `### Heading` → a section header (both produce the same result)
 - `- Item` → a bullet point
-- `[text](tab)` → a link to another tab. `tab` must be an integer, and tabs start at 1
-- `[text](tab, panel)` → a link to another panel. `tab` and `panel` must be integers, and they both start at 1
-- `> Information` →
-> an info box
-- `[title]{content}` → a collapsible box
+- `---` on its own line → thin horizontal rule
+- `===` on its own line → thick horizontal rule
+- `> text` → a styled blockquote — an indented block with a left border. This is visually distinct from the Tip Box; use it for callouts or quotes within the content body.
+- `[text](tab)` → internal link to tab N (1-based integer)
+- `[text](tab, panel)` → internal link to panel M on tab N (both 1-based integers)
+- `[text](url)` → external link, opens in a new tab
+- `[Label]{content}` → a collapsible box — displays a clickable label; content starts hidden and expands on click
 
-The toolbar buttons above the text area will insert formatting around your selection.
+The toolbar buttons above the text area insert all of the above formats around the current selection.
 
 ### Key/Value Panel
 
@@ -109,12 +111,12 @@ Fill in the **Panel Title** and save. Then use **+ Add Row** to add pairs one at
 ### Checklist Panel
 
 1. Fill in **Panel Title** and optionally a **Tip Box**.
-2. Add **Columns** — click **+ Add Column** for each extra column you want. Every checklist already has a built-in Number column and a checkbox; you're adding columns for things like Location, Price, Notes, etc. Each column needs a label and a style:
-   - **Standard** — regular text
-   - **Accent (gold)** — for prices, rewards, key data
-   - **Dim (muted)** — for secondary info; hidden on narrow screens
+2. Add **Columns** — click **+ Add Column** for each column you want. The checkbox and row number are always included automatically; you define all the data columns. The first column you add is the primary label (conventionally the item name); subsequent ones are for things like Location, Price, Notes, etc. Each column needs a label and a style:
+   - **plain** (shown as "Standard" in the builder) — regular text
+   - **accent** — gold/emphasis color; for prices, rewards, key data
+   - **dim** — muted color; for secondary info; hidden on narrow screens
 3. Click **Create Panel**.
-4. Click **+ Add Row** to fill in items. Each row has a Name field and one field per column you defined. The optional **Note** field adds small secondary text under the item name — good for warnings or tips.
+4. Click **+ Add Row** to fill in items. Each row has a field for each column you defined. The optional **Note** field adds small secondary text beneath the first column's cell — good for warnings, requirements, or tips.
 
 > **Tip on IDs:** The builder auto-generates item IDs. If you're migrating an existing guide and need to preserve user progress, you'll want to edit the exported JSON directly to match the old IDs. See `SCHEMA.md`.
 

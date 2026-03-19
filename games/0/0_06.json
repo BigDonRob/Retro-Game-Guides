@@ -1,0 +1,115 @@
+{
+  "label": "🥊 Fighting",
+  "panels": [
+    {
+      "id": "panel_fgt_tips",
+      "panelType": "text",
+      "title": "Fighting games — things to investigate",
+      "content": "## Player data as mirrored structs\n\nFighting games almost always store P1 and P2 data in the same structure, at a fixed byte offset from each other. Once you find the address for P1 health, P2 health is likely the same distance away as P1 max HP is from P1 current HP — the struct repeats. This pattern often extends to the super meter, round wins, and character ID.\n\n## Round timer\n\nThe displayed round timer and its raw value in RAM are frequently the same number in the same units. Searching for the value you see on screen is a direct approach.\n\n## Character unlock flags\n\nCharacter unlock states are almost always packed into a bitmask. Unlocking one character will cause a single bit to flip in a byte, not a standalone value to increment from 0 to 1.\n\n## Clears per character\n\nArcade mode completion is typically tracked per character. The flag for whether a specific character has cleared arcade mode may be a bit in that character's data block rather than at a global address.\n\n## Short-lived values\n\nSome values — damage dealt on the last hit, the critical hit flag, the perfect round flag — exist only for a very short window. Pause-scanning immediately after the event occurs is one way to catch them."
+    },
+    {
+      "id": "panel_fgt_protection",
+      "panelType": "checklist",
+      "title": "Protection",
+      "infobox": "Identify these before writing achievement logic.",
+      "columns": [
+        { "key": "name", "label": "Target", "style": "plain" },
+        { "key": "tNote", "label": "Note", "style": "plain" }
+      ],
+      "entry_Protection": [
+        { "id": "fgt_prot_demo",  "name": "Demo mode",         "tNote": "Check for a specific value that is set or cleared only on the main menu or when demo mode initiates." },
+        { "id": "fgt_prot_save",  "name": "Save protection",   "tNote": "Find values that match a loading state or last loaded in-game state so that you can confirm the player is in-game for at least one frame by checking Delta = in-game." },
+        { "id": "fgt_prot_cheat", "name": "Cheat protection",  "tNote": "Investigate old guides or walkthroughs for possible cheats. If they offer an advantage, block them. Look for on/off flags, unnatural resource increases during a menu or pause scenario." },
+        { "id": "fgt_prot_c1", "name": "Infinite health cheat",     "tNote": "If this exists, damageless and perfect-round achievements must require it to be off." },
+        { "id": "fgt_prot_c2", "name": "Infinite super meter cheat","tNote": "If this exists, super-based challenge achievements must require it to be off." },
+        { "id": "fgt_prot_c3", "name": "All characters cheat",      "tNote": "If this exists, character unlock achievements must require it to be off." },
+        { "id": "fgt_prot_c4", "name": "CPU behavior modifier",     "tNote": "Cheats that change CPU difficulty or behavior. Investigate whether any affect achievement validity." },
+        { "id": "fgt_prot_c5", "name": "Training mode flag",        "tNote": "Training mode may have infinite health or meter enabled by default. Investigate what values change when entering training." },
+        { "id": "fgt_prot_c6", "name": "2-player human input",      "tNote": "A second human player changes match dynamics. Investigate whether solo achievements need to exclude this state." },
+        { "id": "fgt_prot_c7", "name": "Difficulty setting",        "tNote": "Scope anchor for difficulty-gated achievements." }
+      ]
+    },
+    {
+      "id": "panel_fgt_progression",
+      "panelType": "checklist",
+      "title": "Progression",
+      "infobox": "Values that track forward movement through arcade mode, story, and character unlocks.",
+      "columns": [
+        { "key": "name", "label": "Target", "style": "plain" },
+        { "key": "tNote", "label": "Note", "style": "plain" }
+      ],
+      "entry_Progression": [
+        { "id": "fgt_prog_01", "name": "Game mode ID",              "tNote": "What separates arcade, story, vs CPU, vs player, and training modes." },
+        { "id": "fgt_prog_02", "name": "Arcade stage (opponent index)", "tNote": "Which opponent in the arcade ladder is being faced." },
+        { "id": "fgt_prog_03", "name": "Round state / phase",       "tNote": "Pre-fight intro, active round, round over, and match over states." },
+        { "id": "fgt_prog_04", "name": "Round number",              "tNote": "Which round of the current match is being played." },
+        { "id": "fgt_prog_05", "name": "Match outcome flag",        "tNote": "Whether the match ended in a win, loss, draw, or timeout." },
+        { "id": "fgt_prog_06", "name": "Arcade mode cleared flag",  "tNote": "A value set when the full arcade ladder is completed with any character." },
+        { "id": "fgt_prog_07", "name": "Story mode chapter",        "tNote": "Which chapter of story mode is active, if the game has a story mode." },
+        { "id": "fgt_prog_08", "name": "Character unlock flags",    "tNote": "Which characters have been unlocked. Investigate whether this is a bitmask or individual flags." },
+        { "id": "fgt_prog_09", "name": "Stage / arena unlock flags","tNote": "Which stages are available." },
+        { "id": "fgt_prog_10", "name": "Ending seen — char 1",     "tNote": "Whether character 1's arcade ending has been viewed." },
+        { "id": "fgt_prog_11", "name": "Ending seen — char 2",     "tNote": "Same for character 2. Continue for each character." },
+        { "id": "fgt_prog_12", "name": "Clears per character",      "tNote": "How many times each character has cleared arcade mode, if tracked separately." },
+        { "id": "fgt_prog_13", "name": "Difficulty setting",        "tNote": "Active difficulty. Scope anchor." },
+        { "id": "fgt_prog_14", "name": "Game completion flag",      "tNote": "A value set when a meaningful completion state is reached — all characters cleared, all endings seen, or similar." }
+      ]
+    },
+    {
+      "id": "panel_fgt_collections",
+      "panelType": "checklist",
+      "title": "Collections",
+      "infobox": "Things unlocked that persist across sessions.",
+      "columns": [
+        { "key": "name", "label": "Target", "style": "plain" },
+        { "key": "tNote", "label": "Note", "style": "plain" }
+      ],
+      "entry_Collection": [
+        { "id": "fgt_col_01", "name": "Character unlock flags",      "tNote": "All character unlock states. Investigate whether packed into a bitmask or individual addresses." },
+        { "id": "fgt_col_02", "name": "Character unlock count",      "tNote": "A total count of characters available, if this exists alongside the flags." },
+        { "id": "fgt_col_03", "name": "Stage / arena unlock flags",  "tNote": "Which stages are unlocked." },
+        { "id": "fgt_col_04", "name": "Costume / palette unlocks",   "tNote": "Alternate costumes or color palettes that have been unlocked." },
+        { "id": "fgt_col_05", "name": "Gallery content flags",       "tNote": "Artwork, music, or movies unlocked in a gallery mode." },
+        { "id": "fgt_col_06", "name": "Sound test unlock flags",     "tNote": "Which background music tracks are available in a sound test, if one exists." },
+        { "id": "fgt_col_07", "name": "Story completion — char 1",  "tNote": "Whether character 1's story has been completed." },
+        { "id": "fgt_col_08", "name": "Story completion — char 2",  "tNote": "Same for character 2. Continue for each character." },
+        { "id": "fgt_col_09", "name": "Arcade clear — char 1",      "tNote": "Whether character 1 has cleared arcade mode." },
+        { "id": "fgt_col_10", "name": "Arcade clear — char 2",      "tNote": "Same for character 2. Continue for each character." },
+        { "id": "fgt_col_11", "name": "Survival mode record",        "tNote": "Best score or win count in a survival mode, if one exists." },
+        { "id": "fgt_col_12", "name": "In-game currency",            "tNote": "Spendable currency for unlocking content, if the game has this system." }
+      ]
+    },
+    {
+      "id": "panel_fgt_challenges",
+      "panelType": "checklist",
+      "title": "Challenges",
+      "infobox": "Values for achievements with pass/fail conditions.",
+      "columns": [
+        { "key": "name", "label": "Target", "style": "plain" },
+        { "key": "tNote", "label": "Note", "style": "plain" }
+      ],
+      "entry_Challenge": [
+        { "id": "fgt_chl_01", "name": "P1 health (current)",         "tNote": "Current health of player 1." },
+        { "id": "fgt_chl_02", "name": "P1 health (max)",             "tNote": "Maximum health of player 1. Useful for ratio and threshold logic." },
+        { "id": "fgt_chl_03", "name": "P2 health (current)",         "tNote": "Current health of player 2. The offset from P1 current reveals the struct size." },
+        { "id": "fgt_chl_04", "name": "P2 health (max)",             "tNote": "Maximum health of player 2." },
+        { "id": "fgt_chl_05", "name": "Round timer",                 "tNote": "The countdown timer for the current round. The displayed value and RAM value are frequently the same number." },
+        { "id": "fgt_chl_06", "name": "P1 round wins",               "tNote": "Wins accumulated by P1 in the current match." },
+        { "id": "fgt_chl_07", "name": "P2 round wins",               "tNote": "Wins accumulated by P2. May be adjacent to P1 wins." },
+        { "id": "fgt_chl_08", "name": "P1 super / special meter",    "tNote": "P1's current special meter value." },
+        { "id": "fgt_chl_09", "name": "P2 super / special meter",    "tNote": "P2's meter. May follow the same struct offset as health." },
+        { "id": "fgt_chl_10", "name": "Combo counter",               "tNote": "Current hit count in an active combo string." },
+        { "id": "fgt_chl_11", "name": "P1 character ID",             "tNote": "Which character P1 selected." },
+        { "id": "fgt_chl_12", "name": "P2 character ID",             "tNote": "Which character P2 selected." },
+        { "id": "fgt_chl_13", "name": "Stage / arena ID",            "tNote": "Which stage is being fought on." },
+        { "id": "fgt_chl_14", "name": "Perfect round flag",          "tNote": "A value that is set when a round is won with full health. May not exist as a native flag — may need to be derived from HP." },
+        { "id": "fgt_chl_15", "name": "Timeout flag",                "tNote": "A value that is set when time expires before a KO." },
+        { "id": "fgt_chl_16", "name": "Damage dealt (last hit)",     "tNote": "The value of the most recent attack. A short-lived value." },
+        { "id": "fgt_chl_17", "name": "Clears per character — char 1","tNote": "How many times character 1 has cleared arcade mode." },
+        { "id": "fgt_chl_18", "name": "Clears per character — char 2","tNote": "Same for character 2." },
+        { "id": "fgt_chl_19", "name": "Clears per character — char 3","tNote": "Continue for each playable character." },
+        { "id": "fgt_chl_20", "name": "Difficulty setting (current)","tNote": "The active difficulty during the match. Scope anchor for difficulty-gated challenges." }
+      ]
+    }
+  ]
+}
