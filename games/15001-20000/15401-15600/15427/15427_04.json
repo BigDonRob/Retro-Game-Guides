@@ -1,0 +1,1042 @@
+{
+  "label": "🌋The Final Battleground",
+  "panels": [
+    {
+      "title": "Mission 1-1",
+      "infobox": "Push the chest 8 times",
+      "columns": [
+        {
+          "key": "objective",
+          "label": "Objective",
+          "style": "plain"
+        },
+        {
+          "key": "reward",
+          "label": "Reward",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_n0blia8",
+      "panelType": "checklist",
+      "entry_Mission": [
+        {
+          "id": "item_09tvozx",
+          "objective": "Complete the mission",
+          "reward": "Kurapica help koma"
+        },
+        {
+          "id": "item_jcwpuvk",
+          "objective": "Finish with 30 or more seconds remaining on the timer",
+          "reward": "Leorio help koma"
+        },
+        {
+          "id": "item_twa1d9r",
+          "objective": "Never use the \"Y\" button",
+          "reward": "Neji help koma"
+        },
+        {
+          "id": "item_mcwox7m",
+          "objective": "Never use the \"B\" button",
+          "reward": "Hinata 2-space koma"
+        },
+        {
+          "id": "item_a45jsq6",
+          "objective": "Never perform a double-jump",
+          "reward": "Neji 2-space koma"
+        }
+      ]
+    },
+    {
+      "title": "Mission 1-2",
+      "infobox": "Battle Mission - Finish with the most points",
+      "columns": [
+        {
+          "key": "objective",
+          "label": "Objective",
+          "style": "plain"
+        },
+        {
+          "key": "reward",
+          "label": "Reward",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_57lcb9d",
+      "panelType": "checklist",
+      "entry_Mission": [
+        {
+          "id": "item_k5mnb9a",
+          "objective": "Complete the mission",
+          "reward": "Gon help koma"
+        },
+        {
+          "id": "item_54hebh8",
+          "objective": "Finish with 3 or more points",
+          "reward": "Killua help koma"
+        },
+        {
+          "id": "item_dk7erao",
+          "objective": "Finish the stage with a full special gauge",
+          "reward": "Killua 2-space koma"
+        },
+        {
+          "id": "item_34mmgnc",
+          "objective": "Never get KO'd",
+          "reward": "Killua 3-space koma"
+        },
+        {
+          "id": "item_vgq0grg",
+          "objective": "Finish with 3 or more ring outs",
+          "reward": "Gon 4-space koma"
+        }
+      ]
+    },
+    {
+      "title": "Mission 1-3",
+      "infobox": "Battle Mission - Eliminate all opponents",
+      "columns": [
+        {
+          "key": "objective",
+          "label": "Objective",
+          "style": "plain"
+        },
+        {
+          "key": "reward",
+          "label": "Reward",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_h2hqj82",
+      "panelType": "checklist",
+      "entry_Mission": [
+        {
+          "id": "item_5p01xys",
+          "objective": "Complete the mission",
+          "reward": "Gon help koma"
+        },
+        {
+          "id": "item_z35lg15",
+          "objective": "Finish with 30 or more seconds remaining on the timer",
+          "reward": "Shikamaru help koma"
+        },
+        {
+          "id": "item_jw6pie7",
+          "objective": "Finish with 40 or more seconds remaining on the timer",
+          "reward": "Rock Lee 2-space koma"
+        },
+        {
+          "id": "item_92omras",
+          "objective": "Never use the \"X\" button",
+          "reward": "Shikamaru 2-space koma"
+        },
+        {
+          "id": "item_hxgxfyb",
+          "objective": "Never use the \"Y\" button",
+          "reward": "Saskue 5-space koma"
+        }
+      ]
+    },
+    {
+      "title": "Mission 1-4",
+      "infobox": "Battle Mission - Finish with the most points",
+      "columns": [
+        {
+          "key": "objective",
+          "label": "Objective",
+          "style": "plain"
+        },
+        {
+          "key": "reward",
+          "label": "Reward",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_6m7632e",
+      "panelType": "checklist",
+      "entry_Mission": [
+        {
+          "id": "item_bhy2e08",
+          "objective": "Complete the mission",
+          "reward": "Kazuki help koma"
+        },
+        {
+          "id": "item_cbfnnpv",
+          "objective": "Perform 5 or more tag attacks",
+          "reward": "Captain Bravo help koma"
+        },
+        {
+          "id": "item_bifxnls",
+          "objective": "Change characters 5 times or less",
+          "reward": "Kazuki 2-space koma"
+        },
+        {
+          "id": "item_qgl05vw",
+          "objective": "Never get KO'd",
+          "reward": "Kazuki 4-space koma"
+        },
+        {
+          "id": "item_5u6vlbq",
+          "note": "Most special attacks and support attacks count as nature-based attacks. Get a kill with a support like Nami 2-space and then avoid combat.",
+          "objective": "Only hit the opponent with attacks of an opposing nature",
+          "reward": "Kazuki 5-space koma"
+        }
+      ]
+    },
+    {
+      "title": "Mission 1-5",
+      "infobox": "Break the walls",
+      "columns": [
+        {
+          "key": "objective",
+          "label": "Objective",
+          "style": "plain"
+        },
+        {
+          "key": "reward",
+          "label": "Reward",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_cp8goul",
+      "panelType": "checklist",
+      "entry_Mission": [
+        {
+          "id": "item_nezzbxj",
+          "objective": "Complete the mission",
+          "reward": "Higure help koma"
+        },
+        {
+          "id": "item_mytkyg3",
+          "objective": "Never use the \"X\" button",
+          "reward": "Ryotsu 2-space koma"
+        },
+        {
+          "id": "item_mck1d7c",
+          "note": "Checks active character health. Switch before time runs out to a full health character or bring a healing koma",
+          "objective": "Finish the stage with max J-soul (health)",
+          "reward": "Hinata 3-space koma"
+        },
+        {
+          "id": "item_7wvxkr1",
+          "objective": "Never get KO'd",
+          "reward": "Shikamaru 3-space koma"
+        },
+        {
+          "id": "item_wxkg1gh",
+          "objective": "Finish the stage with max J-soul (health) on all characters",
+          "reward": "Sanji 5-space koma"
+        }
+      ]
+    },
+    {
+      "title": "Mission 1-6",
+      "infobox": "Battle Mission - Finish with the most points",
+      "columns": [
+        {
+          "key": "objective",
+          "label": "Objective",
+          "style": "plain"
+        },
+        {
+          "key": "reward",
+          "label": "Reward",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_95eetu6",
+      "panelType": "checklist",
+      "entry_Mission": [
+        {
+          "id": "item_05l2xja",
+          "objective": "Complete the mission",
+          "reward": "Allen help koma"
+        },
+        {
+          "id": "item_0pmvf3t",
+          "objective": "Get KO'd 3 times or less",
+          "reward": "Reever help koma"
+        },
+        {
+          "id": "item_xvkxpge",
+          "objective": "Finish the stage with half of your max J-soul (health)",
+          "reward": "Lavi help koma"
+        },
+        {
+          "id": "item_3g8zzg6",
+          "objective": "Use a deck with exactly 5 support koma",
+          "reward": "Allen 3-space koma"
+        },
+        {
+          "id": "item_40pqpu3",
+          "objective": "Never get KO'd",
+          "reward": "Allen 4-space koma"
+        }
+      ]
+    },
+    {
+      "title": "Mission 1-7",
+      "infobox": "Battle Mission - Defeat Player 2",
+      "columns": [
+        {
+          "key": "objective",
+          "label": "Objective",
+          "style": "plain"
+        },
+        {
+          "key": "reward",
+          "label": "Reward",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_7yaxc7b",
+      "panelType": "checklist",
+      "entry_Mission": [
+        {
+          "id": "item_kws1up4",
+          "objective": "Complete the mission",
+          "reward": "Vegeta help koma"
+        },
+        {
+          "id": "item_jaba148",
+          "objective": "Use a deck containing only power nature battle characters",
+          "reward": "Krillin help koma"
+        },
+        {
+          "id": "item_7rsvjx9",
+          "objective": "Never perform a double-jump",
+          "reward": "Krillin 2-space koma"
+        },
+        {
+          "id": "item_u1ercyr",
+          "objective": "Finish with 30 or more seconds remaining on the timer",
+          "reward": "Vegeta 4-space koma"
+        },
+        {
+          "id": "item_vva8v4s",
+          "objective": "Finish with 40 or more seconds remaining on the timer",
+          "reward": "Don Patch 5-space koma"
+        }
+      ]
+    },
+    {
+      "title": "Mission 1-8",
+      "infobox": "Battle Mission - Finish with the most points",
+      "columns": [
+        {
+          "key": "objective",
+          "label": "Objective",
+          "style": "plain"
+        },
+        {
+          "key": "reward",
+          "label": "Reward",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_t0gp27t",
+      "panelType": "checklist",
+      "entry_Mission": [
+        {
+          "id": "item_errkkre",
+          "objective": "Complete the mission",
+          "reward": "Goku help koma"
+        },
+        {
+          "id": "item_xtluvqg",
+          "objective": "Register 30 hits with \"X\" button attacks",
+          "reward": "Goku 4-space koma"
+        },
+        {
+          "id": "item_yxkci79",
+          "objective": "Never get ringed out",
+          "reward": "Luffy 6-space koma"
+        },
+        {
+          "id": "item_09i9bb3",
+          "objective": "Never get KO'd",
+          "reward": "Naruto 6-space koma"
+        },
+        {
+          "id": "item_gcldhaj",
+          "objective": "Ring out each opponent 1 or more times",
+          "reward": "Bo-bobo 6-space koma"
+        }
+      ]
+    },
+    {
+      "title": "Mission 2-1  (Unlocked by completing Desert 1-7 with 320 koma collected) !C!",
+      "infobox": "Battle Mission - Earn 7 points",
+      "columns": [
+        {
+          "key": "objective",
+          "label": "Objective",
+          "style": "plain"
+        },
+        {
+          "key": "reward",
+          "label": "Reward",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_1d7px39",
+      "panelType": "checklist",
+      "entry_Mission": [
+        {
+          "id": "item_30z9drn",
+          "objective": "Complete the mission",
+          "reward": "Cursed Seal help koma"
+        },
+        {
+          "id": "item_f0jehy5",
+          "objective": "Finish with 1 or more ring outs",
+          "reward": "Gon 2-space koma"
+        },
+        {
+          "id": "item_kzh3qz9",
+          "objective": "Register 20 hits with tag attacks",
+          "reward": "Gon 3-space koma"
+        },
+        {
+          "id": "item_tht9czt",
+          "note": "Power > Knowledge > Laughter;  Bo-bobo and Don Patch are laughter nature",
+          "objective": "Only hit the opponent with attacks of an opposing nature",
+          "reward": "Ryotsu 3-space koma"
+        },
+        {
+          "id": "item_sua2zto",
+          "objective": "Finish with 30 or more seconds remaining on the timer",
+          "reward": "Yui 3-space koma"
+        }
+      ]
+    },
+    {
+      "title": "Mission 2-2",
+      "infobox": "Battle Mission - Finish with the most points",
+      "columns": [
+        {
+          "key": "objective",
+          "label": "Objective",
+          "style": "plain"
+        },
+        {
+          "key": "reward",
+          "label": "Reward",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_1oz9v3q",
+      "panelType": "checklist",
+      "entry_Mission": [
+        {
+          "id": "item_av3iabq",
+          "objective": "Complete the mission",
+          "reward": "Hikaru help koma"
+        },
+        {
+          "id": "item_n2gjrri",
+          "objective": "Never get KO'd",
+          "reward": "Hikaru 2-space koma"
+        },
+        {
+          "id": "item_9103gy8",
+          "objective": "Finish the stage with a full special gauge",
+          "reward": "Yoh 2-space koma"
+        },
+        {
+          "id": "item_za0kn8j",
+          "note": "Checks active character health. Switch before time runs out to a full health character or bring a healing koma",
+          "objective": "Finish the stage with max J-soul (health)",
+          "reward": "Yoh 3-space koma"
+        }
+      ]
+    },
+    {
+      "title": "Mission 3-1",
+      "infobox": "Battle Mission - Finish with the most points",
+      "columns": [
+        {
+          "key": "objective",
+          "label": "Objective",
+          "style": "plain"
+        },
+        {
+          "key": "reward",
+          "label": "Reward",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_jxqz6iq",
+      "panelType": "checklist",
+      "entry_Mission": [
+        {
+          "id": "item_atx1kxa",
+          "objective": "Complete the mission",
+          "reward": "Misa help koma"
+        },
+        {
+          "id": "item_q76f2mc",
+          "objective": "Finish with 1 or more ring outs",
+          "reward": "L 2-space koma"
+        },
+        {
+          "id": "item_sxtfvqk",
+          "objective": "Finish with 2 or more ring outs",
+          "reward": "Vegeta 2-space koma"
+        },
+        {
+          "id": "item_vovxs0b",
+          "objective": "Finish with 3 or more ring outs",
+          "reward": "L 3-space koma"
+        },
+        {
+          "id": "item_ra1c6l7",
+          "objective": "Never get KO'd",
+          "reward": "Vegeta 3-space koma"
+        }
+      ]
+    },
+    {
+      "title": "Mission 3-2",
+      "infobox": "Battle Mission - Finish with the most points",
+      "columns": [
+        {
+          "key": "objective",
+          "label": "Objective",
+          "style": "plain"
+        },
+        {
+          "key": "reward",
+          "label": "Reward",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_cccj4vs",
+      "panelType": "checklist",
+      "entry_Mission": [
+        {
+          "id": "item_j9jy6ok",
+          "objective": "Complete the mission",
+          "reward": "Hisoka help koma"
+        },
+        {
+          "id": "item_osjkjzz",
+          "objective": "Finish with 3 or more points",
+          "reward": "Biscuit Krueger help koma"
+        },
+        {
+          "id": "item_ehebzpx",
+          "objective": "Finish with 1 or more ring outs",
+          "reward": "Kurapica 2-space koma"
+        },
+        {
+          "id": "item_osox1ul",
+          "objective": "Finish with 2 or more ring outs",
+          "reward": "Kurapica 2-space koma"
+        },
+        {
+          "id": "item_bakytvv",
+          "objective": "Never get KO'd",
+          "reward": "Gon 5-space koma"
+        }
+      ]
+    },
+    {
+      "title": "Mission 3-3",
+      "infobox": "Battle Mission - Finish with the most points",
+      "columns": [
+        {
+          "key": "objective",
+          "label": "Objective",
+          "style": "plain"
+        },
+        {
+          "key": "reward",
+          "label": "Reward",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_j8yfzdd",
+      "panelType": "checklist",
+      "entry_Mission": [
+        {
+          "id": "item_hd1ze78",
+          "objective": "Complete the mission",
+          "reward": "Papillon help koma"
+        },
+        {
+          "id": "item_u3ex2wm",
+          "note": "Objective can be completed by using 5 touch screen attacks",
+          "objective": "Perform 5 or more dream combos",
+          "reward": "Torpedo Girl help koma"
+        },
+        {
+          "id": "item_brj3vsb",
+          "objective": "Use a deck without any 5-space koma",
+          "reward": "Hatenkou help koma"
+        },
+        {
+          "id": "item_mq427ne",
+          "objective": "Use a deck with exactly 5 support koma",
+          "reward": "Kazuki 3-space koma"
+        },
+        {
+          "id": "item_3rqiyvy",
+          "objective": "Use a deck with exactly 10 help koma",
+          "reward": "Kazuki 6-space koma"
+        }
+      ]
+    },
+    {
+      "title": "Mission 3-4",
+      "infobox": "Battle Mission - Finish with the most points",
+      "columns": [
+        {
+          "key": "objective",
+          "label": "Objective",
+          "style": "plain"
+        },
+        {
+          "key": "reward",
+          "label": "Reward",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_lic6b0q",
+      "panelType": "checklist",
+      "entry_Mission": [
+        {
+          "id": "item_60ilhno",
+          "objective": "Complete the mission",
+          "reward": "Dende help koma"
+        },
+        {
+          "id": "item_3qb2ftm",
+          "objective": "Finish with an 2 or more point lead",
+          "reward": "Bulma help koma"
+        },
+        {
+          "id": "item_jvjqv07",
+          "objective": "Finish with an 4 or more point lead",
+          "reward": "Allen 2-space koma"
+        },
+        {
+          "id": "item_o05twwp",
+          "objective": "Finish with an 6 or more point lead",
+          "reward": "Allen 5-space koma"
+        },
+        {
+          "id": "item_r1p1yfg",
+          "objective": "Finish with an 8 or more point lead",
+          "reward": "Vegeta 5-space koma"
+        }
+      ]
+    },
+    {
+      "title": "Mission 3-5",
+      "infobox": "Battle Mission - Finish with the most points",
+      "columns": [
+        {
+          "key": "objective",
+          "label": "Objective",
+          "style": "plain"
+        },
+        {
+          "key": "reward",
+          "label": "Reward",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_kktfxr9",
+      "panelType": "checklist",
+      "entry_Mission": [
+        {
+          "id": "item_86qz8te",
+          "objective": "Complete the mission",
+          "reward": "Potara Earring help koma"
+        },
+        {
+          "id": "item_qdesjft",
+          "objective": "Never get KO'd",
+          "reward": "Hikaru 3-space koma"
+        },
+        {
+          "id": "item_7nqy7j2",
+          "objective": "Finish with 2 or more ring outs",
+          "reward": "Krillin 3-space koma"
+        },
+        {
+          "id": "item_f1usfkq",
+          "objective": "Ring out each opponent 1 or more times",
+          "reward": "Don Patch 6-space koma"
+        }
+      ]
+    },
+    {
+      "title": "Mission 3-6",
+      "infobox": "Battle Mission - Finish with the most points",
+      "columns": [
+        {
+          "key": "objective",
+          "label": "Objective",
+          "style": "plain"
+        },
+        {
+          "key": "reward",
+          "label": "Reward",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_1b097g0",
+      "panelType": "checklist",
+      "entry_Mission": [
+        {
+          "id": "item_t5wcilv",
+          "objective": "Complete the mission",
+          "reward": "Piccolo help koma"
+        },
+        {
+          "id": "item_7pkp2oj",
+          "objective": "Register 10 hits with support characters",
+          "reward": "Kami help koma"
+        },
+        {
+          "id": "item_1yb9idx",
+          "objective": "Use a deck with exactly 5 support koma",
+          "reward": "Nail help koma"
+        },
+        {
+          "id": "item_q1bvciq",
+          "note": "Power > Knowledge > Laughter; Gohan, Gon, and Yusuke are power nature, Allen is knowledge nature, Jaguar and Tsuna are laughter nature",
+          "objective": "Register 20 hits of an opposing nature",
+          "reward": "Piccolo 4-space koma"
+        },
+        {
+          "id": "item_egchrcc",
+          "objective": "Finish with 2 or more ring outs",
+          "reward": "Piccolo 5-space koma"
+        }
+      ]
+    },
+    {
+      "title": "Mission 3-7",
+      "infobox": "Battle Mission - Finish with the most points",
+      "columns": [
+        {
+          "key": "objective",
+          "label": "Objective",
+          "style": "plain"
+        },
+        {
+          "key": "reward",
+          "label": "Reward",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_1ydkspk",
+      "panelType": "checklist",
+      "entry_Mission": [
+        {
+          "id": "item_csp62iq",
+          "objective": "Complete the mission",
+          "reward": "Dr. Mashirito help koma"
+        },
+        {
+          "id": "item_qiiuynx",
+          "objective": "Use a deck with exactly 10 help koma",
+          "reward": "Dio 6-space koma"
+        },
+        {
+          "id": "item_hn6u1nu",
+          "objective": "Use a deck without any 4-space battle koma",
+          "reward": "Jotaro 6-space koma"
+        },
+        {
+          "id": "item_n31ul2y",
+          "objective": "Use a deck without any 5-space battle koma",
+          "reward": "Yoh 6-space koma"
+        },
+        {
+          "id": "item_51dbwrq",
+          "objective": "Use a deck without any 6-space battle koma",
+          "reward": "Goku 6-space koma"
+        }
+      ]
+    },
+    {
+      "title": "Mission 3-8",
+      "infobox": "Battle Mission - Finish with the most points",
+      "columns": [
+        {
+          "key": "objective",
+          "label": "Objective",
+          "style": "plain"
+        },
+        {
+          "key": "reward",
+          "label": "Reward",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_e6hko7i",
+      "panelType": "checklist",
+      "entry_Mission": [
+        {
+          "id": "item_bh79eff",
+          "objective": "Complete the mission",
+          "reward": "Arale help koma"
+        },
+        {
+          "id": "item_h758c3f",
+          "objective": "Get KO'd 3 times or less",
+          "reward": "Arale 2-space koma"
+        },
+        {
+          "id": "item_4oy9r64",
+          "objective": "Never get KO'd",
+          "reward": "Arale 3-space koma"
+        },
+        {
+          "id": "item_7vuleby",
+          "objective": "Never perform a double-jump",
+          "reward": "Arale 4-space koma"
+        },
+        {
+          "id": "item_nccqutp",
+          "note": "Checks active character health. Switch before time runs out to a full health character or bring a healing koma",
+          "objective": "Finish the stage with max J-soul (health)",
+          "reward": "Arale 5-space koma"
+        }
+      ]
+    },
+    {
+      "title": "Mission 3-9",
+      "infobox": "Battle Mission - Eliminate all opponents without getting KO'd",
+      "columns": [
+        {
+          "key": "objective",
+          "label": "Objective",
+          "style": "plain"
+        },
+        {
+          "key": "reward",
+          "label": "Reward",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_yh77wkr",
+      "panelType": "checklist",
+      "entry_Mission": [
+        {
+          "id": "item_y099lxm",
+          "objective": "Complete the mission",
+          "reward": "Senbei help koma"
+        },
+        {
+          "id": "item_fzb3utz",
+          "objective": "Change characters 5 times or less",
+          "reward": "Dr. Mashirito 4-space koma"
+        },
+        {
+          "id": "item_05xfd8e",
+          "objective": "Register 20 hits with tag attacks",
+          "reward": "Dr. Mashirito 5-space koma"
+        },
+        {
+          "id": "item_6xcfcn8",
+          "objective": "Use a deck with exactly 5 support koma",
+          "reward": "Arale 6-space koma"
+        },
+        {
+          "id": "item_asxvuub",
+          "objective": "Use a deck with exactly 10 help koma",
+          "reward": "Dr. Mashirito 6-space koma"
+        }
+      ]
+    },
+    {
+      "title": "Mission 4-1  (Unlocked by completing Final Battleground 1-1 with 260 koma collected)",
+      "infobox": "Battle Mission - Don't get hit",
+      "columns": [
+        {
+          "key": "objective",
+          "label": "Objective",
+          "style": "plain"
+        },
+        {
+          "key": "reward",
+          "label": "Reward",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_kzupdgz",
+      "panelType": "checklist",
+      "entry_Mission": [
+        {
+          "id": "item_33pbhaa",
+          "objective": "Complete the mission",
+          "reward": "Kurama help koma"
+        },
+        {
+          "id": "item_ns0nm6z",
+          "objective": "Register 5 hits with support characters",
+          "reward": "Kurama 2-space koma"
+        },
+        {
+          "id": "item_uvviwyg",
+          "objective": "Never perform a double-jump",
+          "reward": "Kurama 3-space koma"
+        }
+      ]
+    },
+    {
+      "title": "Mission 4-2",
+      "infobox": "Battle Mission - Finish with the most points",
+      "columns": [
+        {
+          "key": "objective",
+          "label": "Objective",
+          "style": "plain"
+        },
+        {
+          "key": "reward",
+          "label": "Reward",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_v3cn05g",
+      "panelType": "checklist",
+      "entry_Mission": [
+        {
+          "id": "item_25dljbx",
+          "objective": "Complete the mission",
+          "reward": "Yusuke help koma"
+        },
+        {
+          "id": "item_hi5hfex",
+          "objective": "Use a deck containing only knowledge nature battle characters",
+          "reward": "Yusuke 4-space koma"
+        },
+        {
+          "id": "item_hdhgh7i",
+          "objective": "Never get KO'd",
+          "reward": "Yusuke 5-space koma"
+        }
+      ]
+    },
+    {
+      "title": "Mission 4-3",
+      "infobox": "Battle Mission - Eliminate all opponents",
+      "columns": [
+        {
+          "key": "objective",
+          "label": "Objective",
+          "style": "plain"
+        },
+        {
+          "key": "reward",
+          "label": "Reward",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_8elxub8",
+      "panelType": "checklist",
+      "entry_Mission": [
+        {
+          "id": "item_vuo8ezh",
+          "objective": "Complete the mission",
+          "reward": "Kuwabara help koma"
+        },
+        {
+          "id": "item_ae3trhj",
+          "objective": "Use a deck with exactly 5 support koma",
+          "reward": "Yusuke 2-space koma"
+        },
+        {
+          "id": "item_jp9t0t3",
+          "objective": "Use a deck with exactly 10 help koma",
+          "reward": "Yusuke 3-space koma"
+        }
+      ]
+    },
+    {
+      "title": "Mission 4-4",
+      "infobox": "Battle Mission - Finish with the most points",
+      "columns": [
+        {
+          "key": "objective",
+          "label": "Objective",
+          "style": "plain"
+        },
+        {
+          "key": "reward",
+          "label": "Reward",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_eqlp82k",
+      "panelType": "checklist",
+      "entry_Mission": [
+        {
+          "id": "item_7mxneak",
+          "objective": "Complete the mission",
+          "reward": "Hiei help koma"
+        },
+        {
+          "id": "item_d28tqdv",
+          "objective": "Finish with an 8 or more point lead",
+          "reward": "Hiei 2-space koma"
+        },
+        {
+          "id": "item_pesxwlu",
+          "objective": "Ring out each opponent 1 or more times",
+          "reward": "Hiei 3-space koma"
+        },
+        {
+          "id": "item_v0384g0",
+          "objective": "Finish with 3 or more points against Player 3",
+          "reward": "Yusuke 6-space koma"
+        }
+      ]
+    },
+    {
+      "title": "Mission 5-1 (Unlocked by completing Final Battleground 1-7 with 330 koma collected)",
+      "infobox": "Battle Mission - Finish with the most points",
+      "columns": [
+        {
+          "key": "objective",
+          "label": "Objective",
+          "style": "plain"
+        },
+        {
+          "key": "reward",
+          "label": "Reward",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_gcw5gm7",
+      "panelType": "checklist",
+      "entry_Mission": [
+        {
+          "id": "item_htzjejm",
+          "objective": "Complete the mission",
+          "reward": "Trunks help koma"
+        },
+        {
+          "id": "item_ftfho7w",
+          "objective": "Finish with 1 or more ring outs",
+          "reward": "Gotenks 3-space koma"
+        },
+        {
+          "id": "item_yby00g4",
+          "objective": "Finish with 2 or more ring outs",
+          "reward": "Gotenks 4-space koma"
+        },
+        {
+          "id": "item_9jk5uad",
+          "objective": "Never get ringed out",
+          "reward": "Gotenks 5-space koma"
+        }
+      ]
+    }
+  ]
+}

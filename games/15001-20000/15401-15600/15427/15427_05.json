@@ -1,0 +1,4077 @@
+{
+  "label": "📓Koma Collection (by Series)",
+  "panels": [
+    {
+      "title": "Dragonball Z",
+      "columns": [
+        {
+          "key": "character",
+          "label": "Character",
+          "style": "plain"
+        },
+        {
+          "key": "size",
+          "label": "Size",
+          "style": "plain"
+        },
+        {
+          "key": "type",
+          "label": "Type",
+          "style": "plain"
+        },
+        {
+          "key": "nature",
+          "label": "Nature",
+          "style": "plain"
+        },
+        {
+          "key": "location",
+          "label": "Location",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_jkgoy0q",
+      "panelType": "checklist",
+      "entry_Dragonball": [
+        {
+          "id": "item_hku0zg2",
+          "character": "Goku",
+          "size": "1",
+          "type": "Help",
+          "location": "Final Battleground 1-8"
+        },
+        {
+          "id": "item_qp055pc",
+          "character": "Goku",
+          "size": "2",
+          "type": "Support",
+          "nature": "Power",
+          "location": "Desert 3-1"
+        },
+        {
+          "id": "item_h2h9ag9",
+          "character": "Goku",
+          "size": "3",
+          "type": "Support",
+          "nature": "Power",
+          "location": "Desert 3-1"
+        },
+        {
+          "id": "item_t4m5qzu",
+          "character": "Goku",
+          "size": "4",
+          "type": "Battle",
+          "nature": "Power",
+          "location": "Final Battleground 1-8"
+        },
+        {
+          "id": "item_c0xmfjh",
+          "character": "Goku",
+          "size": "5",
+          "type": "Battle",
+          "nature": "Power",
+          "location": "Grasslands 4-1"
+        },
+        {
+          "id": "item_v9hwgqs",
+          "character": "Goku",
+          "size": "6",
+          "type": "Battle",
+          "nature": "Power",
+          "location": "Final Battleground 3-7"
+        },
+        {
+          "id": "item_j8jepci",
+          "note": "Requires Goku, Vegeta, and Potara Earring to complete",
+          "character": "Goku",
+          "size": "7",
+          "type": "Battle",
+          "nature": "Power",
+          "location": "Collect 655 koma"
+        },
+        {
+          "id": "item_6lfiy15",
+          "character": "Vegeta",
+          "size": "1",
+          "type": "Help",
+          "location": "Final Battleground 1-7"
+        },
+        {
+          "id": "item_8qya2xv",
+          "character": "Vegeta",
+          "size": "2",
+          "type": "Support",
+          "nature": "Power",
+          "location": "Final Battleground 3-1"
+        },
+        {
+          "id": "item_extozj7",
+          "character": "Vegeta",
+          "size": "3",
+          "type": "Support",
+          "nature": "Power",
+          "location": "Final Battleground 3-1"
+        },
+        {
+          "id": "item_j61hj4g",
+          "character": "Vegeta",
+          "size": "4",
+          "type": "Battle",
+          "nature": "Power",
+          "location": "Final Battleground 1-7"
+        },
+        {
+          "id": "item_cfnk47e",
+          "character": "Vegeta",
+          "size": "5",
+          "type": "Battle",
+          "nature": "Power",
+          "location": "Final Battleground 3-4"
+        },
+        {
+          "id": "item_k820vbs",
+          "character": "Gohan",
+          "size": "1",
+          "type": "Help",
+          "location": "Desert 3-3"
+        },
+        {
+          "id": "item_5wqcca1",
+          "character": "Gohan",
+          "size": "2",
+          "type": "Support",
+          "nature": "Power",
+          "location": "Desert 3-3"
+        },
+        {
+          "id": "item_5mja5f6",
+          "character": "Gohan",
+          "size": "3",
+          "type": "Support",
+          "nature": "Power",
+          "location": "Desert 3-3"
+        },
+        {
+          "id": "item_na28h4k",
+          "character": "Gohan",
+          "size": "4",
+          "type": "Battle",
+          "nature": "Power",
+          "location": "Desert 3-4"
+        },
+        {
+          "id": "item_0jbzjvv",
+          "character": "Gohan",
+          "size": "5",
+          "type": "Battle",
+          "nature": "Power",
+          "location": "Battle City 2-2"
+        },
+        {
+          "id": "item_fkvgi7e",
+          "note": "Requires Trunks and Goten to complete",
+          "character": "Gotenks",
+          "size": "3",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Final Battleground 5-1"
+        },
+        {
+          "id": "item_xtsjz8k",
+          "note": "Requires Trunks and Goten to complete",
+          "character": "Gotenks",
+          "size": "4",
+          "type": "Battle",
+          "nature": "Laughter",
+          "location": "Final Battleground 5-1"
+        },
+        {
+          "id": "item_i44dfb7",
+          "note": "Requires Trunks and Goten to complete",
+          "character": "Gotenks",
+          "size": "5",
+          "type": "Battle",
+          "nature": "Laughter",
+          "location": "Final Battleground 5-1"
+        },
+        {
+          "id": "item_16o0o9k",
+          "character": "Piccolo",
+          "size": "1",
+          "type": "Help",
+          "location": "Final Battleground 3-6"
+        },
+        {
+          "id": "item_rd5bdee",
+          "note": "Requires Piccolo, Kami, and Nail to complete",
+          "character": "Piccolo",
+          "size": "4",
+          "type": "Battle",
+          "nature": "Knowledge",
+          "location": "Final Battleground 3-6"
+        },
+        {
+          "id": "item_2cu721r",
+          "note": "Requires Piccolo, Kami, and Nail to complete",
+          "character": "Piccolo",
+          "size": "5",
+          "type": "Battle",
+          "nature": "Knowledge",
+          "location": "Final Battleground 3-6"
+        },
+        {
+          "id": "item_6257n3e",
+          "character": "Krillin",
+          "size": "1",
+          "type": "Help",
+          "location": "Final Battleground 1-7"
+        },
+        {
+          "id": "item_srjb00v",
+          "character": "Krillin",
+          "size": "2",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Final Battleground 1-7"
+        },
+        {
+          "id": "item_f9t3j2g",
+          "character": "Krillin",
+          "size": "3",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Final Battleground 3-5"
+        },
+        {
+          "id": "item_dxmvo41",
+          "character": "Trunks",
+          "size": "1",
+          "type": "Help",
+          "location": "Final Battleground 5-1"
+        },
+        {
+          "id": "item_wqiggdd",
+          "character": "Goten",
+          "size": "1",
+          "type": "Help",
+          "location": "Collect 330 koma"
+        },
+        {
+          "id": "item_oprexn5",
+          "character": "Kami",
+          "size": "1",
+          "type": "Help",
+          "location": "Final Battleground 3-6"
+        },
+        {
+          "id": "item_j09ajri",
+          "character": "Nail",
+          "size": "1",
+          "type": "Help",
+          "location": "Final Battleground 3-6"
+        },
+        {
+          "id": "item_0uav1ye",
+          "character": "Master Roshi",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 2-7"
+        },
+        {
+          "id": "item_1o4ksa6",
+          "character": "Bulma",
+          "size": "1",
+          "type": "Help",
+          "location": "Final Battleground 3-4"
+        },
+        {
+          "id": "item_b2vopk7",
+          "character": "Dende",
+          "size": "1",
+          "type": "Help",
+          "location": "Final Battleground 3-4"
+        },
+        {
+          "id": "item_drprq54",
+          "character": "Senzu Bean",
+          "size": "1",
+          "type": "Help",
+          "location": "Desert 3-1"
+        },
+        {
+          "id": "item_zx76prh",
+          "character": "Potara Earring",
+          "size": "1",
+          "type": "Help",
+          "location": "Final Battleground 3-5"
+        }
+      ]
+    },
+    {
+      "title": "One Piece",
+      "columns": [
+        {
+          "key": "character",
+          "label": "Character",
+          "style": "plain"
+        },
+        {
+          "key": "size",
+          "label": "Size",
+          "style": "plain"
+        },
+        {
+          "key": "type",
+          "label": "Type",
+          "style": "plain"
+        },
+        {
+          "key": "nature",
+          "label": "Nature",
+          "style": "plain"
+        },
+        {
+          "key": "location",
+          "label": "Location",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_6hx6a46",
+      "panelType": "checklist",
+      "entry_One": [
+        {
+          "id": "item_p8xzfhl",
+          "character": "Luffy",
+          "size": "1",
+          "type": "Help",
+          "location": "Default"
+        },
+        {
+          "id": "item_h0m4xmk",
+          "character": "Luffy",
+          "size": "2",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Grasslands 4-1"
+        },
+        {
+          "id": "item_rys8b8n",
+          "character": "Luffy",
+          "size": "3",
+          "type": "Support",
+          "nature": "Power",
+          "location": "Grasslands 4-1"
+        },
+        {
+          "id": "item_obok4t8",
+          "character": "Luffy",
+          "size": "4",
+          "type": "Battle",
+          "nature": "Power",
+          "location": "Grasslands 1-4"
+        },
+        {
+          "id": "item_ag6o5r3",
+          "character": "Luffy",
+          "size": "5",
+          "type": "Battle",
+          "nature": "Power",
+          "location": "Desert 1-8"
+        },
+        {
+          "id": "item_36b77i3",
+          "character": "Luffy",
+          "size": "6",
+          "type": "Battle",
+          "nature": "Power",
+          "location": "Final Battleground 1-8"
+        },
+        {
+          "id": "item_79jezbe",
+          "note": "Requires Luffy and Afro to complete",
+          "character": "Luffy",
+          "size": "7",
+          "type": "Battle",
+          "nature": "Power",
+          "location": "Finish 200 missions in J-Adventure mode"
+        },
+        {
+          "id": "item_i64plft",
+          "character": "Zoro",
+          "size": "1",
+          "type": "Help",
+          "location": "Grasslands 1-5"
+        },
+        {
+          "id": "item_pma9nwj",
+          "character": "Zoro",
+          "size": "2",
+          "type": "Support",
+          "nature": "Power",
+          "location": "Grasslands 1-5"
+        },
+        {
+          "id": "item_eg7j5i5",
+          "character": "Zoro",
+          "size": "3",
+          "type": "Support",
+          "nature": "Power",
+          "location": "Grasslands 1-7"
+        },
+        {
+          "id": "item_kmjcz0b",
+          "character": "Zoro",
+          "size": "4",
+          "type": "Battle",
+          "nature": "Power",
+          "location": "Grasslands 1-7"
+        },
+        {
+          "id": "item_fcv8agw",
+          "character": "Zoro",
+          "size": "5",
+          "type": "Battle",
+          "nature": "Power",
+          "location": "Desert 1-3"
+        },
+        {
+          "id": "item_xfbfoe9",
+          "character": "Nami",
+          "size": "1",
+          "type": "Help",
+          "location": "Grasslands 1-5"
+        },
+        {
+          "id": "item_j88vh0k",
+          "character": "Nami",
+          "size": "2",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Grasslands 1-5"
+        },
+        {
+          "id": "item_suj57r6",
+          "character": "Nami",
+          "size": "3",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Desert 1-1"
+        },
+        {
+          "id": "item_0oivsq1",
+          "character": "Nami",
+          "size": "4",
+          "type": "Battle",
+          "nature": "Knowledge",
+          "location": "Desert 1-2"
+        },
+        {
+          "id": "item_j9uzrs4",
+          "character": "Nami",
+          "size": "5",
+          "type": "Battle",
+          "nature": "Knowledge",
+          "location": "Desert 1-5"
+        },
+        {
+          "id": "item_p7hpn64",
+          "character": "Sanji",
+          "size": "1",
+          "type": "Help",
+          "location": "Grasslands 1-7"
+        },
+        {
+          "id": "item_h48i0b1",
+          "character": "Sanji",
+          "size": "2",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Grasslands 1-9"
+        },
+        {
+          "id": "item_a3ucqpi",
+          "character": "Sanji",
+          "size": "3",
+          "type": "Support",
+          "nature": "Power",
+          "location": "Desert 1-2"
+        },
+        {
+          "id": "item_cx4j2rn",
+          "character": "Sanji",
+          "size": "4",
+          "type": "Battle",
+          "nature": "Power",
+          "location": "Desert 1-1"
+        },
+        {
+          "id": "item_cppo7jl",
+          "character": "Sanji",
+          "size": "5",
+          "type": "Battle",
+          "nature": "Power",
+          "location": "Final Battleground 1-5"
+        },
+        {
+          "id": "item_v5jys83",
+          "character": "Nico Robin",
+          "size": "1",
+          "type": "Help",
+          "location": "Desert 1-3"
+        },
+        {
+          "id": "item_rw9spwv",
+          "character": "Nico Robin",
+          "size": "2",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Desert 1-3"
+        },
+        {
+          "id": "item_p0ucqno",
+          "character": "Nico Robin",
+          "size": "3",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Desert 1-3"
+        },
+        {
+          "id": "item_bfdnm84",
+          "character": "Nico Robin",
+          "size": "4",
+          "type": "Battle",
+          "nature": "Knowledge",
+          "location": "Grasslands 4-1"
+        },
+        {
+          "id": "item_9mo57sy",
+          "character": "Nico Robin",
+          "size": "5",
+          "type": "Battle",
+          "nature": "Knowledge",
+          "location": "Grasslands 4-1"
+        },
+        {
+          "id": "item_0huwhvx",
+          "character": "Usopp",
+          "size": "1",
+          "type": "Help",
+          "location": "Grasslands 1-11"
+        },
+        {
+          "id": "item_dwhxo5v",
+          "character": "Usopp",
+          "size": "2",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Desert 1-5"
+        },
+        {
+          "id": "item_4jtjpms",
+          "character": "Usopp",
+          "size": "3",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Desert 1-5"
+        },
+        {
+          "id": "item_tbwb0p0",
+          "character": "Chopper",
+          "size": "1",
+          "type": "Help",
+          "location": "Grasslands 1-11"
+        },
+        {
+          "id": "item_vhwfowl",
+          "character": "Chopper",
+          "size": "2",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Desert 1-1"
+        },
+        {
+          "id": "item_12fnsct",
+          "character": "Chopper",
+          "size": "3",
+          "type": "Support",
+          "nature": "Power",
+          "location": "Desert 1-7"
+        },
+        {
+          "id": "item_sngkckn",
+          "character": "Afro",
+          "size": "1",
+          "type": "Help",
+          "location": "Desert 1-9"
+        }
+      ]
+    },
+    {
+      "title": "Naruto",
+      "columns": [
+        {
+          "key": "character",
+          "label": "Character",
+          "style": "plain"
+        },
+        {
+          "key": "size",
+          "label": "Size",
+          "style": "plain"
+        },
+        {
+          "key": "type",
+          "label": "Type",
+          "style": "plain"
+        },
+        {
+          "key": "nature",
+          "label": "Nature",
+          "style": "plain"
+        },
+        {
+          "key": "location",
+          "label": "Location",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_pjgi4z8",
+      "panelType": "checklist",
+      "entry_Naruto": [
+        {
+          "id": "item_en8ko3l",
+          "character": "Naruto",
+          "size": "1",
+          "type": "Help",
+          "location": "Desert 3-4"
+        },
+        {
+          "id": "item_opgwo40",
+          "character": "Naruto",
+          "size": "2",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Desert 3-4"
+        },
+        {
+          "id": "item_zwb18ec",
+          "character": "Naruto",
+          "size": "3",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Desert 3-4"
+        },
+        {
+          "id": "item_71j7f5k",
+          "character": "Naruto",
+          "size": "4",
+          "type": "Battle",
+          "nature": "Power",
+          "location": "Desert 1-8"
+        },
+        {
+          "id": "item_cfvckyy",
+          "character": "Naruto",
+          "size": "5",
+          "type": "Battle",
+          "nature": "Power",
+          "location": "Battle City 1-1"
+        },
+        {
+          "id": "item_fi7floz",
+          "character": "Naruto",
+          "size": "6",
+          "type": "Battle",
+          "nature": "Power",
+          "location": "Final Battleground 1-8"
+        },
+        {
+          "id": "item_tom6oga",
+          "note": "Requires Naruto and Kyuubi to complete",
+          "character": "Naruto",
+          "size": "7",
+          "type": "Battle",
+          "nature": "Power",
+          "location": "Finish 400 missions in J-Adventure mode"
+        },
+        {
+          "id": "item_xav1bew",
+          "character": "Sasuke",
+          "size": "1",
+          "type": "Help",
+          "location": "Desert 1-8"
+        },
+        {
+          "id": "item_8oetuoc",
+          "character": "Sasuke",
+          "size": "2",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Desert 1-10"
+        },
+        {
+          "id": "item_f2perbq",
+          "character": "Sasuke",
+          "size": "3",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Battle City 1-2"
+        },
+        {
+          "id": "item_343fx8o",
+          "character": "Sasuke",
+          "size": "4",
+          "type": "Battle",
+          "nature": "Knowledge",
+          "location": "Desert 1-10"
+        },
+        {
+          "id": "item_vg6p3j7",
+          "character": "Sasuke",
+          "size": "5",
+          "type": "Battle",
+          "nature": "Knowledge",
+          "location": "Final Battleground 1-3"
+        },
+        {
+          "id": "item_ldppgaa",
+          "character": "Sasuke",
+          "size": "6",
+          "type": "Battl",
+          "nature": "Knowledge",
+          "location": "Battle City 2-3"
+        },
+        {
+          "id": "item_14jfzvd",
+          "note": "Requires Sasuke and Cursed Seal to complete",
+          "character": "Sasuke",
+          "size": "7",
+          "type": "Battle",
+          "nature": "Knowledge",
+          "location": "Finish 500 missions in J-Adventure mode"
+        },
+        {
+          "id": "item_1erthe3",
+          "character": "Sakura",
+          "size": "1",
+          "type": "Help",
+          "location": "Desert 1-7"
+        },
+        {
+          "id": "item_km6usjg",
+          "character": "Sakura",
+          "size": "2",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Desert 1-7"
+        },
+        {
+          "id": "item_j3ogefo",
+          "character": "Sakura",
+          "size": "3",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Desert 1-7"
+        },
+        {
+          "id": "item_3ywvvdu",
+          "character": "Sakura",
+          "size": "4",
+          "type": "Battle",
+          "nature": "Knowledge",
+          "location": "Desert 1-8"
+        },
+        {
+          "id": "item_c5nusiu",
+          "character": "Sakura",
+          "size": "5",
+          "type": "Battle",
+          "nature": "Knowledge",
+          "location": "Battle City 1-6"
+        },
+        {
+          "id": "item_ky5p162",
+          "character": "Kakashi",
+          "size": "1",
+          "type": "Help",
+          "location": "Collect 360 koma"
+        },
+        {
+          "id": "item_omc0o1k",
+          "character": "Kakashi",
+          "size": "2",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Desert 5-1"
+        },
+        {
+          "id": "item_j87pq0o",
+          "character": "Kakashi",
+          "size": "3",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Desert 5-1"
+        },
+        {
+          "id": "item_ulaoe9y",
+          "character": "Kakashi",
+          "size": "4",
+          "type": "Battle",
+          "nature": "Knowledge",
+          "location": "Desert 5-1"
+        },
+        {
+          "id": "item_j0jjgkl",
+          "character": "Kakashi",
+          "size": "5",
+          "type": "Battle",
+          "nature": "Knowledge",
+          "location": "Desert 5-1"
+        },
+        {
+          "id": "item_r3ucfnd",
+          "character": "Shikamaru",
+          "size": "1",
+          "type": "Help",
+          "location": "Final Battlegound 1-3"
+        },
+        {
+          "id": "item_aqsysbx",
+          "character": "Shikamaru",
+          "size": "2",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Final Battleground 1-3"
+        },
+        {
+          "id": "item_nn3i3vr",
+          "character": "Shikamaru",
+          "size": "3",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Final Battleground 1-5"
+        },
+        {
+          "id": "item_2ffv5rn",
+          "character": "Rock Lee",
+          "size": "1",
+          "type": "Help",
+          "location": "Final Battleground 1-3"
+        },
+        {
+          "id": "item_uth0u0r",
+          "character": "Rock Lee",
+          "size": "2",
+          "type": "Support",
+          "nature": "Power",
+          "location": "Final Battleground 1-3"
+        },
+        {
+          "id": "item_0wyz4vg",
+          "character": "Rock Lee",
+          "size": "3",
+          "type": "Support",
+          "nature": "Power",
+          "location": "Desert 3-4"
+        },
+        {
+          "id": "item_cuepa09",
+          "character": "Neji",
+          "size": "1",
+          "type": "Help",
+          "location": "Final Battleground 1-1"
+        },
+        {
+          "id": "item_spf63hh",
+          "character": "Neji",
+          "size": "2",
+          "type": "Support",
+          "nature": "Power",
+          "location": "Final Battleground 1-1"
+        },
+        {
+          "id": "item_vy0d36w",
+          "character": "Neji",
+          "size": "3",
+          "type": "Support",
+          "nature": "Power",
+          "location": "Desert 3-4"
+        },
+        {
+          "id": "item_pjhkrkp",
+          "character": "Hinata",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 1-9"
+        },
+        {
+          "id": "item_q2oddax",
+          "character": "Hinata",
+          "size": "2",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Final Battleground 1-1"
+        },
+        {
+          "id": "item_msc28jk",
+          "character": "Hinata",
+          "size": "3",
+          "type": "Support",
+          "nature": "Power",
+          "location": "Final Battleground 1-5"
+        },
+        {
+          "id": "item_b80sxuq",
+          "character": "Jiraiya",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 3-1"
+        },
+        {
+          "id": "item_b4pqnrx",
+          "character": "Tsunade",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 2-7"
+        },
+        {
+          "id": "item_n1prrla",
+          "character": "Kyuubi",
+          "size": "1",
+          "type": "Help",
+          "location": "Desert 1-9"
+        },
+        {
+          "id": "item_f10s736",
+          "character": "Cursed Seal",
+          "size": "1",
+          "type": "Help",
+          "location": "Final Battleground 2-1"
+        }
+      ]
+    },
+    {
+      "title": "Shaman King",
+      "columns": [
+        {
+          "key": "character",
+          "label": "Character",
+          "style": "plain"
+        },
+        {
+          "key": "size",
+          "label": "Size",
+          "style": "plain"
+        },
+        {
+          "key": "type",
+          "label": "Type",
+          "style": "plain"
+        },
+        {
+          "key": "nature",
+          "label": "Nature",
+          "style": "plain"
+        },
+        {
+          "key": "location",
+          "label": "Location",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_ffsa1tc",
+      "panelType": "checklist",
+      "entry_Shaman": [
+        {
+          "id": "item_hc942uu",
+          "character": "Yoh",
+          "size": "1",
+          "type": "Help",
+          "location": "Grasslands 1-10"
+        },
+        {
+          "id": "item_5bbk3lz",
+          "character": "Yoh",
+          "size": "2",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Final Battleground 2-2"
+        },
+        {
+          "id": "item_h99wbmo",
+          "note": "Requires Yoh and Amidamaru to complete",
+          "character": "Yoh",
+          "size": "3",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Final Battleground 2-2"
+        },
+        {
+          "id": "item_acl20rz",
+          "note": "Requires Yoh and Amidamaru to complete",
+          "character": "Yoh",
+          "size": "4",
+          "type": "Battle",
+          "nature": "Knowledge",
+          "location": "Grasslands 1-10"
+        },
+        {
+          "id": "item_9gyak45",
+          "note": "Requires Yoh and Amidamaru to complete",
+          "character": "Yoh",
+          "size": "5",
+          "type": "Battle",
+          "nature": "Knowledge",
+          "location": "Battle City 1-4"
+        },
+        {
+          "id": "item_u2z97fg",
+          "note": "Requires Yoh and Amidamaru to complete",
+          "character": "Yoh",
+          "size": "6",
+          "type": "Battle",
+          "nature": "Knowledge",
+          "location": "Final Battleground 3-7"
+        },
+        {
+          "id": "item_b6njeh7",
+          "character": "Anna",
+          "size": "1",
+          "type": "Help",
+          "location": "Grasslands 4-3"
+        },
+        {
+          "id": "item_6nko4jg",
+          "character": "Anna",
+          "size": "2",
+          "type": "Supoport",
+          "nature": "Laughter",
+          "location": "Grasslands 4-3"
+        },
+        {
+          "id": "item_gwnx5qq",
+          "character": "Anna",
+          "size": "3",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Grasslands 4-3"
+        },
+        {
+          "id": "item_vhoyf5s",
+          "character": "Anna",
+          "size": "4",
+          "type": "Battle",
+          "nature": "Knowledge",
+          "location": "Grasslands 4-3"
+        },
+        {
+          "id": "item_r1fjrv2",
+          "character": "Anna",
+          "size": "5",
+          "type": "Battle",
+          "nature": "Knowledge",
+          "location": "Grasslands 4-3"
+        },
+        {
+          "id": "item_f9ue0hn",
+          "character": "Hao",
+          "size": "1",
+          "type": "Help",
+          "location": "Grasslands 1-11"
+        },
+        {
+          "id": "item_5xgmxb7",
+          "character": "Hao",
+          "size": "2",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Desert 1-1"
+        },
+        {
+          "id": "item_0sfwtgc",
+          "character": "Hao",
+          "size": "3",
+          "type": "Support",
+          "nature": "Power",
+          "location": "Desert 1-6"
+        },
+        {
+          "id": "item_xxnioyo",
+          "character": "Tao Ren",
+          "size": "1",
+          "type": "Help",
+          "location": "Grasslands 1-11"
+        },
+        {
+          "id": "item_0touti5",
+          "character": "Horohoro",
+          "size": "1",
+          "type": "Help",
+          "location": "Grasslands 1-11"
+        },
+        {
+          "id": "item_3bzlzjy",
+          "character": "Manta",
+          "size": "1",
+          "type": "Help",
+          "location": "Desert 1-9"
+        },
+        {
+          "id": "item_u01o2wu",
+          "character": "Amidamaru",
+          "size": "1",
+          "type": "Help",
+          "location": "Grasslands 1-10"
+        }
+      ]
+    },
+    {
+      "title": "Jojo's Bizarre Adventure",
+      "columns": [
+        {
+          "key": "character",
+          "label": "Character",
+          "style": "plain"
+        },
+        {
+          "key": "size",
+          "label": "Size",
+          "style": "plain"
+        },
+        {
+          "key": "type",
+          "label": "Type",
+          "style": "plain"
+        },
+        {
+          "key": "nature",
+          "label": "Nature",
+          "style": "plain"
+        },
+        {
+          "key": "location",
+          "label": "Location",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_99b3s91",
+      "panelType": "checklist",
+      "entry_Jojos": [
+        {
+          "id": "item_aohb842",
+          "character": "Jotaro",
+          "size": "1",
+          "type": "Help",
+          "location": "Desert 1-11"
+        },
+        {
+          "id": "item_pn5aqbo",
+          "character": "Jotaro",
+          "size": "2",
+          "type": "Support",
+          "nature": "Power",
+          "location": "Desert 1-11"
+        },
+        {
+          "id": "item_dvkp5uc",
+          "character": "Jotaro",
+          "size": "3",
+          "type": "Support",
+          "nature": "Power",
+          "location": "Battle City 2-1"
+        },
+        {
+          "id": "item_anu6lcg",
+          "character": "Jotaro",
+          "size": "4",
+          "type": "Battle",
+          "nature": "Power",
+          "location": "Desert 1-11"
+        },
+        {
+          "id": "item_xghu1pd",
+          "character": "Jotaro",
+          "size": "5",
+          "type": "Battle",
+          "nature": "Power",
+          "location": "Desert 1-11"
+        },
+        {
+          "id": "item_75lb0l1",
+          "character": "Jotaro",
+          "size": "6",
+          "type": "Battle",
+          "nature": "Power",
+          "location": "Final Battleground 3-7"
+        },
+        {
+          "id": "item_hc6depd",
+          "character": "Dio",
+          "size": "1",
+          "type": "Help",
+          "location": "Desert 1-10"
+        },
+        {
+          "id": "item_kjp9l4g",
+          "character": "Dio",
+          "size": "2",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Desert 1-10"
+        },
+        {
+          "id": "item_pybxkcy",
+          "character": "Dio",
+          "size": "3",
+          "type": "Support",
+          "nature": "Power",
+          "location": "Desert 1-10"
+        },
+        {
+          "id": "item_3fcybf4",
+          "character": "Dio",
+          "size": "4",
+          "type": "Battle",
+          "nature": "Power",
+          "location": "Battle City 2-1"
+        },
+        {
+          "id": "item_53bxc8v",
+          "character": "Dio",
+          "size": "5",
+          "type": "Battle",
+          "nature": "Power",
+          "location": "Battle City 2-1"
+        },
+        {
+          "id": "item_gvuw09q",
+          "character": "Dio",
+          "size": "6",
+          "type": "Battle",
+          "nature": "Power",
+          "location": "Final Battleground 3-7"
+        }
+      ]
+    },
+    {
+      "title": "Steel Ball Run",
+      "columns": [
+        {
+          "key": "character",
+          "label": "Character",
+          "style": "plain"
+        },
+        {
+          "key": "size",
+          "label": "Size",
+          "style": "plain"
+        },
+        {
+          "key": "type",
+          "label": "Type",
+          "style": "plain"
+        },
+        {
+          "key": "nature",
+          "label": "Nature",
+          "style": "plain"
+        },
+        {
+          "key": "location",
+          "label": "Location",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_aasrx08",
+      "panelType": "checklist",
+      "entry_Steel": [
+        {
+          "id": "item_nwshb8q",
+          "character": "Gyro",
+          "size": "1",
+          "type": "Help",
+          "location": "Desert 1-2"
+        },
+        {
+          "id": "item_mecelfz",
+          "character": "Gyro",
+          "size": "2",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Desert 1-2"
+        },
+        {
+          "id": "item_zni36c1",
+          "character": "Gyro",
+          "size": "3",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Desert 3-1"
+        },
+        {
+          "id": "item_qjz8b78",
+          "character": "Johnny Joestar",
+          "size": "1",
+          "type": "Help",
+          "location": "Desert 3-1"
+        }
+      ]
+    },
+    {
+      "title": "Hunter X Hunter",
+      "columns": [
+        {
+          "key": "character",
+          "label": "Character",
+          "style": "plain"
+        },
+        {
+          "key": "size",
+          "label": "Size",
+          "style": "plain"
+        },
+        {
+          "key": "type",
+          "label": "Type",
+          "style": "plain"
+        },
+        {
+          "key": "nature",
+          "label": "Nature",
+          "style": "plain"
+        },
+        {
+          "key": "location",
+          "label": "Location",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_ipc76az",
+      "panelType": "checklist",
+      "entry_Hunter": [
+        {
+          "id": "item_h65ysgv",
+          "character": "Gon",
+          "size": "1",
+          "type": "Help",
+          "location": "Final Battleground 1-2"
+        },
+        {
+          "id": "item_cckx2my",
+          "character": "Gon",
+          "size": "2",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Final Battleground 2-1"
+        },
+        {
+          "id": "item_zccii4r",
+          "character": "Gon",
+          "size": "3",
+          "type": "Support",
+          "nature": "Power",
+          "location": "Final Battleground 2-1"
+        },
+        {
+          "id": "item_v9j9dww",
+          "character": "Gon",
+          "size": "4",
+          "type": "Battle",
+          "nature": "Power",
+          "location": "Final Battleground 1-2"
+        },
+        {
+          "id": "item_sbb80zn",
+          "character": "Gon",
+          "size": "5",
+          "type": "Battle",
+          "nature": "Power",
+          "location": "Final Battleground 3-2"
+        },
+        {
+          "id": "item_otld0q2",
+          "character": "Killua",
+          "size": "1",
+          "type": "Help",
+          "location": "Final Battleground 1-2"
+        },
+        {
+          "id": "item_qf9z2de",
+          "character": "Killua",
+          "size": "2",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Final Battleground 1-2"
+        },
+        {
+          "id": "item_e0fcz7y",
+          "character": "Killua",
+          "size": "3",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Final Battleground 1-2"
+        },
+        {
+          "id": "item_phodu1i",
+          "character": "Kurapica",
+          "size": "1",
+          "type": "Help",
+          "location": "Final Battleground 1-1"
+        },
+        {
+          "id": "item_fb2kvt8",
+          "character": "Kurapica",
+          "size": "2",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Final Battleground 3-2"
+        },
+        {
+          "id": "item_zbo4ds4",
+          "character": "Kurapica",
+          "size": "3",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Final Battleground 3-2"
+        },
+        {
+          "id": "item_txn5z6j",
+          "character": "Leorio",
+          "size": "1",
+          "type": "Help",
+          "location": "Final Battleground 1-1"
+        },
+        {
+          "id": "item_noodp00",
+          "character": "Hisoka",
+          "size": "1",
+          "type": "Help",
+          "location": "Final Battleground 3-2"
+        },
+        {
+          "id": "item_8i5rkvl",
+          "character": "Biscuit Kruger",
+          "size": "1",
+          "type": "Help",
+          "location": "Final Battleground 3-2"
+        }
+      ]
+    },
+    {
+      "title": "Yu Yu Hakusho",
+      "columns": [
+        {
+          "key": "character",
+          "label": "Character",
+          "style": "plain"
+        },
+        {
+          "key": "size",
+          "label": "Size",
+          "style": "plain"
+        },
+        {
+          "key": "type",
+          "label": "Type",
+          "style": "plain"
+        },
+        {
+          "key": "nature",
+          "label": "Nature",
+          "style": "plain"
+        },
+        {
+          "key": "location",
+          "label": "Location",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_82oelpi",
+      "panelType": "checklist",
+      "entry_Yu": [
+        {
+          "id": "item_96par22",
+          "character": "Yusuke",
+          "size": "1",
+          "type": "Help",
+          "location": "Final Battleground 4-2"
+        },
+        {
+          "id": "item_p33cc8h",
+          "character": "Yusuke",
+          "size": "2",
+          "type": "Support",
+          "nature": "Power",
+          "location": "Final Battleground 4-3"
+        },
+        {
+          "id": "item_ctx9dky",
+          "character": "Yusuke",
+          "size": "3",
+          "type": "Support",
+          "nature": "Power",
+          "location": "Final Battleground 4-3"
+        },
+        {
+          "id": "item_usd8tmb",
+          "character": "Yusuke",
+          "size": "4",
+          "type": "Battle",
+          "nature": "Power",
+          "location": "Final Battleground 4-2"
+        },
+        {
+          "id": "item_8dry3sq",
+          "character": "Yusuke",
+          "size": "5",
+          "type": "Battle",
+          "nature": "Power",
+          "location": "Final Battleground 4-2"
+        },
+        {
+          "id": "item_hbzdwrs",
+          "character": "Yusuke",
+          "size": "6",
+          "type": "Battle",
+          "nature": "Power",
+          "location": "Final Battleground 4-4"
+        },
+        {
+          "id": "item_x84jna6",
+          "character": "Kurama",
+          "size": "1",
+          "type": "Help",
+          "location": "Final Battleground 4-1"
+        },
+        {
+          "id": "item_cg16313",
+          "character": "Kurama",
+          "size": "2",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Final Battleground 4-1"
+        },
+        {
+          "id": "item_0upn0d8",
+          "character": "Kurama",
+          "size": "3",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Final Battleground 4-1"
+        },
+        {
+          "id": "item_vjryk6g",
+          "character": "Hiei",
+          "size": "1",
+          "type": "Help",
+          "location": "Final Battleground 4-4"
+        },
+        {
+          "id": "item_huh0n5c",
+          "character": "Hiei",
+          "size": "2",
+          "type": "Support",
+          "nature": "Power",
+          "location": "Final Battleground 4-4"
+        },
+        {
+          "id": "item_0cyg9ev",
+          "character": "Hiei",
+          "size": "3",
+          "type": "Support",
+          "nature": "Power",
+          "location": "Final Battleground 4-4"
+        },
+        {
+          "id": "item_asynzl3",
+          "character": "Kuwabara",
+          "size": "1",
+          "type": "Help",
+          "location": "Final Battleground 4-3"
+        }
+      ]
+    },
+    {
+      "title": "Yu-gi-oh",
+      "columns": [
+        {
+          "key": "character",
+          "label": "Character",
+          "style": "plain"
+        },
+        {
+          "key": "size",
+          "label": "Size",
+          "style": "plain"
+        },
+        {
+          "key": "type",
+          "label": "Type",
+          "style": "plain"
+        },
+        {
+          "key": "nature",
+          "label": "Nature",
+          "style": "plain"
+        },
+        {
+          "key": "location",
+          "label": "Location",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_r3fds55",
+      "panelType": "checklist",
+      "entry_Yugioh": [
+        {
+          "id": "item_22eeko4",
+          "character": "Yugi",
+          "size": "1",
+          "type": "Help",
+          "location": "Desert 1-4"
+        },
+        {
+          "id": "item_vgakm97",
+          "character": "Yugi",
+          "size": "2",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Desert 3-2"
+        },
+        {
+          "id": "item_m1cr7it",
+          "character": "Yugi",
+          "size": "3",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Desert 3-2"
+        },
+        {
+          "id": "item_hxfhpv2",
+          "note": "Requires Yugi and Dark Magician to complete",
+          "character": "Yugi",
+          "size": "4",
+          "type": "Battle",
+          "nature": "Knowledge",
+          "location": "Desert 1-4"
+        },
+        {
+          "id": "item_0jscu1v",
+          "note": "Requires Yugi, Exodia, and Ra to complete",
+          "character": "Yugi",
+          "size": "5",
+          "type": "Battle",
+          "nature": "Knowledge",
+          "location": "Desert 1-4"
+        },
+        {
+          "id": "item_ieazpem",
+          "note": "Required Yugi, Obelisk, and Slifer to complete",
+          "character": "Yugi",
+          "size": "6",
+          "type": "Battle",
+          "nature": "Knowledge",
+          "location": "Desert 3-2"
+        },
+        {
+          "id": "item_kdduzq9",
+          "character": "Dark Magician",
+          "size": "1",
+          "type": "Help",
+          "location": "Desert 1-3"
+        },
+        {
+          "id": "item_w5hny1x",
+          "character": "Exodia",
+          "size": "1",
+          "type": "Help",
+          "location": "Desert 1-4"
+        },
+        {
+          "id": "item_tagzukd",
+          "character": "Slifer",
+          "size": "1",
+          "type": "Help",
+          "location": "Desert 3-2"
+        },
+        {
+          "id": "item_i4kw7bh",
+          "character": "Obelisk",
+          "size": "1",
+          "type": "Help",
+          "location": "Desert 3-2"
+        },
+        {
+          "id": "item_0pw56e8",
+          "character": "Ra",
+          "size": "1",
+          "type": "Help",
+          "location": "Desert 1-4"
+        }
+      ]
+    },
+    {
+      "title": "Rurouni Kenshin",
+      "columns": [
+        {
+          "key": "character",
+          "label": "Character",
+          "style": "plain"
+        },
+        {
+          "key": "size",
+          "label": "Size",
+          "style": "plain"
+        },
+        {
+          "key": "type",
+          "label": "Type",
+          "style": "plain"
+        },
+        {
+          "key": "nature",
+          "label": "Nature",
+          "style": "plain"
+        },
+        {
+          "key": "location",
+          "label": "Location",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_hvpy66y",
+      "panelType": "checklist",
+      "entry_Rurouni": [
+        {
+          "id": "item_8niyf2g",
+          "character": "Kenshin",
+          "size": "1",
+          "type": "Help",
+          "location": "Grasslands 3-4"
+        },
+        {
+          "id": "item_erzrlr3",
+          "character": "Kenshin",
+          "size": "2",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Grasslands 3-6"
+        },
+        {
+          "id": "item_zjhob1i",
+          "character": "Kenshin",
+          "size": "3",
+          "type": "Support",
+          "nature": "Power",
+          "location": "Grasslands 3-4"
+        },
+        {
+          "id": "item_1keics0",
+          "character": "Kenshin",
+          "size": "4",
+          "type": "Battle",
+          "nature": "Power",
+          "location": "Grasslands 3-4"
+        },
+        {
+          "id": "item_e2fldeq",
+          "character": "Kenshin",
+          "size": "5",
+          "type": "Battle",
+          "nature": "Power",
+          "location": "Grasslands 3-6"
+        },
+        {
+          "id": "item_ardyna5",
+          "character": "Kenshin",
+          "size": "6",
+          "type": "Battle",
+          "nature": "Power",
+          "location": "Grasslands 4-4"
+        },
+        {
+          "id": "item_d4izdvs",
+          "character": "Sanosuke",
+          "size": "1",
+          "type": "Help",
+          "location": "Grasslands 3-4"
+        },
+        {
+          "id": "item_gll169h",
+          "character": "Sanosuke",
+          "size": "2",
+          "type": "Support",
+          "nature": "Power",
+          "location": "Grasslands 3-4"
+        },
+        {
+          "id": "item_hf0pm0f",
+          "character": "Sanosuke",
+          "size": "3",
+          "type": "Support",
+          "nature": "Power",
+          "location": "Grasslands 3-6"
+        },
+        {
+          "id": "item_i5toer6",
+          "character": "Saito",
+          "size": "1",
+          "type": "Help",
+          "location": "Grasslands 3-5"
+        },
+        {
+          "id": "item_9y45tg4",
+          "character": "Saito",
+          "size": "2",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Grasslands 3-5"
+        },
+        {
+          "id": "item_sa56uwj",
+          "character": "Saito",
+          "size": "3",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Grasslands 3-5"
+        },
+        {
+          "id": "item_enfqqzn",
+          "character": "Kaoru",
+          "size": "1",
+          "type": "Help",
+          "location": "Grasslands 3-6"
+        }
+      ]
+    },
+    {
+      "title": "Black Cat",
+      "columns": [
+        {
+          "key": "character",
+          "label": "Character",
+          "style": "plain"
+        },
+        {
+          "key": "size",
+          "label": "Size",
+          "style": "plain"
+        },
+        {
+          "key": "type",
+          "label": "Type",
+          "style": "plain"
+        },
+        {
+          "key": "nature",
+          "label": "Nature",
+          "style": "plain"
+        },
+        {
+          "key": "location",
+          "label": "Location",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_pt6qsru",
+      "panelType": "checklist",
+      "entry_Black": [
+        {
+          "id": "item_9zdoqwz",
+          "character": "Eve",
+          "size": "1",
+          "type": "Help",
+          "location": "Collect 510 koma"
+        },
+        {
+          "id": "item_w403662",
+          "character": "Eve",
+          "size": "2",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Desert 4-1"
+        },
+        {
+          "id": "item_514yfj4",
+          "character": "Eve",
+          "size": "3",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Desert 4-1"
+        },
+        {
+          "id": "item_ed4hj1t",
+          "character": "Eve",
+          "size": "4",
+          "type": "Battle",
+          "nature": "Knowledge",
+          "location": "Desert 4-1"
+        },
+        {
+          "id": "item_b1i37fh",
+          "character": "Eve",
+          "size": "5",
+          "type": "Battle",
+          "nature": "Knowledge",
+          "location": "Desert 4-1"
+        },
+        {
+          "id": "item_8tijsuh",
+          "character": "Train",
+          "size": "1",
+          "type": "Help",
+          "location": "Desert 1-6"
+        },
+        {
+          "id": "item_lcrvwq9",
+          "character": "Train",
+          "size": "2",
+          "type": "Support",
+          "nature": "Power",
+          "location": "Desert 1-6"
+        },
+        {
+          "id": "item_p1bbyy0",
+          "character": "Train",
+          "size": "3",
+          "type": "Support",
+          "nature": "Power",
+          "location": "Desert 1-6"
+        },
+        {
+          "id": "item_rflcsan",
+          "character": "Sven",
+          "size": "1",
+          "type": "Help",
+          "location": "Desert 1-5"
+        },
+        {
+          "id": "item_z00c0d2",
+          "character": "Sven",
+          "size": "2",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Desert 1-5"
+        },
+        {
+          "id": "item_a7f520k",
+          "character": "Sven",
+          "size": "3",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Desert 3-3"
+        },
+        {
+          "id": "item_mugqol0",
+          "character": "Saya",
+          "size": "1",
+          "type": "Help",
+          "location": "Desert 3-3"
+        }
+      ]
+    },
+    {
+      "title": "Bleach",
+      "columns": [
+        {
+          "key": "character",
+          "label": "Character",
+          "style": "plain"
+        },
+        {
+          "key": "size",
+          "label": "Size",
+          "style": "plain"
+        },
+        {
+          "key": "type",
+          "label": "Type",
+          "style": "plain"
+        },
+        {
+          "key": "nature",
+          "label": "Nature",
+          "style": "plain"
+        },
+        {
+          "key": "location",
+          "label": "Location",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_qh3t8be",
+      "panelType": "checklist",
+      "entry_Bleach": [
+        {
+          "id": "item_hhk3v47",
+          "character": "Ichigo",
+          "size": "1",
+          "type": "Help",
+          "location": "Collect 420 koma"
+        },
+        {
+          "id": "item_zp1ymmy",
+          "character": "Ichigo",
+          "size": "2",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Grasslands 5-1"
+        },
+        {
+          "id": "item_de02zhs",
+          "character": "Ichigo",
+          "size": "3",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Grasslands 5-3"
+        },
+        {
+          "id": "item_spra1fq",
+          "character": "Ichigo",
+          "size": "4",
+          "type": "Battle",
+          "nature": "Power",
+          "location": "Grasslands 5-2"
+        },
+        {
+          "id": "item_icn7jxs",
+          "character": "Ichigo",
+          "size": "5",
+          "type": "Battle",
+          "nature": "Power",
+          "location": "Grasslands 5-2"
+        },
+        {
+          "id": "item_zmfvq3s",
+          "character": "Ichigo",
+          "size": "6",
+          "type": "Battle",
+          "nature": "Power",
+          "location": "Grasslands 5-4"
+        },
+        {
+          "id": "item_p9jro4w",
+          "note": "Requires Ichigo and Zangetsu to complete",
+          "character": "Ichigo",
+          "size": "7",
+          "type": "Battle",
+          "nature": "Power",
+          "location": "Collect 540 koma"
+        },
+        {
+          "id": "item_gw830i1",
+          "character": "Rukia",
+          "size": "1",
+          "type": "Help",
+          "location": "Grasslands 5-3"
+        },
+        {
+          "id": "item_60ecuk6",
+          "character": "Rukia",
+          "size": "2",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Grasslands 5-4"
+        },
+        {
+          "id": "item_54madja",
+          "character": "Rukia",
+          "size": "3",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Grasslands 5-4"
+        },
+        {
+          "id": "item_lublx33",
+          "character": "Zangetsu",
+          "size": "1",
+          "type": "Help",
+          "location": "Grasslands 5-2"
+        },
+        {
+          "id": "item_4el6560",
+          "character": "Yoruichi",
+          "size": "1",
+          "type": "Help",
+          "location": "Grasslands 5-1"
+        },
+        {
+          "id": "item_lmj4msk",
+          "character": "Renji",
+          "size": "1",
+          "type": "Help",
+          "location": "Grasslands 5-3"
+        },
+        {
+          "id": "item_e7ymmjr",
+          "character": "Hitsugaya",
+          "size": "1",
+          "type": "Help",
+          "location": "Grasslands 5-1"
+        }
+      ]
+    },
+    {
+      "title": "Busou Renkin",
+      "columns": [
+        {
+          "key": "character",
+          "label": "Character",
+          "style": "plain"
+        },
+        {
+          "key": "size",
+          "label": "Size",
+          "style": "plain"
+        },
+        {
+          "key": "type",
+          "label": "Type",
+          "style": "plain"
+        },
+        {
+          "key": "nature",
+          "label": "Nature",
+          "style": "plain"
+        },
+        {
+          "key": "location",
+          "label": "Location",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_ohqgrax",
+      "panelType": "checklist",
+      "entry_Busou": [
+        {
+          "id": "item_glwpi01",
+          "character": "Kazuki",
+          "size": "1",
+          "type": "Help",
+          "location": "Final Battleground 1-4"
+        },
+        {
+          "id": "item_7hwajll",
+          "character": "Kazuki",
+          "size": "2",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Final Battleground 1-4"
+        },
+        {
+          "id": "item_dz4lyqg",
+          "character": "Kazuki",
+          "size": "3",
+          "type": "Support",
+          "nature": "Power",
+          "location": "Final Battleground 3-3"
+        },
+        {
+          "id": "item_szcktgn",
+          "character": "Kazuki",
+          "size": "4",
+          "type": "Battle",
+          "nature": "Power",
+          "location": "Final Battleground 1-4"
+        },
+        {
+          "id": "item_gd8j4a4",
+          "character": "Kazuki",
+          "size": "5",
+          "type": "Battle",
+          "nature": "Power",
+          "location": "Final Battleground 1-4"
+        },
+        {
+          "id": "item_9wfyaqe",
+          "character": "Kazuki",
+          "size": "6",
+          "type": "Battle",
+          "nature": "Power",
+          "location": "Final Battleground 3-3"
+        },
+        {
+          "id": "item_dkzfmg6",
+          "character": "Papillon",
+          "size": "1",
+          "type": "Help",
+          "location": "Final Battleground 3-3"
+        },
+        {
+          "id": "item_jp0gfwo",
+          "character": "Captain Bravo",
+          "size": "1",
+          "type": "Help",
+          "location": "Final Battleground 1-4"
+        }
+      ]
+    },
+    {
+      "title": "D.Gray Man",
+      "columns": [
+        {
+          "key": "character",
+          "label": "Character",
+          "style": "plain"
+        },
+        {
+          "key": "size",
+          "label": "Size",
+          "style": "plain"
+        },
+        {
+          "key": "type",
+          "label": "Type",
+          "style": "plain"
+        },
+        {
+          "key": "nature",
+          "label": "Nature",
+          "style": "plain"
+        },
+        {
+          "key": "location",
+          "label": "Location",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_74qkjja",
+      "panelType": "checklist",
+      "entry_DGray": [
+        {
+          "id": "item_ohhyu0w",
+          "character": "Allen",
+          "size": "1",
+          "type": "Help",
+          "location": "Final Battleground 1-6"
+        },
+        {
+          "id": "item_hgjvfzw",
+          "character": "Allen",
+          "size": "2",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Final Battleground 3-4"
+        },
+        {
+          "id": "item_zo9roh4",
+          "character": "Allen",
+          "size": "3",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Final Battleground 1-6"
+        },
+        {
+          "id": "item_e1n9qro",
+          "character": "Allen",
+          "size": "4",
+          "type": "Battle",
+          "nature": "Knowledge",
+          "location": "Final Battleground 1-6"
+        },
+        {
+          "id": "item_psb2ipf",
+          "character": "Allen",
+          "size": "5",
+          "type": "Battle",
+          "nature": "Knowledge",
+          "location": "Final Battleground 3-4"
+        },
+        {
+          "id": "item_rysoeip",
+          "character": "Reever",
+          "size": "1",
+          "type": "Help",
+          "location": "Final Battleground 1-6"
+        },
+        {
+          "id": "item_2k6q5iq",
+          "character": "Lavi",
+          "size": "1",
+          "type": "Help",
+          "location": "Final Battleground 1-6"
+        }
+      ]
+    },
+    {
+      "title": "Bobobo-bo Bo-bobo",
+      "columns": [
+        {
+          "key": "character",
+          "label": "Character",
+          "style": "plain"
+        },
+        {
+          "key": "size",
+          "label": "Size",
+          "style": "plain"
+        },
+        {
+          "key": "type",
+          "label": "Type",
+          "style": "plain"
+        },
+        {
+          "key": "nature",
+          "label": "Nature",
+          "style": "plain"
+        },
+        {
+          "key": "location",
+          "label": "Location",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_sm6w9o8",
+      "panelType": "checklist",
+      "entry_Bobobobo": [
+        {
+          "id": "item_oflyodl",
+          "character": "Bo-bobo",
+          "size": "1",
+          "type": "Help",
+          "location": "Default"
+        },
+        {
+          "id": "item_k881nlu",
+          "character": "Bo-bobo",
+          "size": "2",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Grasslands 4-2"
+        },
+        {
+          "id": "item_96503ks",
+          "character": "Bo-bobo",
+          "size": "3",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Grasslands 1-3"
+        },
+        {
+          "id": "item_9wdnt6s",
+          "note": "Requires Bobobo and Dengaku Man to complete",
+          "character": "Bo-bobo",
+          "size": "4",
+          "type": "Battle",
+          "nature": "Laughter",
+          "location": "Grasslands 1-8"
+        },
+        {
+          "id": "item_256olr1",
+          "note": "Requires Bobobo and Tennosuke to complete",
+          "character": "Bo-bobo",
+          "size": "5",
+          "type": "Battle",
+          "nature": "Laughter",
+          "location": "Grasslands 1-8"
+        },
+        {
+          "id": "item_rxu79iy",
+          "note": "Requires Bobobo, Don Patch, and Tennosuke to complete",
+          "character": "Bo-bobo",
+          "size": "6",
+          "type": "Battle",
+          "nature": "Laughter",
+          "location": "Final Battleground 1-8"
+        },
+        {
+          "id": "item_3m3q3zc",
+          "note": "Requires Bobobo and Dengaku Man to complete",
+          "character": "Bo-bobo",
+          "size": "7",
+          "type": "Battle",
+          "nature": "Laughter",
+          "location": "Finish 350 missions in J-Adventure mode"
+        },
+        {
+          "id": "item_udfezxa",
+          "character": "Don Patch",
+          "size": "1",
+          "type": "Help",
+          "location": "Grasslands 1-8"
+        },
+        {
+          "id": "item_pwm3tzu",
+          "character": "Don Patch",
+          "size": "2",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Grasslands 4-2"
+        },
+        {
+          "id": "item_lp7yhjn",
+          "character": "Don Patch",
+          "size": "3",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Grasslands 4-2"
+        },
+        {
+          "id": "item_3qjktmj",
+          "character": "Don Patch",
+          "size": "4",
+          "type": "Battle",
+          "nature": "Laughter",
+          "location": "Battle City 1-5"
+        },
+        {
+          "id": "item_l43jhnf",
+          "note": "Requires Don Patch and Heppokomaru to complete",
+          "character": "Don Patch",
+          "size": "5",
+          "type": "Battle",
+          "nature": "Laughter",
+          "location": "Final Battleground 1-7"
+        },
+        {
+          "id": "item_n2xu8qc",
+          "character": "Don Patch",
+          "size": "6",
+          "type": "Battle",
+          "nature": "Laugher",
+          "location": "Final Battleground 3-5"
+        },
+        {
+          "id": "item_8m6gymb",
+          "note": "Requires Don Patch and Kopachi to complete",
+          "character": "Don Patch",
+          "size": "7",
+          "type": "Battle",
+          "nature": "Laughter",
+          "location": "Finish 450 missions in J-Adventure mode"
+        },
+        {
+          "id": "item_65dfoc8",
+          "character": "Tennosuke",
+          "size": "1",
+          "type": "Help",
+          "location": "Grasslands 1-7"
+        },
+        {
+          "id": "item_02iqhtp",
+          "character": "Tennosuke",
+          "size": "2",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Grasslands 1-8"
+        },
+        {
+          "id": "item_9gbrdo1",
+          "character": "Tennosuke",
+          "size": "3",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Grasslands 1-9"
+        },
+        {
+          "id": "item_94hz6b3",
+          "character": "Heppokomaru",
+          "size": "1",
+          "type": "Help",
+          "location": "Grasslands 1-9"
+        },
+        {
+          "id": "item_0fahjrg",
+          "character": "Heppokomaru",
+          "size": "2",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Grasslands 1-9"
+        },
+        {
+          "id": "item_cdwivr2",
+          "character": "Heppokomaru",
+          "size": "3",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Desert 1-6"
+        },
+        {
+          "id": "item_crd6odi",
+          "character": "Beauty",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 3-1"
+        },
+        {
+          "id": "item_58lh3v4",
+          "character": "Hatenkou",
+          "size": "1",
+          "type": "Help",
+          "location": "Final Battleground 3-3"
+        },
+        {
+          "id": "item_huyw3uk",
+          "character": "Softon",
+          "size": "1",
+          "type": "Help",
+          "location": "Desert 1-9"
+        },
+        {
+          "id": "item_9jdjjfo",
+          "character": "Torpedo Girl",
+          "size": "1",
+          "type": "Help",
+          "location": "Final Battleground 3-3"
+        },
+        {
+          "id": "item_g53tolu",
+          "character": "Dengaku Man",
+          "size": "1",
+          "type": "Help",
+          "location": "Grasslands 1-8"
+        },
+        {
+          "id": "item_onmhytw",
+          "character": "Service Man",
+          "size": "1",
+          "type": "Help",
+          "location": "Desert 1-9"
+        },
+        {
+          "id": "item_lykc5z1",
+          "character": "Kopachi",
+          "size": "1",
+          "type": "Help",
+          "location": "Grasslands 4-2"
+        }
+      ]
+    },
+    {
+      "title": "KochiKame",
+      "columns": [
+        {
+          "key": "character",
+          "label": "Character",
+          "style": "plain"
+        },
+        {
+          "key": "size",
+          "label": "Size",
+          "style": "plain"
+        },
+        {
+          "key": "type",
+          "label": "Type",
+          "style": "plain"
+        },
+        {
+          "key": "nature",
+          "label": "Nature",
+          "style": "plain"
+        },
+        {
+          "key": "location",
+          "label": "Location",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_q33m6j9",
+      "panelType": "checklist",
+      "entry_KochiKame": [
+        {
+          "id": "item_qmlpnlb",
+          "character": "Ryotsu",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 1-8"
+        },
+        {
+          "id": "item_b2vj0ba",
+          "character": "Ryotsu",
+          "size": "2",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Final Battleground 1-5"
+        },
+        {
+          "id": "item_1vt30hl",
+          "character": "Ryotsu",
+          "size": "3",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Final Battleground 2-1"
+        },
+        {
+          "id": "item_4seepux",
+          "character": "Ryotsu",
+          "size": "4",
+          "type": "Battle",
+          "nature": "Laughter",
+          "location": "Battle City 1-8"
+        },
+        {
+          "id": "item_r8y8sje",
+          "character": "Ryotsu",
+          "size": "5",
+          "type": "Battle",
+          "nature": "Laughter",
+          "location": "Battle City 1-8"
+        },
+        {
+          "id": "item_kfa9ec5",
+          "character": "Ryotsu",
+          "size": "6",
+          "type": "Battle",
+          "nature": "Laughter",
+          "location": "Battle City 2-6"
+        },
+        {
+          "id": "item_68ydjr7",
+          "character": "Ohara",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 1-9"
+        },
+        {
+          "id": "item_8f0xv83",
+          "character": "Ohara",
+          "size": "2",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Battle City 2-6"
+        },
+        {
+          "id": "item_nb451pw",
+          "character": "Ohara",
+          "size": "3",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Battle City 2-6"
+        },
+        {
+          "id": "item_2s6x2o3",
+          "character": "Nakagawa",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 1-8"
+        },
+        {
+          "id": "item_87fcgda",
+          "character": "Nakagawa",
+          "size": "2",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Battle City 1-9"
+        },
+        {
+          "id": "item_56ivkkz",
+          "character": "Nakagawa",
+          "size": "3",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Battle City 2-6"
+        },
+        {
+          "id": "item_zuri4z3",
+          "character": "Reiko",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 1-8"
+        },
+        {
+          "id": "item_yhctqvq",
+          "character": "Reiko",
+          "size": "2",
+          "type": "Support",
+          "location": "Battle City 1-9"
+        },
+        {
+          "id": "item_ibkilwk",
+          "character": "Reiko",
+          "size": "3",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Battle City 2-6"
+        },
+        {
+          "id": "item_ujclhxb",
+          "character": "Matoi",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 1-13"
+        },
+        {
+          "id": "item_5rr3xxq",
+          "character": "Maria",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 1-3"
+        },
+        {
+          "id": "item_ajjo7q5",
+          "character": "Higurashi",
+          "size": "1",
+          "type": "Help",
+          "location": "Final Battleground 1-5"
+        }
+      ]
+    },
+    {
+      "title": "Gintama",
+      "columns": [
+        {
+          "key": "character",
+          "label": "Character",
+          "style": "plain"
+        },
+        {
+          "key": "size",
+          "label": "Size",
+          "style": "plain"
+        },
+        {
+          "key": "type",
+          "label": "Type",
+          "style": "plain"
+        },
+        {
+          "key": "nature",
+          "label": "Nature",
+          "style": "plain"
+        },
+        {
+          "key": "location",
+          "label": "Location",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_vypnuou",
+      "panelType": "checklist",
+      "entry_Gintama": [
+        {
+          "id": "item_go81d2b",
+          "character": "Gintoki",
+          "size": "1",
+          "type": "Help",
+          "location": "Grasslands 3-2"
+        },
+        {
+          "id": "item_0m0vq8g",
+          "character": "Gintoki",
+          "size": "2",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Grasslands 3-2"
+        },
+        {
+          "id": "item_xfasz0v",
+          "character": "Gintoki",
+          "size": "3",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Grasslands 3-2"
+        },
+        {
+          "id": "item_ouao1cd",
+          "character": "Gintoki",
+          "size": "4",
+          "type": "Battle",
+          "nature": "Laughter",
+          "location": "Grasslands 3-2"
+        },
+        {
+          "id": "item_tytvjft",
+          "character": "Gintoki",
+          "size": "5",
+          "type": "Battle",
+          "nature": "Laughter",
+          "location": "Grasslands 3-3"
+        },
+        {
+          "id": "item_vnm05js",
+          "character": "Shinpachi",
+          "size": "1",
+          "type": "Help",
+          "location": "Grasslands 3-1"
+        },
+        {
+          "id": "item_fbdcff5",
+          "character": "Shinpachi",
+          "size": "2",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Grasslands 3-1"
+        },
+        {
+          "id": "item_7kcgmr9",
+          "character": "Shinpachi",
+          "size": "3",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Grasslands 3-2"
+        },
+        {
+          "id": "item_tdycnc7",
+          "character": "Kagura",
+          "size": "1",
+          "type": "Help",
+          "location": "Grasslands 3-1"
+        },
+        {
+          "id": "item_dbeii7t",
+          "character": "Kagura",
+          "size": "2",
+          "type": "Support",
+          "nature": "Power",
+          "location": "Grasslands 4-4"
+        },
+        {
+          "id": "item_1z8y8v2",
+          "character": "Kagura",
+          "size": "3",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Grasslands 4-4"
+        },
+        {
+          "id": "item_xcckfl2",
+          "character": "Otose",
+          "size": "1",
+          "type": "Help",
+          "location": "Grasslands 3-3"
+        },
+        {
+          "id": "item_i31w46b",
+          "character": "Otae",
+          "size": "1",
+          "type": "Help",
+          "location": "Grasslands 3-3"
+        },
+        {
+          "id": "item_69edkqt",
+          "character": "Kotarou",
+          "size": "1",
+          "type": "Help",
+          "location": "Grasslands 4-4"
+        },
+        {
+          "id": "item_0pkk23i",
+          "character": "Isao",
+          "size": "1",
+          "type": "Help",
+          "location": "Grasslands 4-4"
+        },
+        {
+          "id": "item_dijyik2",
+          "character": "Taizo",
+          "size": "1",
+          "type": "Help",
+          "location": "Grasslands 3-3"
+        }
+      ]
+    },
+    {
+      "title": "Katekyo Hitman Reborn!",
+      "columns": [
+        {
+          "key": "character",
+          "label": "Character",
+          "style": "plain"
+        },
+        {
+          "key": "size",
+          "label": "Size",
+          "style": "plain"
+        },
+        {
+          "key": "type",
+          "label": "Type",
+          "style": "plain"
+        },
+        {
+          "key": "nature",
+          "label": "Nature",
+          "style": "plain"
+        },
+        {
+          "key": "location",
+          "label": "Location",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_rei8zfh",
+      "panelType": "checklist",
+      "entry_Katekyo": [
+        {
+          "id": "item_hv70zy5",
+          "character": "Tsuna",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 3-2"
+        },
+        {
+          "id": "item_jqv1svt",
+          "character": "Tsuna",
+          "size": "2",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Battle City 3-2"
+        },
+        {
+          "id": "item_ks4augn",
+          "character": "Tsuna",
+          "size": "3",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Battle City 3-2"
+        },
+        {
+          "id": "item_xifbidt",
+          "character": "Tsuna",
+          "size": "4",
+          "type": "Battle",
+          "nature": "Laughter",
+          "location": "Battle City 3-2"
+        },
+        {
+          "id": "item_wixhw6f",
+          "character": "Tsuna",
+          "size": "5",
+          "type": "Battle",
+          "nature": "Laughter",
+          "location": "Battle City 3-2"
+        },
+        {
+          "id": "item_xbv5v17",
+          "character": "Lambo",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 2-7"
+        },
+        {
+          "id": "item_nosjksi",
+          "character": "Lambo",
+          "size": "2",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Battle City 2-7"
+        },
+        {
+          "id": "item_m0r0jon",
+          "character": "Lambo",
+          "size": "3",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Battle City 2-7"
+        },
+        {
+          "id": "item_za6cg2v",
+          "character": "Takeshi",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 3-1"
+        },
+        {
+          "id": "item_c1b3kxb",
+          "character": "Kyoko",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 3-1"
+        }
+      ]
+    },
+    {
+      "title": "Pyu to Fuku! Jaguar",
+      "columns": [
+        {
+          "key": "character",
+          "label": "Character",
+          "style": "plain"
+        },
+        {
+          "key": "size",
+          "label": "Size",
+          "style": "plain"
+        },
+        {
+          "key": "type",
+          "label": "Type",
+          "style": "plain"
+        },
+        {
+          "key": "nature",
+          "label": "Nature",
+          "style": "plain"
+        },
+        {
+          "key": "location",
+          "label": "Location",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_jww6mlg",
+      "panelType": "checklist",
+      "entry_Pyu": [
+        {
+          "id": "item_94cbjtf",
+          "character": "Jaguar",
+          "size": "1",
+          "type": "Help",
+          "location": "Desert 2-2"
+        },
+        {
+          "id": "item_qe7muxk",
+          "character": "Jaguar",
+          "size": "2",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Desert 2-2"
+        },
+        {
+          "id": "item_ebmz5iy",
+          "character": "Jaguar",
+          "size": "3",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Desert 2-2"
+        },
+        {
+          "id": "item_tq7xjjc",
+          "character": "Jaguar",
+          "size": "4",
+          "type": "Battle",
+          "nature": "Laughter",
+          "location": "Desert 2-2"
+        },
+        {
+          "id": "item_650w4w4",
+          "character": "Jaguar",
+          "size": "5",
+          "type": "Battle",
+          "nature": "Laughter",
+          "location": "Battle City 2-5"
+        },
+        {
+          "id": "item_sxplscp",
+          "character": "Jaguar",
+          "size": "6",
+          "type": "Battle",
+          "nature": "Laughter",
+          "location": "Battle City 2-5"
+        },
+        {
+          "id": "item_g23tzwp",
+          "character": "Piyohiko",
+          "size": "1",
+          "type": "Help",
+          "location": "Desert 2-1"
+        },
+        {
+          "id": "item_chv3eun",
+          "character": "Piyohiko",
+          "size": "2",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Desert 2-1"
+        },
+        {
+          "id": "item_fc6u99s",
+          "character": "Piyohiko",
+          "size": "3",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Battle City 2-5"
+        },
+        {
+          "id": "item_lrifdp0",
+          "character": "Hammer",
+          "size": "1",
+          "type": "Help",
+          "location": "Desert 2-1"
+        },
+        {
+          "id": "item_ra2qkj7",
+          "character": "Hammer",
+          "size": "2",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Desert 2-1"
+        },
+        {
+          "id": "item_5vbr3lh",
+          "character": "Hammer",
+          "size": "3",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Battle City 2-5"
+        },
+        {
+          "id": "item_jjtkzc3",
+          "character": "Takana",
+          "size": "1",
+          "type": "Help",
+          "location": "Desert 2-2"
+        },
+        {
+          "id": "item_tb3rklr",
+          "character": "Jirou",
+          "size": "1",
+          "type": "Help",
+          "location": "Desert 2-1"
+        },
+        {
+          "id": "item_ug8bcu5",
+          "character": "Porgy",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 2-5"
+        }
+      ]
+    },
+    {
+      "title": "Dr. Slump",
+      "columns": [
+        {
+          "key": "character",
+          "label": "Character",
+          "style": "plain"
+        },
+        {
+          "key": "size",
+          "label": "Size",
+          "style": "plain"
+        },
+        {
+          "key": "type",
+          "label": "Type",
+          "style": "plain"
+        },
+        {
+          "key": "nature",
+          "label": "Nature",
+          "style": "plain"
+        },
+        {
+          "key": "location",
+          "label": "Location",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_hyrakm8",
+      "panelType": "checklist",
+      "entry_Dr": [
+        {
+          "id": "item_22o1ynn",
+          "character": "Arale",
+          "size": "1",
+          "type": "Help",
+          "location": "Final Battleground 3-8"
+        },
+        {
+          "id": "item_7naz940",
+          "character": "Arale",
+          "size": "2",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Final Battleground 3-8"
+        },
+        {
+          "id": "item_s05v4uv",
+          "character": "Arale",
+          "size": "3",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Final Battleground 3-8"
+        },
+        {
+          "id": "item_p4asv48",
+          "character": "Arale",
+          "size": "4",
+          "type": "Battle",
+          "nature": "Laughter",
+          "location": "Final Battleground 3-8"
+        },
+        {
+          "id": "item_sh5tfjw",
+          "character": "Arale",
+          "size": "5",
+          "type": "Battle",
+          "nature": "Laughter",
+          "location": "Final Battleground 3-8"
+        },
+        {
+          "id": "item_5j4hfew",
+          "character": "Arale",
+          "size": "6",
+          "type": "Battle",
+          "nature": "Laughter",
+          "location": "Final Battleground 3-9"
+        },
+        {
+          "id": "item_ojoxnk5",
+          "character": "Dr. Mashirito",
+          "size": "1",
+          "type": "Help",
+          "location": "Final Battleground 3-7"
+        },
+        {
+          "id": "item_mb9vrgn",
+          "character": "Dr. Mashirito",
+          "size": "4",
+          "type": "Battle",
+          "nature": "Laughter",
+          "location": "Final Battleground 3-9"
+        },
+        {
+          "id": "item_qz9gj9f",
+          "character": "Dr. Mashirito",
+          "size": "5",
+          "type": "Battle",
+          "nature": "Laughter",
+          "location": "Final Battleground 3-9"
+        },
+        {
+          "id": "item_zi7xjfy",
+          "character": "Dr. Mashirito",
+          "size": "6",
+          "type": "Battle",
+          "nature": "Laughter",
+          "location": "Final Battleground 3-9"
+        },
+        {
+          "id": "item_huwvlck",
+          "character": "Senebi",
+          "size": "1",
+          "type": "Help",
+          "location": "Final Battleground 3-9"
+        }
+      ]
+    },
+    {
+      "title": "Prince of Tennis",
+      "columns": [
+        {
+          "key": "character",
+          "label": "Character",
+          "style": "plain"
+        },
+        {
+          "key": "size",
+          "label": "Size",
+          "style": "plain"
+        },
+        {
+          "key": "type",
+          "label": "Type",
+          "style": "plain"
+        },
+        {
+          "key": "nature",
+          "label": "Nature",
+          "style": "plain"
+        },
+        {
+          "key": "location",
+          "label": "Location",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_rtx9fc3",
+      "panelType": "checklist",
+      "entry_Prince": [
+        {
+          "id": "item_rwmin9v",
+          "character": "Ryoma",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 1-4"
+        },
+        {
+          "id": "item_dw8sh3v",
+          "character": "Ryoma",
+          "size": "2",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Battle City 1-7"
+        },
+        {
+          "id": "item_eoro3uc",
+          "character": "Ryoma",
+          "size": "3",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Battle City 1-4"
+        },
+        {
+          "id": "item_b3sryc1",
+          "character": "Kunimitsu",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 2-3"
+        },
+        {
+          "id": "item_ap2584d",
+          "character": "Kunimitsu",
+          "size": "2",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Battle City 2-3"
+        },
+        {
+          "id": "item_dm62e9y",
+          "character": "Kunimitsu",
+          "size": "3",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Battle City 2-3"
+        },
+        {
+          "id": "item_sw19szi",
+          "character": "Shusuke",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 1-4"
+        },
+        {
+          "id": "item_wu3hkqh",
+          "character": "Shusuke",
+          "size": "2",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Battle City 1-5"
+        },
+        {
+          "id": "item_iayqnxt",
+          "character": "Shusuke",
+          "size": "3",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Battle City 1-7"
+        },
+        {
+          "id": "item_w9wp4ln",
+          "character": "Eiji",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 1-5"
+        },
+        {
+          "id": "item_xhzo5xj",
+          "character": "Shuichiro",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 1-5"
+        },
+        {
+          "id": "item_jo9ez2i",
+          "note": "Requires Eiji and Shuichiro to complete",
+          "character": "The Golden Pair",
+          "size": "3",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Battle City 1-13"
+        },
+        {
+          "id": "item_kt5iu1t",
+          "character": "Takeshi",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 1-3"
+        },
+        {
+          "id": "item_f9cqa7b",
+          "character": "Takeshi",
+          "size": "2",
+          "type": "Support",
+          "nature": "Power",
+          "location": "Battle City 1-4"
+        },
+        {
+          "id": "item_7d98965",
+          "character": "Takeshi",
+          "size": "3",
+          "type": "Support",
+          "nature": "Power",
+          "location": "Battle City 1-7"
+        },
+        {
+          "id": "item_kxt0hr2",
+          "character": "Kaoru",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 1-3"
+        },
+        {
+          "id": "item_fhm8iq0",
+          "character": "Kaoru",
+          "size": "2",
+          "type": "Support",
+          "nature": "Power",
+          "location": "Battle City 1-3"
+        },
+        {
+          "id": "item_1wrvojy",
+          "character": "Kaoru",
+          "size": "3",
+          "type": "Support",
+          "nature": "Power",
+          "location": "Battle City 1-4"
+        },
+        {
+          "id": "item_8as2k0u",
+          "character": "Takashi",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 1-7"
+        },
+        {
+          "id": "item_8fzdq4l",
+          "character": "Inui",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 1-13"
+        },
+        {
+          "id": "item_mrrich9",
+          "character": "Keigo",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 2-3"
+        }
+      ]
+    },
+    {
+      "title": "Eyeshield 21",
+      "columns": [
+        {
+          "key": "character",
+          "label": "Character",
+          "style": "plain"
+        },
+        {
+          "key": "size",
+          "label": "Size",
+          "style": "plain"
+        },
+        {
+          "key": "type",
+          "label": "Type",
+          "style": "plain"
+        },
+        {
+          "key": "nature",
+          "label": "Nature",
+          "style": "plain"
+        },
+        {
+          "key": "location",
+          "label": "Location",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_yj72m4r",
+      "panelType": "checklist",
+      "entry_Eyeshield": [
+        {
+          "id": "item_61ts3ld",
+          "character": "Sena",
+          "size": "1",
+          "type": "Help",
+          "location": "Default"
+        },
+        {
+          "id": "item_cmhj4y5",
+          "character": "Sena",
+          "size": "2",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Battle City 1-2"
+        },
+        {
+          "id": "item_7fal45v",
+          "character": "Sena",
+          "size": "3",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Battle City 1-2"
+        },
+        {
+          "id": "item_3yxqsev",
+          "character": "Yoichi",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 2-1"
+        },
+        {
+          "id": "item_o6l7im7",
+          "character": "Yoichi",
+          "size": "2",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Battle City 2-2"
+        },
+        {
+          "id": "item_ofrmng4",
+          "character": "Yoichi",
+          "size": "3",
+          "type": "Support",
+          "nature": "Power",
+          "location": "Battle City 2-2"
+        },
+        {
+          "id": "item_tguxate",
+          "character": "Ryokan",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 1-1"
+        },
+        {
+          "id": "item_wfu5pn7",
+          "character": "Ryokan",
+          "size": "2",
+          "type": "Support",
+          "nature": "Power",
+          "location": "Battle City 1-2"
+        },
+        {
+          "id": "item_pzqcew1",
+          "character": "Ryokan",
+          "size": "3",
+          "type": "Support",
+          "nature": "Power",
+          "location": "Battle City 2-2"
+        },
+        {
+          "id": "item_9cvxxbf",
+          "character": "Taro",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 1-13"
+        },
+        {
+          "id": "item_fyyan4w",
+          "character": "Mamori",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 1-1"
+        },
+        {
+          "id": "item_nxlfcln",
+          "character": "Cerberus",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 1-13"
+        },
+        {
+          "id": "item_nqormtk",
+          "character": "Suzuna",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 2-2"
+        }
+      ]
+    },
+    {
+      "title": "Mr. Fullswing",
+      "columns": [
+        {
+          "key": "character",
+          "label": "Character",
+          "style": "plain"
+        },
+        {
+          "key": "size",
+          "label": "Size",
+          "style": "plain"
+        },
+        {
+          "key": "type",
+          "label": "Type",
+          "style": "plain"
+        },
+        {
+          "key": "nature",
+          "label": "Nature",
+          "style": "plain"
+        },
+        {
+          "key": "location",
+          "label": "Location",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_i55bit9",
+      "panelType": "checklist",
+      "entry_Mr": [
+        {
+          "id": "item_qu77d8q",
+          "character": "Saruno",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 1-6"
+        },
+        {
+          "id": "item_eiachoj",
+          "character": "Saruno",
+          "size": "2",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Battle City 1-6"
+        },
+        {
+          "id": "item_su8rcya",
+          "character": "Saruno",
+          "size": "3",
+          "type": "Support",
+          "nature": "Power",
+          "location": "Battle City 2-4"
+        },
+        {
+          "id": "item_7on0w0n",
+          "character": "Mei",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 2-4"
+        },
+        {
+          "id": "item_5rdg2mz",
+          "character": "Mikado",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 1-6"
+        },
+        {
+          "id": "item_tg9rcou",
+          "character": "Nagi",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 2-4"
+        }
+      ]
+    },
+    {
+      "title": "Slam Dunk",
+      "columns": [
+        {
+          "key": "character",
+          "label": "Character",
+          "style": "plain"
+        },
+        {
+          "key": "size",
+          "label": "Size",
+          "style": "plain"
+        },
+        {
+          "key": "type",
+          "label": "Type",
+          "style": "plain"
+        },
+        {
+          "key": "nature",
+          "label": "Nature",
+          "style": "plain"
+        },
+        {
+          "key": "location",
+          "label": "Location",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_jgtnepf",
+      "panelType": "checklist",
+      "entry_Slam": [
+        {
+          "id": "item_e97yhrl",
+          "character": "Hanamichi",
+          "size": "1",
+          "type": "Help",
+          "location": "Collect 450 koma"
+        },
+        {
+          "id": "item_n5p31d1",
+          "character": "Hanamichi",
+          "size": "2",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Battle City 4-2"
+        },
+        {
+          "id": "item_ul7czg6",
+          "character": "Hanamichi",
+          "size": "3",
+          "type": "Support",
+          "nature": "Power",
+          "location": "Battle City 4-2"
+        },
+        {
+          "id": "item_93o7pam",
+          "character": "Kaede",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 4-1"
+        },
+        {
+          "id": "item_s14oy7y",
+          "character": "Kaede",
+          "size": "2",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Battle City 4-2"
+        },
+        {
+          "id": "item_plx2xm5",
+          "character": "Kaede",
+          "size": "3",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Battle City 4-2"
+        },
+        {
+          "id": "item_lwygz80",
+          "character": "Takenori",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 4-1"
+        },
+        {
+          "id": "item_l9b8iic",
+          "character": "Haruko",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 4-1"
+        }
+      ]
+    },
+    {
+      "title": "Death Note",
+      "columns": [
+        {
+          "key": "character",
+          "label": "Character",
+          "style": "plain"
+        },
+        {
+          "key": "size",
+          "label": "Size",
+          "style": "plain"
+        },
+        {
+          "key": "type",
+          "label": "Type",
+          "style": "plain"
+        },
+        {
+          "key": "nature",
+          "label": "Nature",
+          "style": "plain"
+        },
+        {
+          "key": "location",
+          "label": "Location",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_0kkwc5d",
+      "panelType": "checklist",
+      "entry_Death": [
+        {
+          "id": "item_oq7cs6r",
+          "character": "Light",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 1-10"
+        },
+        {
+          "id": "item_8th5jdt",
+          "character": "Light",
+          "size": "2",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Battle City 1-10"
+        },
+        {
+          "id": "item_kmhg43k",
+          "character": "Light",
+          "size": "3",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Battle City 1-10"
+        },
+        {
+          "id": "item_0pyj2zd",
+          "character": "L",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 1-10"
+        },
+        {
+          "id": "item_zenqp3z",
+          "character": "L",
+          "size": "2",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Final Battleground 3-1"
+        },
+        {
+          "id": "item_ri7k9ys",
+          "character": "L",
+          "size": "3",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Final Battleground 3-1"
+        },
+        {
+          "id": "item_g8ghe2h",
+          "character": "Misa",
+          "size": "1",
+          "type": "Help",
+          "location": "Final Battleground 3-1"
+        }
+      ]
+    },
+    {
+      "title": "Ichigo 100%",
+      "columns": [
+        {
+          "key": "character",
+          "label": "Character",
+          "style": "plain"
+        },
+        {
+          "key": "size",
+          "label": "Size",
+          "style": "plain"
+        },
+        {
+          "key": "type",
+          "label": "Type",
+          "style": "plain"
+        },
+        {
+          "key": "nature",
+          "label": "Nature",
+          "style": "plain"
+        },
+        {
+          "key": "location",
+          "label": "Location",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_fvfe3hb",
+      "panelType": "checklist",
+      "entry_Ichigo": [
+        {
+          "id": "item_z9zs243",
+          "character": "Aya",
+          "size": "1",
+          "type": "Help",
+          "location": "Default"
+        },
+        {
+          "id": "item_fzp1qvl",
+          "character": "Aya",
+          "size": "2",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Battle City 1-12"
+        },
+        {
+          "id": "item_cx8q34l",
+          "character": "Aya",
+          "size": "3",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Battle City 1-12"
+        },
+        {
+          "id": "item_j32v1sp",
+          "character": "Tsukasa",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 1-11"
+        },
+        {
+          "id": "item_ddw8rc1",
+          "character": "Tsukasa",
+          "size": "2",
+          "type": "Support",
+          "nature": "Power",
+          "location": "Battle City 2-8"
+        },
+        {
+          "id": "item_0h4q97t",
+          "character": "Tsukasa",
+          "size": "3",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Battle City 2-8"
+        },
+        {
+          "id": "item_pkte5ue",
+          "character": "Satsuki",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 1-11"
+        },
+        {
+          "id": "item_qbknloh",
+          "character": "Satsuki",
+          "size": "3",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Battle City 2-8"
+        },
+        {
+          "id": "item_ggwwov1",
+          "character": "Yui",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 1-11"
+        },
+        {
+          "id": "item_j3d66d9",
+          "character": "Yui",
+          "size": "2",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Battle City 1-12"
+        },
+        {
+          "id": "item_stbwqwz",
+          "character": "Yui",
+          "size": "3",
+          "type": "Support",
+          "nature": "Laughter",
+          "location": "Final Battleground 2-1"
+        },
+        {
+          "id": "item_ekisvvb",
+          "character": "Misuzu",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 2-8"
+        },
+        {
+          "id": "item_u2proet",
+          "character": "Junpei",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 1-12"
+        },
+        {
+          "id": "item_qzwsx6w",
+          "character": "Hiroshi",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 1-11"
+        }
+      ]
+    },
+    {
+      "title": "Hikaru No Go",
+      "columns": [
+        {
+          "key": "character",
+          "label": "Character",
+          "style": "plain"
+        },
+        {
+          "key": "size",
+          "label": "Size",
+          "style": "plain"
+        },
+        {
+          "key": "type",
+          "label": "Type",
+          "style": "plain"
+        },
+        {
+          "key": "nature",
+          "label": "Nature",
+          "style": "plain"
+        },
+        {
+          "key": "location",
+          "label": "Location",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_rg9cvrl",
+      "panelType": "checklist",
+      "entry_Hikaru": [
+        {
+          "id": "item_crgc9ac",
+          "character": "Hikaru",
+          "size": "1",
+          "type": "Help",
+          "location": "Final Battleground 2-2"
+        },
+        {
+          "id": "item_vdot05s",
+          "character": "Hikaru",
+          "size": "2",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Final Battleground 2-2"
+        },
+        {
+          "id": "item_tij62iy",
+          "character": "Hikaru",
+          "size": "3",
+          "type": "Support",
+          "nature": "Knowledge",
+          "location": "Final Battleground 3-5"
+        }
+      ]
+    },
+    {
+      "title": "Special",
+      "columns": [
+        {
+          "key": "character",
+          "label": "Character",
+          "style": "plain"
+        },
+        {
+          "key": "size",
+          "label": "Size",
+          "style": "plain"
+        },
+        {
+          "key": "type",
+          "label": "Type",
+          "style": "plain"
+        },
+        {
+          "key": "nature",
+          "label": "Nature",
+          "style": "plain"
+        },
+        {
+          "key": "location",
+          "label": "Location",
+          "style": "plain"
+        }
+      ],
+      "id": "panel_p1bqwfe",
+      "panelType": "checklist",
+      "entry_Special": [
+        {
+          "id": "item_ia0gf76",
+          "character": "Friendship",
+          "size": "1",
+          "type": "Help",
+          "location": "Grasslands 1-10"
+        },
+        {
+          "id": "item_urun45g",
+          "character": "Effort",
+          "size": "1",
+          "type": "Help",
+          "location": "Desert 1-11"
+        },
+        {
+          "id": "item_x737tav",
+          "character": "Victory",
+          "size": "1",
+          "type": "Help",
+          "location": "Battle City 1-10"
+        }
+      ]
+    }
+  ]
+}
