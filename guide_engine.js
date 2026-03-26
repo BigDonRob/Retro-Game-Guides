@@ -30,6 +30,86 @@
   const A11Y_DYSLEXIA_KEY    = 'bdr_a11y_dyslexia';    // '1'/'0', global preference
   const ROYGBIV              = ['red','orange','yellow','green','blue','violet','neutral'];
 
+  // ── ZIP LOADING ───────────────────────────────────────────────────────
+  async function loadFromZip(raId) {
+    if (typeof JSZip === 'undefined') return null;
+    
+    try {
+      // Try to load ZIP file from the game directory
+      const zipPath = `${getGamePath(raId)}/${raId}_submission.zip`;
+      const zipResponse = await fetch(zipPath);
+      if (!zipResponse.ok) return null;
+      
+      const zipBlob = await zipResponse.blob();
+      const zip = await JSZip.loadAsync(zipBlob);
+      
+      // Extract files from ZIP
+      const submissionFolder = zip.folder(`${raId}_submission`);
+      if (!submissionFolder) return null;
+      
+      const configFile = submissionFolder.file(`${raId}_00.json`);
+      const indexFile = submissionFolder.file('games_index_entry.json');
+      const themesFile = zip.file('themes.json');
+      const palettesFile = zip.file('palettes.json');
+      
+      if (!configFile) return null;
+      
+      // Load all files in parallel
+      const [config, themes, palettes, indexEntry] = await Promise.all([
+        configFile.async('string').then(JSON.parse),
+        themesFile ? themesFile.async('string').then(JSON.parse).catch(() => ({})) : Promise.resolve({}),
+        palettesFile ? palettesFile.async('string').then(JSON.parse).catch(() => ({})) : Promise.resolve({}),
+        indexFile ? indexFile.async('string').then(JSON.parse).catch(() => ({})) : Promise.resolve({})
+      ]);
+      
+      // Store tab files in cache for later loading
+      const tabFiles = {};
+      const tabFilePromises = [];
+      submissionFolder.forEach((relativePath, file) => {
+        if (!file.dir && /_(\d{2})\.json$/.test(relativePath) && !/_00\.json$/.test(relativePath)) {
+          const tabNum = relativePath.match(/_(\d{2})\.json$/)[1];
+          tabFilePromises.push(
+            file.async('string').then(content => {
+              tabFiles[tabNum] = JSON.parse(content);
+            })
+          );
+        }
+      });
+      
+      await Promise.all(tabFilePromises);
+      
+      // Create a mock index structure
+      const mockIndex = {
+        systems: indexEntry.systems || {},
+        series: indexEntry.series || {},
+        themes: indexEntry.themes || [],
+        palettes: indexEntry.palettes || [],
+        games: [indexEntry]
+      };
+      
+      // Override fetchJSON to use cached tab data
+      const originalFetchJSON = window.fetchJSON;
+      window.fetchJSON = async function(url) {
+        const tabMatch = url.match(/\/(\d+)_(\d{2})\.json$/);
+        if (tabMatch && tabMatch[1] === String(raId) && tabFiles[tabMatch[2]]) {
+          return tabFiles[tabMatch[2]];
+        }
+        return originalFetchJSON ? originalFetchJSON(url) : fetchJSON(url);
+      };
+      
+      return {
+        config,
+        themes,
+        palettes,
+        index: mockIndex
+      };
+      
+    } catch (e) {
+      console.warn('Failed to load from ZIP:', e.message);
+      return null;
+    }
+  }
+
   // ── PATH HELPER ──────────────────────────────────────────────────────
   function getGamePath(id) {
     // Special case for raId = 0 (Dev Scour template)
@@ -83,13 +163,22 @@
 
     let config, themes, palettes, index;
     try {
-      const GAME_PATH = getGamePath(raId) + '/';
-      [config, themes, palettes, index] = await Promise.all([
-        fetchJSON(`${GAME_PATH}${raId}_00.json`),
-        fetchJSON('./themes.json').catch(() => ({})),
-        fetchJSON('./palettes.json').catch(() => ({})),
-        fetchJSON('./games_index.json').catch(() => ({ systems: {}, series: {}, themes: [], palettes: [], games: [] })),
-      ]);
+      // Try ZIP file first, then fallback to individual files
+      const zipData = await loadFromZip(raId);
+      if (zipData) {
+        config = zipData.config;
+        themes = zipData.themes;
+        palettes = zipData.palettes;
+        index = zipData.index;
+      } else {
+        const GAME_PATH = getGamePath(raId) + '/';
+        [config, themes, palettes, index] = await Promise.all([
+          fetchJSON(`${GAME_PATH}${raId}_00.json`),
+          fetchJSON('./themes.json').catch(() => ({})),
+          fetchJSON('./palettes.json').catch(() => ({})),
+          fetchJSON('./games_index.json').catch(() => ({ systems: {}, series: {}, themes: [], palettes: [], games: [] })),
+        ]);
+      }
     } catch (e) {
       panic(`Failed to load guide: ${e.message}`); return;
     }
