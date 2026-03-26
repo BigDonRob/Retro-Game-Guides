@@ -1231,19 +1231,6 @@
         2,
         3
       ]
-    },
-    {
-      "raId": 15427,
-      "slug": "jump_super_stars",
-      "name": "Jump Super Stars",
-      "system": 18,
-      "icon": "📖",
-      "theme": 1,
-      "palette": 7,
-      "tags": [
-        1,
-        2
-      ]
     }
   ]
 }
